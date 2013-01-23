@@ -24,20 +24,41 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
+        
+        <script type="text/javascript"> 			
+			function displayHello(){
+				PhoneGap.exec(
+				   function(succ) {
+         			navigator.notification.alert(succ);
+    			}, function(err) {
+         			navigator.notification.alert(err);
+    			}, 'Echo', 'echo',
+				[ "this is a native Call on Android" ]);
+			}
+		</script>
+        
     </head>
     <body>
+
+
         <div class="app">
             <h1>Apache Cordova new hacked</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
+            <a href="#" class="btn" onclick="javascript:displayHello()"><h1>Alert Message</h1>  </a>
 			<p class="blink">Ready on iOS/Android</p>
         </div>
-        <script type="text/javascript" src="../cordova-2.3.0.js"></script>
+        <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
+            document.addEventListener("deviceready", function(){
+		   		navigator.notification.alert("ready");
+			}, false);
         </script>
+
+        
     </body>
 </html>
