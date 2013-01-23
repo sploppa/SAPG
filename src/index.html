@@ -35,6 +35,15 @@
     			}, 'Echo', 'echo',
 				[ "Basti is a github god!!11einself" ]);
 			}
+			function displayHello2(){
+				PhoneGap.exec(
+				   function(succ) {
+         			navigator.notification.alert(succ);
+    			}, function(err) {
+         			navigator.notification.alert(err);
+    			}, 'Echo', 'blubba',
+				[ "Basti is a github god!!11einself" ]);
+			}
 		</script>
         
     </head>
