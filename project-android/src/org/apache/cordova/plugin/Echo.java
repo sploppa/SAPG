@@ -22,11 +22,22 @@ public class Echo extends CordovaPlugin {
             String message = args.getString(0); 
             this.echo(message, callbackContext);
             return true;
+        } else if (action.equals("blubba")) {
+            String message = args.getString(0); 
+            this.echo(message, callbackContext);
+            return true;
         }
         return false;
     }
 
-    private void echo(String message, CallbackContext callbackContext) {
+	private void echo(String message, CallbackContext callbackContext) {
+        if (message != null && message.length() > 0) { 
+            callbackContext.success(message);
+        } else {
+            callbackContext.error("Expected one non-empty string argument.");
+        }
+    }
+	private void blubba(String message, CallbackContext callbackContext) {
         if (message != null && message.length() > 0) { 
             callbackContext.success(message);
         } else {
