@@ -22,6 +22,10 @@ public class Echo extends CordovaPlugin {
             String message = args.getString(0); 
             this.echo(message, callbackContext);
             return true;
+        } else if (action.equals("echo")) {
+            String message = args.getString(0); 
+            this.echo(message, callbackContext);
+            return true;
         }
         return false;
     }
