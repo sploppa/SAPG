@@ -1,13 +1,9 @@
-//
-//  UdpController.h
-//  Anel_Power_Control
-//
-//  Created by Baskus Marti on 15.02.13.
-//
-//
+/********* Echo.h Cordova Plugin Header *******/
 
-#import <Foundation/Foundation.h>
+#import <Cordova/CDV.h>
 
-@interface UdpController : NSObject
+@interface UdpController : CDVPlugin
+
+- (void)switchPower:(CDVInvokedUrlCommand*)command;
 
 @end
