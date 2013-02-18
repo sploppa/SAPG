@@ -1,0 +1,83 @@
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#404040;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:20px;
+    height:800px;
+    width:480px;
+    text-align:center;
+}
+
+.statusbar{
+	position:relative;
+	color: #999999;
+	width:100%;
+	top: -20px;
+	background-color: #333333;
+}
+.socket_control{
+	width: 100%;
+}
+
+#socket_control button{
+	width: 95%; 
+	text-align: left; 
+}
+
+#socket_status_picture{
+	display: inline;
+}
+
+#socket_name{
+	display: inline; 
+	margin-left: 30px; 
+	min-width:90%;
+	margin-right: 50px;
+}
+
+#socket_device_icon{
+	position: static;
+	display:inline;
+	margin-left: auto;
+	margin-right: 1em;
+	float:right;
+}
+
+#menu_select ul {
+	list-style: none;
+	padding:0;
+	margin:0;
+}
+
+#menu_select li {
+	float: left;
+	border: 1px solid;
+	border-bottom-width: 0;
+	margin: 0 0.5em 0 0;
+}
+
+#menu_select li a{
+	padding: 0 1em;
+}
+
+#menu_select #selected {
+
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color: #4B946A;
+    display:none;
+}
+
+.blink {
+    animation:fade 300ms infinite;
+    -webkit-animation:fade 300ms infinite;
+    width:100%;
+}
