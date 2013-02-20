@@ -100,7 +100,7 @@ body {
 }
 
 /*
- * CSS for devices with SMALL screen
+ * CSS for devices with SMALL screen.
 */
 @media only screen 
 and (min-device-width: 250px)
