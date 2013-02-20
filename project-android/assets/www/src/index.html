@@ -25,6 +25,8 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Hello World</title>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="js/activeTabSwitcher.js"></script>
         
         <script type="text/javascript"> 			
 			function displayDose1(){
@@ -77,7 +79,7 @@
 	    <button name="Dose 1" type="button"  value="Dose 1" onclick="javascript:displayDose1();">
 	    	<p>
 	    		<div id="socket_status_picture" > <img src="http://cdn1.iconfinder.com/data/icons/CrystalClear/128x128/actions/exit.png" width="50" height="50" alt="Power off"> </div>
-	    		<div id="socket_name" ><b>Socket 1 </b> </div>
+	    		<div id="socket_name" ><b>Dose 1 </b> </div>
 	    		<div id="socket_device_icon"><img src="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/48/Lamp-icon.png" width="50" height="50" alt="Lamp icon"></div>
     		</p>
     	</button>
@@ -105,17 +107,21 @@
 	    		
 	</div>
 	
-	<div id="menu_select" class="menu_select">
+	<div id="menu_tabs" class="menu_tabs">
 		<ul>
-			<li id="selected"><a href="#">Steuerung</a></li>
-			<li><a href="#">Administration</a></li>
+			<li  class="active"><a href="#" title="Steuerung"> <img src="http://png-3.findicons.com/files/icons/1684/ravenna/48/sound_mixer.png" width="50" height="50" alt="Control" > Steuerung</a></li>
+			<li><a href="#" title="Administration"><img src="http://png-4.findicons.com/files/icons/329/simple/48/settings.png" width="50" height="50" alt="Settings">Administration</a></li>
 		</ul>
+	</div>
+	
+	<div id="actions">
+			<button name="Dose an/ausschalten" type="button" value="An/ausschalten" onclick="javascript:displayDose2();">
+	    	<p>An-/ausschalten</p>
+    	</button>
 	</div>
 		
 
-    <div class="actions">
-        <input type="button" href="#" class="btn" onclick="javascript:displayDose1()" value="Dose an/aus">
-    </div>
+    
         <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
