@@ -52,16 +52,23 @@ body {
 
 #menu_tabs {
 	margin: 40px 0 0 -50px;
+	min-width: 100%;
+	width: auto !important;
+	width:100%;
 }
 
 #menu_tabs ul{
 	list-style: none;
+	margin:auto;
+	min-width: 50%;
+	width: auto !important;
+	width: 50%;
 }
 
 #menu_tabs ul li{
 	display: inline;
 	float: left;
-	padding:10px 20% 30px 10px;
+	padding:10px 10px 30px 10px;
 	background: rgba(0,0,0,0.3);
 	-moz-border-radius-topleft: 12px; 
     -moz-border-radius-topright: 12px; 
