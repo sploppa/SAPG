@@ -12,6 +12,7 @@ import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+
 /**
  * This class echoes a string called from JavaScript.
  */
@@ -32,6 +33,10 @@ public class UdpController extends CordovaPlugin {
         String socket = args.getString(3);
         String ip = args.getString(4);
         int port = args.getInt(5);
+          
+        UPNP upnp = new UPNP(cordova.getContext());
+        upnp.upnpManager();
+
         
         DatagramSocket theSocket = null;
 		try {
