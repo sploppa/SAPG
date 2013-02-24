@@ -5,12 +5,14 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.teleal.common.util.ByteArray;
 
 
 /**
@@ -23,71 +25,93 @@ public class UdpController extends CordovaPlugin {
             this.switchPower(args, callbackContext);
             return true;
         }
+        if (action.equals("activatePortForwarding")){
+        	this.activatePortForwarding(args, callbackContext);
+        	return true;
+        }
         return false;
     }
+
+	private void activatePortForwarding(JSONArray args,
+			CallbackContext callbackContext) throws JSONException {
+		String forwardToIp = args.getString(0);
+		int sendPort = args.getInt(1);
+		int receivePort = args.getInt(2);
+        UPNP upnp = new UPNP(cordova.getContext());
+        String result = upnp.upnpManager(forwardToIp, sendPort, receivePort);
+		callbackContext.success(result);
+	}
 
 	private void switchPower(JSONArray args, CallbackContext callbackContext) throws JSONException {
         String user = args.getString(0);
         String pw = args.getString(1);
         String command = args.getString(2);
-        String socket = args.getString(3);
+        String jack = args.getString(3);
         String ip = args.getString(4);
-        int port = args.getInt(5);
-          
-        UPNP upnp = new UPNP(cordova.getContext());
-        upnp.upnpManager();
+        int sendPort = args.getInt(5);
+        int receivePort = args.getInt(6);
 
-        
-        DatagramSocket theSocket = null;
-		try {
-			theSocket = new DatagramSocket();
+        try {
+			DatagramSocket sendSocket = new DatagramSocket();
+			DatagramSocket receiveSocket = new DatagramSocket(receivePort);
 			
-			// but if you want to connect to your remote server, then alter the theServer address below
 			InetAddress theServer = InetAddress.getByName(ip);
-			theSocket.connect(theServer,port);
- 
-			System.out.println("Client socket created");
-		}catch (SocketException ExceSocket)
-		{
-			System.out.println("Socket creation error  : "+ExceSocket.getMessage());
-		} 
-		catch (UnknownHostException ExceHost)
-		{
-			System.out.println("Socket host unknown : "+ExceHost.getMessage());
-		}
-		
-		DatagramPacket theSendPacket;
-		DatagramPacket theReceivedPacket;
-		InetAddress theServerAddress;
-		byte[] outBuffer;
-		byte[] inBuffer;
- 
-		// the place to store the sending and receiving data
-		inBuffer = new byte[500];
-		outBuffer = new byte[50];
-		try {
-			String message = command + socket + user + pw;
-			outBuffer = message.getBytes();
- 
-			System.out.println("Message sending is : " + message);
- 
-			// the server details
-			theServerAddress = theSocket.getInetAddress();
- 
-			// build up a packet to send to the server
-			theSendPacket = new DatagramPacket(outBuffer, outBuffer.length, theServerAddress, port);
-			// send the data
-			theSocket.send(theSendPacket);
-
-		      // Create a packet to receive data into the buffer
-		    //theReceivedPacket = new DatagramPacket(inBuffer, inBuffer.length);
-			//theSocket2.receive(theReceivedPacket);
+			sendSocket.connect(theServer,sendPort);
 			
-			theSocket.close();
+			DatagramPacket sendPacket;
+			InetAddress sendServerAddress;
+	
+			// the place to store the sending and receiving data
+			byte[] inBuffer = new byte[500];
+			byte[] outBuffer = new byte[50];
+			String message = command + jack + user + pw;
+			outBuffer = message.getBytes();
+	
+			System.out.println("Message sending is : " + message);
+	
+			DatagramPacket receivePacket = new DatagramPacket(inBuffer, inBuffer.length);
+			
+			// the server details
+			sendServerAddress = sendSocket.getInetAddress();
+	
+			// build up a packet to send to the server
+			sendPacket = new DatagramPacket(outBuffer, outBuffer.length, sendServerAddress, sendPort);
+			// send the data
+			sendSocket.send(sendPacket);
+			      
+			receiveSocket.setSoTimeout(1000);
+			
+            try {
+            	receiveSocket.receive(receivePacket);
+            	
+            	inBuffer = receivePacket.getData(); 
+            	String result = new String(inBuffer);
+    			callbackContext.success(result);
+    	        sendSocket.close();
+    	        receiveSocket.close();
+            }
+            catch (SocketTimeoutException e) {
+                // timeout exception.
+            	String result = new String(inBuffer);
+            	result= result.trim();
+            	if(result.equals("")){
+            		callbackContext.error("Timeout");
+            	}
+                sendSocket.close();
+                receiveSocket.close();
+            }    			
 		} catch (IOException ExceIO)
 		{
 			callbackContext.error("Client getting data error : "+ExceIO.getMessage());
 		}
-		callbackContext.success("call success");
     }
+private String toString(byte[] byteArray){
+    char[] charray = new char[byteArray.length]; 
+    for (int i=0;i<=byteArray.length-1;i++) 
+    { 
+      Byte bt = new Byte(byteArray[i]); 
+      charray[i]=(char) bt.intValue(); 
+    } 
+    return new String (charray); 
+}
 }

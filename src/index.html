@@ -33,8 +33,18 @@
     			}, function(err) {
          			navigator.notification.alert(err);
     			}, 'UdpController', 'switchPower',
-				[ "admin", "anel", "Sw_on", "1", "192.168.1.8", 75 ]);
+				[ "admin", "anel", "wer da?", "1", "255.255.255.255", 75, 1027]);
 			}
+			function setupPortForwarding(){
+				Cordova.exec(
+				   function(succ) {
+         			navigator.notification.alert(succ);
+    			}, function(err) {
+         			navigator.notification.alert(err);
+    			}, 'UdpController', 'activatePortForwarding',
+				[ "192.168.1.8", 75, 999]);
+			}
+			
 		</script>
         
     </head>
@@ -47,7 +57,8 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-            <input type="button" value="Alert Message" onclick="sendUdpPackage()"/>
+            <input type="button" value="sendUdpPackage" onclick="sendUdpPackage()"/>
+             <input type="button" value="setupPortForwarding" onclick="setupPortForwarding()"/>
 			<p class="blink">Ready on iOS/Android</p>
         </div>
         <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
@@ -55,7 +66,7 @@
         <script type="text/javascript">
             app.initialize();
             document.addEventListener("deviceready", function(){
-		   		navigator.notification.alert("ready");
+            
 			}, false);
         </script>
 
