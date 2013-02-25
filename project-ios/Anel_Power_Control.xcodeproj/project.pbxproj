@@ -41,6 +41,8 @@
 		30A0434814DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434314DC770100060A13 /* Localizable.strings */; };
 		30A0434914DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434614DC770100060A13 /* Localizable.strings */; };
 		30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9EA90F0A16DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */; };
+		9EA90F0B16DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA90F0916DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m */; };
 		9EF6030316CE589F00B953D1 /* UdpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6030216CE589F00B953D1 /* UdpController.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
@@ -103,6 +105,10 @@
 		30E5649113A7FCAF007403D8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* Anel_Power_Control-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Anel_Power_Control-Prefix.pch"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Anel_Power_Control-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Anel_Power_Control-Info.plist"; path = "../Anel_Power_Control-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		9EA90F0616DC1E9F0030E7F4 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		9EA90F0816DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GCDAsyncUdpSocket+sendString.h"; sourceTree = "<group>"; };
+		9EA90F0916DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GCDAsyncUdpSocket+sendString.m"; sourceTree = "<group>"; };
 		9EF6030116CE589F00B953D1 /* UdpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpController.h; sourceTree = "<group>"; };
 		9EF6030216CE589F00B953D1 /* UdpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdpController.m; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
@@ -246,6 +252,10 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				9EA90F0616DC1E9F0030E7F4 /* GCDAsyncUdpSocket.h */,
+				9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */,
+				9EA90F0816DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.h */,
+				9EA90F0916DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m */,
 				9EF6030116CE589F00B953D1 /* UdpController.h */,
 				9EF6030216CE589F00B953D1 /* UdpController.m */,
 			);
@@ -416,6 +426,8 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				9EF6030316CE589F00B953D1 /* UdpController.m in Sources */,
+				9EA90F0A16DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m in Sources */,
+				9EA90F0B16DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
