@@ -4,9 +4,9 @@ body {
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     background-color:#404040;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:20px;
-    height:800px;
-    width:480px;
+    font-size:200%;
+    height:100%;
+    width:100%;
     text-align:center;
 }
 
@@ -14,9 +14,10 @@ body {
 	position:relative;
 	color: #999999;
 	width:100%;
-	top: -20px;
+	top: -2%;
 	left: -10px;
 	background-color: #333333;
+	font-size: 40%;
 }
 .socket_control{
 	position: relative;
@@ -38,8 +39,8 @@ body {
 	display: inline; 
 	position:absolute;
 	margin-top: 15px; /* 0.5*50px - 0.5*20px (half of button height - half of font-size)*/
-	margin-left: 30px; 
-	font-size: 20px;
+	margin-left: 3%; 
+	font-size: 50%;
 }
 
 #socket_device_icon{
@@ -63,6 +64,7 @@ body {
 	min-width: 50%;
 	width: auto !important;
 	width: 50%;
+	font-size: 90%;
 }
 
 #menu_tabs ul li{
