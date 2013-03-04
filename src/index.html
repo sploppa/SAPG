@@ -16,57 +16,127 @@
      KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations
     under the License.
+    Test 5
 -->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Hello World</title>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="js/activeTabSwitcher.js"></script>
         
         <script type="text/javascript"> 			
-			function sendUdpPackage(){
-				Cordova.exec(
+			function displayDose1(){
+                Cordova.exec(
+                             function(succ) {
+                             navigator.notification.alert(succ);
+                             }, function(err) {
+                             navigator.notification.alert(err);
+                             }, 'UdpController', 'switchPower',
+                             [ "Sw_on1adminanel", "192.168.178.117", 75, 1027]);
+			}
+			function displayDose2(){
+                Cordova.exec(
+                             function(succ) {
+                             navigator.notification.alert(succ);
+                             }, function(err) {
+                             navigator.notification.alert(err);
+                             }, 'UdpController', 'activePortForwarding',
+                             [ "192.168.1.8", 75, 1027]);
+			}
+			function displayDose3(){
+				PhoneGap.exec(
 				   function(succ) {
          			navigator.notification.alert(succ);
     			}, function(err) {
          			navigator.notification.alert(err);
-    			}, 'UdpController', 'switchPower',
-				[ "Sw_on1adminanel", "192.168.178.117", 75, 1027]);
+    			}, 'Echo', 'echo',
+				[ "Dose 3 aktiv" ]);
 			}
-			function setupPortForwarding(){
-				Cordova.exec(
+			function displayDose4(){
+				PhoneGap.exec(
 				   function(succ) {
          			navigator.notification.alert(succ);
     			}, function(err) {
          			navigator.notification.alert(err);
-    			}, 'UdpController', 'activatePortForwarding',
-				[ "192.168.1.8", 75, 999]);
+    			}, 'Echo', 'echo',
+				[ "Dose 4 aktiv" ]);
 			}
-			
 		</script>
         
     </head>
     <body>
+    
+    <div id="deviceready" class="statusbar">
+        <p class="event listening">Connecting to Device...</p>
+        <p class="event received">Device is Ready!</p>
+    </div>
 
+	<div id="socket_control" class="socket_control">
+	    <button name="Dose 1" type="button"  value="Dose 1" onclick="javascript:displayDose1();">
+	    	<p>
+	    		<div id="socket_status_picture" > <img src="http://cdn1.iconfinder.com/data/icons/CrystalClear/128x128/actions/exit.png" height="5%" alt="Power off"> </div>
+	    		<div id="socket_name" ><b>Dose 1 </b> </div>
+	    		<div id="socket_device_icon"><img src="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/48/Lamp-icon.png" height="5%" alt="Lamp icon"></div>
+    		</p>
+    	</button>
+    	<button name="Dose 1" type="button" value="Dose 2" onclick="javascript:displayDose2();">
+	    	<p>
+	    		<div id="socket_status_picture" > <img src="http://cdn1.iconfinder.com/data/icons/CrystalClear/128x128/actions/exit.png" height="5%" alt="Power off"> </div>
+	    		<div id="socket_name" ><b>Dose 2</b> </div>
+	    		<div id="socket_device_icon"><img src="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/48/Lamp-icon.png" height="5%" alt="Lamp icon"></div>
+    		</p>
+    	</button>
+    	<button name="Dose 1" type="button" value="Dose 3" onclick="javascript:displayDose3();">
+	    	<p>
+	    		<div id="socket_status_picture" > <img src="http://cdn1.iconfinder.com/data/icons/CrystalClear/128x128/actions/exit.png" height="5%" alt="Power off"> </div>
+	    		<div id="socket_name" ><b>Dose 3 </b> </div>
+	    		<div id="socket_device_icon"><img src="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/48/Lamp-icon.png" height="5%" alt="Lamp icon"></div>
+    		</p>
+    	</button>
+    	<button name="Dose 1" type="button" value="Dose 4" onclick="javascript:displayDose4();">
+	    	<p>
+	    		<div id="socket_status_picture" > <img src="http://cdn1.iconfinder.com/data/icons/CrystalClear/128x128/actions/exit.png" height="5%" alt="Power off"> </div>
+	    		<div id="socket_name" ><b>Dose 4 </b> </div>
+	    		<div id="socket_device_icon"><img src="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/48/Lamp-icon.png" height="5%" alt="Lamp icon"></div>
+    		</p>
+    	</button>
+	    		
+	</div>
+	
+	
+	
+	<div id="menu_tabs" class="menu_tabs">
+		<ul class="tabs">
+			<li  class="active"><a href="#steuerung" title="Steuerung"> <img src="http://png-3.findicons.com/files/icons/1684/ravenna/48/sound_mixer.png" height="5%" alt="Control" > Steuerung</a></li>
+			<li><a href="#administration" title="Administration"><img src="http://png-4.findicons.com/files/icons/329/simple/48/settings.png" height="5%" alt="Settings">Administration</a></li>
+		</ul>
+	</div>
+	
+	<div class="actions" id="actions">
+		<div id="steuerung">
+			<button name="Dose an/ausschalten" type="button" value="An/ausschalten" onclick="javascript:displayDose2();">
+	    		<p>An-/ausschalten</p>
+    		</button>
+   		</div>
+   		<div id="administration">
+   			<button name="Settings" type="button" value="settings" onclick="javascript:displayDose2();">
+	    		<p>Settings</p>
+    		</button>
+   		</div>
+	</div>
+		
 
-        <div class="app">
-            <h1>Apache Cordova new hacked</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-            <input type="button" value="sendUdpPackage" onclick="sendUdpPackage()"/>
-             <input type="button" value="setupPortForwarding" onclick="setupPortForwarding()"/>
-			<p class="blink">Ready on iOS/Android</p>
-        </div>
+    
         <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
             document.addEventListener("deviceready", function(){
-            
+		   		navigator.notification.alert("ready");
 			}, false);
         </script>
 

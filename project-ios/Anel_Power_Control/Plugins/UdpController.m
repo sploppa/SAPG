@@ -51,6 +51,7 @@ CDVPluginResult* pluginResult = nil;
         }
         
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    [udpSocket close];
 }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data

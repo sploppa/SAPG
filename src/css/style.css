@@ -1,0 +1,224 @@
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#404040;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:200%;
+    height:100%;
+    width:100%;
+    text-align:center;
+}
+
+.statusbar{
+	position:relative;
+	color: #999999;
+	width:100%;
+	background-color: #333333;
+	font-size: 40%;
+	top: -2%;
+	left: -9px;
+}
+
+.socket_control{
+	position: relative;
+	width: 100%;
+}
+
+#socket_control button{
+		width: 90%; 
+		text-align: left; 
+		height: 100%;
+}
+
+#socket_status_picture{
+	display: inline;
+}
+
+#socket_name{
+	display: inline; 
+	position:absolute;
+	margin-left: 3%; 
+	font-size:40%;
+	margin-top: 6%;
+}
+
+#socket_device_icon{
+	position: static;
+	display:inline;
+	margin-left: auto;
+	margin-right: 1em;
+	float:right;
+}
+
+#menu_tabs {
+	margin: 40px 0 0 -50px;
+	min-width: 100%;
+	width: auto !important;
+	width:100%;
+	min-height: 50%;
+	height: auto !important;
+	height:50%;
+}
+
+#menu_tabs ul{
+	list-style: none;
+	margin:auto;
+	min-width: 50%;
+	width: auto !important;
+	width: 50%;
+	font-size: 90%;
+}
+
+#menu_tabs ul li{
+	display: inline;
+	float: left;
+	padding:10px 10px 10px 10px;
+	background: rgba(0,0,0,0.3);
+	-moz-border-radius-topleft: 12px; 
+    -moz-border-radius-topright: 12px; 
+    -webkit-border-top-left-radius:12px;
+    -webkit-border-top-right-radius:12px;
+}
+
+#menu_tabs ul li a{
+	position:relative;
+	height: 50px;
+	position: relative;
+	text-decoration: none; 
+	font: bold; 
+	color: #111111;
+}
+
+#menu_tabs ul li.active {
+	background: rgba(255,255,255, 0.8);
+}
+
+#menu_tabs ul li.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+#actions{
+	
+}
+
+/*
+ * CSS for devices with SMALL screen.
+*/
+@media only screen 
+and (min-device-width: 250px)
+and (max-device-width: 400px)
+{
+	.statusbar{
+		margin-bottom: 10%;
+	}
+	
+	#socket_control button{
+		height: -10px;
+	}
+	
+	.socket_control{
+		margin-top: -25px;
+	    left: -10px;
+	}
+	
+	#socket_control button{
+		margin-top: -5px;
+	}
+	
+	#menu_tabs ul li{
+		/*padding: top right bottom left*/
+		margin-top: -15%;
+		padding:5% 3% 2% 5%;
+	}
+	
+	#socket_device_icon{
+		margin-right: 0em;
+	}
+	
+	#menu_tabs {
+		font-size: 45%;
+	}
+}
+
+/*
+ * CSS for devices with BIG screen
+*/
+@media only screen 
+and (min-device-width : 480px)
+{
+	.statusbar{
+		margin-bottom: 5%;
+		font-size: 50%;
+		top: -2%;
+	}
+	
+	.socket_control{
+		margin-top: -20px;
+	    left: -10px;
+	}
+	
+	#socket_control button{
+		margin-bottom: 10px;
+	}
+	
+	#menu_tabs {
+		font-size: 110%;
+	}
+	
+	#menu_tabs ul li{
+		/*padding: top right bottom left*/
+		margin-top: -5%;
+		padding:5% 2% 2% 2%;
+	}
+}
+
+/*
+ * CSS for iPhone
+*/
+@media only screen 
+and (min-device-width : 630px)
+{
+	.statusbar{
+		margin-bottom: 5%;
+	}
+	
+	.socket_control{
+		margin-top: -20px;
+	    left: -10px;
+	}
+	
+	#socket_control button{
+		margin-bottom: 10px;
+	}
+	
+	#socket_name{
+		display: inline; 
+		position:absolute;
+		margin-left: 3%; 
+		font-size:50px;
+		margin-top: 6%;
+	}
+	
+	#menu_tabs {
+		font-size: 105%;
+	}
+}
+
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color: #333333;/*#4B946A;*/
+    display:none;
+}
+
+.blink {
+    animation:fade 300ms infinite;
+    -webkit-animation:fade 300ms infinite;
+    width:100%;
+}
