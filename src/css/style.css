@@ -14,21 +14,21 @@ body {
 	position:relative;
 	color: #999999;
 	width:100%;
-	top: -2%;
-	left: -10px;
 	background-color: #333333;
-	font-size: 40%;`
+	font-size: 40%;
+	top: -2%;
+	left: -9px;
 }
+
 .socket_control{
 	position: relative;
 	width: 100%;
-	margin-top: -25px;
-    left: -10px;
 }
 
 #socket_control button{
-	width: 90%; 
-	text-align: left; 
+		width: 90%; 
+		text-align: left; 
+		height: 100%;
 }
 
 #socket_status_picture{
@@ -38,9 +38,9 @@ body {
 #socket_name{
 	display: inline; 
 	position:absolute;
-	margin-top: 15px; /* 0.5*50px - 0.5*20px (half of button height - half of font-size)*/
 	margin-left: 3%; 
-	font-size: 50%;
+	font-size:40%;
+	margin-top: 6%;
 }
 
 #socket_device_icon{
@@ -99,26 +99,63 @@ body {
 	
 }
 
-/*#menu_tabs ul {
-	list-style: none;
-	padding:0;
-	margin:0;
+/*
+ * CSS for devices with SMALL screen.
+*/
+@media only screen 
+and (min-device-width: 250px)
+and (max-device-width: 400px)
+{
+	.statusbar{
+		margin-bottom: 10%;
+	}
+	
+	#socket_control button{
+		height: -10px;
+	}
+	
+	.socket_control{
+		margin-top: -25px;
+	    left: -10px;
+	}
+	
+	#socket_control button{
+		margin-top: -5px;
+	}
+	
+	#socket_device_icon{
+		margin-right: 0em;
+	}
+	
+	#menu_tabs {
+		font-size: 45%;
+	}
 }
 
-#menu_tabs li {
-	float: left;
-	border: 1px solid;
-	border-bottom-width: 0;
-	margin: 0 0.5em 0 0;
+/*
+ * CSS for devices with BIG screen
+*/
+@media only screen 
+and (min-device-width : 480px)
+{
+	.statusbar{
+		margin-bottom: 5%;
+	}
+	
+	.socket_control{
+		margin-top: -20px;
+	    left: -10px;
+	}
+	
+	#socket_control button{
+		margin-bottom: 10px;
+	}
+	
+	#menu_tabs {
+		font-size: 105%;
+	}
 }
 
-#menu_tabs li a{
-	padding: 0 1em;
-}
-
-#menu_tabs #selected {
-
-}*/
 
 .event.listening {
     background-color:#333333;
