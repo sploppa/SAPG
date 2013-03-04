@@ -43,13 +43,10 @@ public class UdpController extends CordovaPlugin {
 	}
 
 	private void switchPower(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        String user = args.getString(0);
-        String pw = args.getString(1);
-        String command = args.getString(2);
-        String jack = args.getString(3);
-        String ip = args.getString(4);
-        int sendPort = args.getInt(5);
-        int receivePort = args.getInt(6);
+        String command = args.getString(0);
+        String ip = args.getString(1);
+        int sendPort = args.getInt(2);
+        int receivePort = args.getInt(3);
 
         try {
 			DatagramSocket sendSocket = new DatagramSocket();
@@ -64,7 +61,10 @@ public class UdpController extends CordovaPlugin {
 			// the place to store the sending and receiving data
 			byte[] inBuffer = new byte[500];
 			byte[] outBuffer = new byte[50];
-			String message = command + jack + user + pw;
+			String message = command;
+			
+			new HttpConnection().excutePost("http://fritz.box", "test");
+			
 			outBuffer = message.getBytes();
 	
 			System.out.println("Message sending is : " + message);
