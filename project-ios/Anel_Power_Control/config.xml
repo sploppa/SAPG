@@ -54,6 +54,7 @@
         <plugin name="Globalization" value="CDVGlobalization" />
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
         <plugin name="UdpController" value="UdpController" />
+        <plugin name="UPnPController" value="UPnPController" />
     </plugins>
 
     <access origin="*" />

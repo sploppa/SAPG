@@ -36,7 +36,7 @@
                              }, function(err) {
                              navigator.notification.alert(err);
                              }, 'UdpController', 'switchPower',
-                             [ "Sw_on1adminanel", "192.168.178.117", 75, 1027]);
+                             [ "Sw_on1adminanel", "192.168.1.8", 75, 1027]);
 			}
 			function displayDose2(){
                 Cordova.exec(
@@ -44,7 +44,7 @@
                              navigator.notification.alert(succ);
                              }, function(err) {
                              navigator.notification.alert(err);
-                             }, 'UdpController', 'activePortForwarding',
+                             }, 'UPnPController', 'addPortMapping',
                              [ "192.168.1.8", 75, 1027]);
 			}
 			function displayDose3(){
@@ -136,7 +136,7 @@
         <script type="text/javascript">
             app.initialize();
             document.addEventListener("deviceready", function(){
-		   		navigator.notification.alert("ready");
+		   	
 			}, false);
         </script>
 
