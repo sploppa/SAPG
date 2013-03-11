@@ -25,22 +25,8 @@ public class UdpController extends CordovaPlugin {
             this.switchPower(args, callbackContext);
             return true;
         }
-        if (action.equals("activatePortForwarding")){
-        	this.activatePortForwarding(args, callbackContext);
-        	return true;
-        }
         return false;
     }
-
-	private void activatePortForwarding(JSONArray args,
-			CallbackContext callbackContext) throws JSONException {
-		String forwardToIp = args.getString(0);
-		int sendPort = args.getInt(1);
-		int receivePort = args.getInt(2);
-        UPNP upnp = new UPNP(cordova.getContext());
-        String result = upnp.upnpManager(forwardToIp, sendPort, receivePort);
-		callbackContext.success(result);
-	}
 
 	private void switchPower(JSONArray args, CallbackContext callbackContext) throws JSONException {
         String command = args.getString(0);
@@ -62,8 +48,6 @@ public class UdpController extends CordovaPlugin {
 			byte[] inBuffer = new byte[500];
 			byte[] outBuffer = new byte[50];
 			String message = command;
-			
-			new HttpConnection().excutePost("http://fritz.box", "test");
 			
 			outBuffer = message.getBytes();
 	
