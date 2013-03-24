@@ -28,7 +28,7 @@ function switchSocket(){
 		+"Accept-Encoding: gzip,deflate,sdch\r\n"
 		+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
 		+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3;\r\n\r\n";
-	var result = cordovaCall("UPnPController","sendMessage",header,body,"134.3.157.228",80);	
+	var result = cordovaCall("HttpController","sendMessage",header,body,"134.3.157.228",80);	
 	navigator.notification.alert(header + "\n" + body + "\n" + result);	
 	}
 }
@@ -68,7 +68,7 @@ function addPortMapping(protocol, externalPort, internalClient, internalPort, de
 		+"Content-Length: " + body.length +"\r\n"
 		+"Content-Type: text/xml; charset='utf-8'\r\n"
 		+"\r\n";
-	var result = cordovaCall("UPnPController","sendMessage",header,body,ROUTER_IP,ROUTER_PORT);	
+	var result = cordovaCall("HttpController","sendMessage",header,body,ROUTER_IP,ROUTER_PORT);	
 	navigator.notification.alert(header + "\n" + body + "\n" + result);	
 }
 function deletePortMapping(protocol, externalPort){
@@ -96,7 +96,7 @@ function deletePortMapping(protocol, externalPort){
 		+"Content-Length: " + body.length +"\r\n"
 		+"Content-Type: text/xml; charset='utf-8'\r\n"
 		+"\r\n";
-	var result = cordovaCall("UPnPController","sendMessage",header,body,ROUTER_IP,ROUTER_PORT);	
+	var result = cordovaCall("HttpController","sendMessage",header,body,ROUTER_IP,ROUTER_PORT);	
 	navigator.notification.alert(header + "\n" + body + "\n" + result);
 }
 function getExternalIp(){
@@ -122,7 +122,7 @@ function getExternalIp(){
 		+"Content-Type: text/xml; charset='utf-8'\r\n"
 		+"\r\n";
 	
-	var result = cordovaCall("UPnPController","sendMessage",header,body,ROUTER_IP,ROUTER_PORT);	
+	var result = cordovaCall("HttpController","sendMessage",header,body,ROUTER_IP,ROUTER_PORT);	
 	navigator.notification.alert(header + "\n" + body + "\n" + result);
 }
 function getRouterInfo(){

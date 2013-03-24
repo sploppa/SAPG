@@ -24,31 +24,9 @@ public class UPnPController extends CordovaPlugin{
         }else*/ if (action.equals("getRouterInfo")){
         	this.getRouterInfo(args, callbackContext);
         	return true;
-        }else if (action.equals("sendMessage")){
-        	this.sendMessage(args, callbackContext);
-        	return true;
         }
         return false;
     }
-private void sendMessage(JSONArray args, CallbackContext callbackContext) throws JSONException {
-	String header = args.getString(0);
-	String body = args.getString(1);
-	String routerIp = args.getString(2);
-	int routerPort = args.getInt(3);
-	Tcp tcp = new Tcp();
-	String result = tcp.sendMessage(header,body,routerIp,routerPort);
-	HttpConnection h = new HttpConnection();
-	try {
-		h.excutePost("", "");
-	} catch (ClientProtocolException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	callbackContext.success(result);
-	}
 	/*	private void getExternalIp(JSONArray args, CallbackContext callbackContext) {
 		UPnPProtocol upnp = new UPnPProtocol();
 		String externalIp = upnp.getExternalIp();
