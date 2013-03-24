@@ -18,129 +18,175 @@ body {
 	font-size: 40%;
 	top: -2%;
 	left: -9px;
+	margin-bottom: 10%;
 }
 
 .socket_control{
 	position: relative;
 	width: 100%;
+	margin-top: -25px;
 }
 
-#socket_control button{
-		width: 90%; 
-		text-align: left; 
-		height: 100%;
+#socket_control a{
+	width: 90%;
+	text-align: left;
 }
 
-#socket_status_picture{
+.fancy_socket_button {
+    -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    box-shadow:inset 0px 0px 0px 0px #ffffff;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',       endColorstr='#dfdfdf');
+    background-color:#ededed;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    color:#777777;
+    font-family:arial;
+    font-size:50%;
+    font-weight:bold;
+    width: 95%;
+    margin: 2%;
+    margin-left:-5px;
+    margin-right:10px;
+    padding: 0px 0px;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #ffffff;
+}
+
+.fancy_socket_button:active {
+	position:relative;
+	top:1px;
+}
+
+.socket_status_picture{
 	display: inline;
+	height: 5%;
+	margin-top: 3px;
+	margin-left: 2px;
 }
 
-#socket_name{
-	display: inline; 
+.socket_name{
+	display: inline;
 	position:absolute;
-	margin-left: 3%; 
-	font-size:40%;
-	margin-top: 6%;
+	margin-left: 3%;
+	margin-top: 2%;
 }
 
-#socket_device_icon{
+.socket_device_icon{
+	height: 5%;
 	position: static;
-	display:inline;
-	margin-left: auto;
-	margin-right: 1em;
-	float:right;
+	display: inline;
+	float: right;
+	margin-top: 3px;
+	margin-right: 3px;
 }
+
+
 
 #menu_tabs {
-	margin: 40px 0 0 -50px;
-	min-width: 100%;
-	width: auto !important;
 	width:100%;
-	min-height: 50%;
-	height: auto !important;
-	height:50%;
-}
-
-#menu_tabs ul{
-	list-style: none;
-	margin:auto;
-	min-width: 50%;
-	width: auto !important;
-	width: 50%;
-	font-size: 90%;
-}
-
-#menu_tabs ul li{
-	display: inline;
 	float: left;
-	padding:10px 10px 10px 10px;
+	height: auto !important;
+	height:30%;
+	font-size: 45%;
+	margin: 10px 0 0 -5px;
+	padding: 0px;
+}
+
+.menu_table{
+	width: 100%;
+}
+
+.menu_table tr{
+	line-height: 10px;
+}
+
+.menu_tab{
+	display: inline-block;
+	width: 100%;
+	font-size: 150%;
+	font: bold; 
+	height:60%;
+	padding-top: 10%;
+}
+
+.menu_tab img{
+		height:70%;
+}
+
+#menu_tabs table tr td{
 	background: rgba(0,0,0,0.3);
 	-moz-border-radius-topleft: 12px; 
     -moz-border-radius-topright: 12px; 
     -webkit-border-top-left-radius:12px;
     -webkit-border-top-right-radius:12px;
+    padding: 0px ;
 }
 
-#menu_tabs ul li a{
-	position:relative;
+#menu_tabs table tr td a{
 	height: 50px;
-	position: relative;
 	text-decoration: none; 
-	font: bold; 
 	color: #111111;
 }
 
-#menu_tabs ul li.active {
+#menu_tabs table tr td.active {
 	background: rgba(255,255,255, 0.8);
 }
 
-#menu_tabs ul li.active a{
+#menu_tabs table tr td.active a{
 	color: #505050;
 	text-shadow: #FFF 2px 2px 2px;
 }
 
-#actions{
-	
+td {
+	width: 50%;
 }
 
-/*
- * CSS for devices with SMALL screen.
-*/
-@media only screen 
-and (min-device-width: 250px)
-and (max-device-width: 400px)
-{
-	.statusbar{
-		margin-bottom: 10%;
-	}
-	
-	#socket_control button{
-		height: -10px;
-	}
-	
-	.socket_control{
-		margin-top: -25px;
-	    left: -10px;
-	}
-	
-	#socket_control button{
-		margin-top: -5px;
-	}
-	
-	#menu_tabs ul li{
-		/*padding: top right bottom left*/
-		margin-top: -15%;
-		padding:5% 3% 2% 5%;
-	}
-	
-	#socket_device_icon{
-		margin-right: 0em;
-	}
-	
-	#menu_tabs {
-		font-size: 45%;
-	}
+.actions_table{
+    width:100%;
+    border-spacing:0;
 }
+#actions{
+    width:100%;
+    float:left;
+}
+
+.fancy_action_button {
+    -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    box-shadow:inset 0px 0px 0px 0px #ffffff;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',       endColorstr='#dfdfdf');
+    background-color:#ededed;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    color:#777777;
+    font-family:arial;
+    font-size:50%;
+    font-weight:bold;
+    width: 95%;
+    margin: 2%;
+    margin-left:-5px;
+    margin-right:10px;
+    padding: 1em  0px;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #ffffff;
+}
+
+.fancy_action_button:active {
+	position:relative;
+	top:1px;
+}
+
 
 /*
  * CSS for devices with BIG screen
@@ -163,8 +209,17 @@ and (min-device-width : 480px)
 		margin-bottom: 10px;
 	}
 	
+	.socket_name{
+		margin-top: 3%;
+	}
+	
 	#menu_tabs {
-		font-size: 110%;
+		font-size: 70%;
+		padding-top: -5%;
+	}
+	
+	.menu_tab img{
+		height:100%;
 	}
 	
 	#menu_tabs ul li{
@@ -172,39 +227,14 @@ and (min-device-width : 480px)
 		margin-top: -5%;
 		padding:5% 2% 2% 2%;
 	}
+	#menu_tabs table tr td{
+		padding:10px 10px 10px 10px;
+	}
+	.fancy_action_button {
+		padding: 1em 0px;
+	}
 }
 
-/*
- * CSS for iPhone
-*/
-@media only screen 
-and (min-device-width : 630px)
-{
-	.statusbar{
-		margin-bottom: 5%;
-	}
-	
-	.socket_control{
-		margin-top: -20px;
-	    left: -10px;
-	}
-	
-	#socket_control button{
-		margin-bottom: 10px;
-	}
-	
-	#socket_name{
-		display: inline; 
-		position:absolute;
-		margin-left: 3%; 
-		font-size:50px;
-		margin-top: 6%;
-	}
-	
-	#menu_tabs {
-		font-size: 105%;
-	}
-}
 
 
 .event.listening {

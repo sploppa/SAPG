@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.nio.channels.DatagramChannel;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
@@ -35,18 +37,22 @@ public class UdpController extends CordovaPlugin {
         int receivePort = args.getInt(3);
 
         try {
+
 			DatagramSocket sendSocket = new DatagramSocket();
-			DatagramSocket receiveSocket = new DatagramSocket(receivePort);
+			
 			
 			InetAddress theServer = InetAddress.getByName(ip);
+			DatagramSocket receiveSocket = new DatagramSocket(8080);
 			sendSocket.connect(theServer,sendPort);
-			
 			DatagramPacket sendPacket;
 			InetAddress sendServerAddress;
+			
+			HttpConnection c = new HttpConnection();
+			c.excutePost("", "");
 	
 			// the place to store the sending and receiving data
-			byte[] inBuffer = new byte[500];
-			byte[] outBuffer = new byte[50];
+			byte[] inBuffer = new byte[250];
+			byte[] outBuffer = new byte[250];
 			String message = command;
 			
 			outBuffer = message.getBytes();
@@ -63,7 +69,7 @@ public class UdpController extends CordovaPlugin {
 			// send the data
 			sendSocket.send(sendPacket);
 			      
-			receiveSocket.setSoTimeout(1000);
+			receiveSocket.setSoTimeout(10000);
 			
             try {
             	receiveSocket.receive(receivePacket);
