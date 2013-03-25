@@ -35,22 +35,16 @@
 				getRouterInfo();
 			}
 			function displayDose2(){
-				PhoneGap.exec(
-				   function(succ) {
-         			navigator.notification.alert(succ);
-    			}, function(err) {
-         			navigator.notification.alert(err);
-    			}, 'Echo', 'echo',
-				[ "Dose 2 aktiv" ]);
+                navigator.notification.alert(cordovaCall('UPnPController','getRouterInfo','Test 5'));
 			}
 			function displayDose3(){
-				PhoneGap.exec(
+				cordova.exec(
 				   function(succ) {
          			navigator.notification.alert(succ);
     			}, function(err) {
          			navigator.notification.alert(err);
-    			}, 'Echo', 'echo',
-				[ "Dose 3 aktiv" ]);
+    			}, 'HttpController', 'sendMessage',
+				[]);
 			}
 			function displayDose4(){
 				PhoneGap.exec(
@@ -72,22 +66,22 @@
     </div>
 
 	<div id="socket_control" class="socket_control">
-		<a href="javascript:switchSocket('1');" class="fancy_socket_button" > 
+		<a href="javascript:displayDose1();" class="fancy_socket_button" > 
 				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
 	    		<b class="socket_name">Socket 1 </b>
 	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
 		</a>
-		<a href="javascript:switchSocket('2');" class="fancy_socket_button" > 
+		<a href="javascript:displayDose2();" class="fancy_socket_button" > 
 				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
 	    		<b class="socket_name">Socket 2 </b>
 	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
 		</a>
-		<a href="javascript:switchSocket('3');" class="fancy_socket_button" > 
+		<a href="javascript:displayDose3();" class="fancy_socket_button" > 
 				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
 	    		<b class="socket_name">Socket 3 </b>
 	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
 		</a>
-		<a href="javascript:switchSocket('4');" class="fancy_socket_button" > 
+		<a href="javascript:switchSocket('1');" class="fancy_socket_button" > 
 				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
 	    		<b class="socket_name">Socket 4 </b>
 	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
@@ -156,8 +150,19 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
-            document.addEventListener("deviceready", function(){
+                document.addEventListener("deviceready", function(){
 			}, false);
+            function onDeviceReady() {
+                document.addEventListener("resume", onResume, false);
+                document.addEventListener("pause", onPause, false);
+
+            }
+            function onResume() {
+                backendCall = false;
+            }
+            function onPause() {
+                backendCall = true;
+            }
         </script>
 
         

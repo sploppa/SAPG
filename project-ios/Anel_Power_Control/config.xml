@@ -55,6 +55,7 @@
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
         <plugin name="UdpController" value="UdpController" />
         <plugin name="UPnPController" value="UPnPController" />
+        <plugin name="HttpController" value="HttpController" />
     </plugins>
 
     <access origin="*" />

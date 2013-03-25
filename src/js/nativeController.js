@@ -127,8 +127,6 @@ function getExternalIp(){
 }
 function getRouterInfo(){
 	var args = cordovaCall("UPnPController","getRouterInfo",DISCOVER_MESSAGE_ROOTDEVICE,"239.255.255.250",1900);
-	DELIVERY_PATH = args[0];
-	ROUTER_IP = args[1];
-	ROUTER_PORT = args[2];
+    navigator.notification.alert(args);
 }
 
