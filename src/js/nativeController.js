@@ -28,8 +28,14 @@ function switchSocket(){
 		+"Accept-Encoding: gzip,deflate,sdch\r\n"
 		+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
 		+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3;\r\n\r\n";
-	var result = cordovaCall("HttpController","sendMessage",header,body,"134.3.157.228",80);	
-	navigator.notification.alert(header + "\n" + body + "\n" + result);	
+
+        cordova.exec(function(succ){
+                        navigator.notification.alert(header + "\n" + body + "\n" + succ);
+                     },
+                     function(err){
+                     navigator.notification.alert(err);
+                     }, "HttpController", "sendMessage",
+                     [header,body,"134.3.157.228",80]);
 	}
 }
 function setTimer(){

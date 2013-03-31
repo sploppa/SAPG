@@ -17,7 +17,7 @@
 
 CDVPluginResult* pluginResult_HTTP = nil;
 GCDAsyncSocket* tcpSocket_Http;
-NSString* respond_http;
+NSString* respond_http =@"nil";
 
 - (void)sendMessage:(CDVInvokedUrlCommand *)command
 {
@@ -40,13 +40,18 @@ NSString* respond_http;
     NSData* bodyD = [body dataUsingEncoding:NSUTF8StringEncoding];
     [tcpSocket_Http writeData:bodyD withTimeout:-1 tag:0];
 
-    [tcpSocket_Http readDataWithTimeout:3 tag:0];
-    [self waitForConditionWithTimeout:3];
-    pluginResult_HTTP = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:respond_http];
+    
+    [tcpSocket_Http readDataWithTimeout:-1 tag:0];
+    [self waitForConditionWithTimeout:1];
+    if (respond_http != nil && [respond_http length] > 0) {
+        pluginResult_HTTP = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:respond_http];
+    } else {
+        pluginResult_HTTP = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    }
     
     [self.commandDelegate sendPluginResult:pluginResult_HTTP callbackId:command.callbackId];
-    
     [tcpSocket_Http disconnectAfterReading];
+    
 }
 - (BOOL)waitForConditionWithTimeout:(NSTimeInterval)aTimeout
 {
@@ -82,10 +87,12 @@ NSString* respond_http;
     self.com_private_condition = YES;
 }
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
-    
-       respond_http = [NSString stringWithUTF8String:[data bytes]];
-        NSLog(@"MESSAGE: %@", respond_http);
+    [tcpSocket_Http readDataWithTimeout:-1 tag:0];
+    NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
-    
+    NSString* tmp = [[NSString alloc] initWithFormat:@"%@", msg];
+    respond_http = [[NSString alloc] initWithFormat:@"%@%@", respond_http, tmp];
+
+    NSLog(respond_http);
 }
 @end

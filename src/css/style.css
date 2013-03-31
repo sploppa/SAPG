@@ -100,6 +100,7 @@ body {
 
 .menu_table{
 	width: 100%;
+	border: 0;
 }
 
 .menu_table tr{
@@ -203,14 +204,22 @@ and (min-device-width : 480px)
 	.socket_control{
 		margin-top: -20px;
 	    left: -10px;
+	    font-size: 150%;
 	}
 	
-	#socket_control button{
-		margin-bottom: 10px;
+	.socket_control a{
+		margin-left: 3px;
 	}
-	
+	.socket_status_picture{
+		height: 8%;
+	}
+		
 	.socket_name{
-		margin-top: 3%;
+		margin-top: 4%;
+	}
+	
+	.socket_device_icon{
+		height: 8%;
 	}
 	
 	#menu_tabs {
@@ -232,6 +241,8 @@ and (min-device-width : 480px)
 	}
 	.fancy_action_button {
 		padding: 1em 0px;
+		font-size: 70%;
+		margin-top: 10%;
 	}
 }
 

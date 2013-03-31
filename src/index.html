@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
-    Test 5
--->
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ Test 5
+ -->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -30,141 +30,154 @@
         <script type="text/javascript" src="js/nativeController.js"></script>
         <script type="text/javascript" src="js/cordovaInterface.js"></script>
         
-        <script type="text/javascript"> 			
+        <script type="text/javascript">
 			function displayDose1(){
-				getRouterInfo();
+                
+                        switchSocket('1');
 			}
 			function displayDose2(){
-                navigator.notification.alert(cordovaCall('UPnPController','getRouterInfo','Test 5'));
+				PhoneGap.exec(
+                              function(succ) {
+                              navigator.notification.alert(succ);
+                              }, function(err) {
+                              navigator.notification.alert(err);
+                              }, 'Echo', 'echo',
+                              [ "Dose 2 aktiv" ]);
 			}
 			function displayDose3(){
-				cordova.exec(
-				   function(succ) {
-         			navigator.notification.alert(succ);
-    			}, function(err) {
-         			navigator.notification.alert(err);
-    			}, 'HttpController', 'sendMessage',
-				[]);
+				PhoneGap.exec(
+                              function(succ) {
+                              navigator.notification.alert(succ);
+                              }, function(err) {
+                              navigator.notification.alert(err);
+                              }, 'Echo', 'echo',
+                              [ "Dose 3 aktiv" ]);
 			}
 			function displayDose4(){
 				PhoneGap.exec(
-				   function(succ) {
-         			navigator.notification.alert(succ);
-    			}, function(err) {
-         			navigator.notification.alert(err);
-    			}, 'Echo', 'echo',
-				[ "Dose 4 aktiv" ]);
+                              function(succ) {
+                              navigator.notification.alert(succ);
+                              }, function(err) {
+                              navigator.notification.alert(err);
+                              }, 'Echo', 'echo',
+                              [ "Dose 4 aktiv" ]);
 			}
-		</script>
+			
+			var c = new Array(0,0,0,0);
+			function changeImage(SocketNumber){
+				var powerId = 'power_status_';
+				var socketId = 'socket_status_';
+				if (c[SocketNumber-1]==0){
+					c[SocketNumber-1]=1;
+					document.getElementById(powerId.concat(SocketNumber)).src="img/power_on.png";
+					document.getElementById(socketId.concat(SocketNumber)).style.opacity="1";
+				}
+				else{
+					c[SocketNumber-1]=0;
+					document.getElementById(powerId.concat(SocketNumber)).src="img/power_off.png";
+					document.getElementById(socketId.concat(SocketNumber)).style.opacity="0.3";
+				}
+			}
+            </script>
         
     </head>
     <body>
-    
-    <div id="deviceready" class="statusbar">
-        <p class="event listening">Connecting to Device...</p>
-        <p class="event received">Device is Ready!</p>
-    </div>
-
-	<div id="socket_control" class="socket_control">
-		<a href="javascript:displayDose1();" class="fancy_socket_button" > 
-				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
-	    		<b class="socket_name">Socket 1 </b>
-	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
-		</a>
-		<a href="javascript:displayDose2();" class="fancy_socket_button" > 
-				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
-	    		<b class="socket_name">Socket 2 </b>
-	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
-		</a>
-		<a href="javascript:displayDose3();" class="fancy_socket_button" > 
-				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
-	    		<b class="socket_name">Socket 3 </b>
-	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
-		</a>
-		<a href="javascript:switchSocket('1');" class="fancy_socket_button" > 
-				<img src="img/power_off.png" class="socket_status_picture"  alt="Power off">
-	    		<b class="socket_name">Socket 4 </b>
-	    		<img src="img/lamp_icon.png" class="socket_device_icon" alt="Lamp icon">
-		</a>
-	    		
-	</div>
-	
-	
-	
-	<div id="menu_tabs" class="menu_tabs">
-		<table class="menu_table" border ="0">
-			<tr >
-				<td class ="tabs active">
-					<a href="#steuerung" class="menu_tab" title="Steuerung"><img src="img/control.png"  alt="Control" > Control</a>
-				</td>
-				<td class="tabs">
-					<a href="#administration" class="menu_tab" title="Administration"><img src="img/settings.png"  alt="Settings">Settings</a>
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<div class="actions" id="actions">
-		<div id="steuerung">
-			<table class="actions_table" border="0" >
-				<tr >
-					<td >
-						<a href="javascript:switchSocket('1','2','4');" class="fancy_action_button" >Switch on/off</a>
-		    		</td>
-		    		<td >
-		    			<a href="javascript:setTimer();" class="fancy_action_button" >Set time</a>
-		    		</td>
-	    		</tr>
-	    		<tr >
-					<td >
-						<a href="javascript:switchSocket('1','2','3');" class="fancy_action_button"  >Switch all on/off</a>
-		    		</td>
-		    		<td >
-		    			<a href="javascript:setCountdown();" class="fancy_action_button" >Set countdown</a>
-		    		</td>
-	    		</tr>
-	    	</table>
-   		</div>
-   		<div id="administration">
-   			<table class="actions_table" border="0" >
-				<tr >
-					<td >
-						<a href="javascript:getExternalIp();" class="fancy_action_button" >Configure socket</a>
-		    		</td>
-		    		<td >
-		    			<a href="javascript:addPortMapping('TCP', 1028, '192.168.1.9', 1028, 'bbla');" class="fancy_action_button" >Rename Socket</a>
-		    		</td>
-	    		</tr>
-	    		<tr >
-					<td >
-						<a href="javascript:deletePortMapping('TCP', 1028);" class="fancy_action_button"  >Set user data</a>
-		    		</td>
-	    		</tr>
-	    	</table>
-   		</div>
-	</div>
+        
+        <div id="deviceready" class="statusbar">
+            <p class="event listening">Connecting to Device...</p>
+            <p class="event received">Device is Ready!</p>
+        </div>
+        
+        <div id="socket_control" class="socket_control">
+            <a href="javascript:displayDose1();" class="fancy_socket_button" onclick="changeImage(1)">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_1" alt="Power off">
+                    <b class="socket_name">Fernseher</b>
+                    <img src="img/tv_icon.png" class="socket_device_icon" id="socket_status_1" style="opacity:0.3" alt="Lamp icon">
+                        </a>
+            <a href="javascript:displayDose2();" class="fancy_socket_button" onclick="changeImage(2)">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_2"  alt="Power off">
+                    <b class="socket_name">Radio</b>
+                    <img src="img/music_icon.png" class="socket_device_icon" id="socket_status_2" style="opacity:0.3" alt="Lamp icon">
+                        </a>
+            <a href="javascript:displayDose3();" class="fancy_socket_button" onclick="changeImage(3)">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_3"  alt="Power off">
+                    <b class="socket_name">Computer</b>
+                    <img src="img/pc_icon.png" class="socket_device_icon" id="socket_status_3" style="opacity:0.3" alt="Lamp icon">
+                        </a>
+            <a href="javascript:displayDose4();" class="fancy_socket_button" onclick="changeImage(4)">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_4"  alt="Power off">
+                    <b class="socket_name">Laden</b>
+                    <img src="img/power_icon.png" class="socket_device_icon" id="socket_status_4" style="opacity:0.3" alt="Lamp icon">
+                        </a>
+            
+        </div>
+        
+        
+        
+        <div id="menu_tabs" class="menu_tabs">
+            <table class="menu_table" >
+                <tr >
+                    <td class ="tabs active">
+                        <a href="#steuerung" class="menu_tab" title="Steuerung"><img src="img/control.png"  alt="Control" > Control</a>
+                    </td>
+                    <td class="tabs">
+                        <a href="#administration" class="menu_tab" title="Administration"><img src="img/settings.png"  alt="Settings">Settings</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="actions" id="actions">
+            <div id="steuerung">
+                <table class="actions_table" border="0" >
+                    <tr >
+                        <td >
+                            <a href="javascript:displayDose1();" class="fancy_action_button" >Switch on/off</a>
+                        </td>
+                        <td >
+                            <a href="javascript:displayDose2();" class="fancy_action_button" >Set time</a>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td >
+                            <a href="javascript:displayDose1();" class="fancy_action_button"  >Switch all on/off</a>
+                        </td>
+                        <td >
+                            <a href="javascript:displayDose2();" class="fancy_action_button" >Set countdown</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="administration">
+                <table class="actions_table" border="0" >
+                    <tr >
+                        <td >
+                            <a href="javascript:displayDose1();" class="fancy_action_button" >Configure socket</a>
+                        </td>
+                        <td >
+                            <a href="javascript:displayDose2();" class="fancy_action_button" >Rename Socket</a>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td >
+                            <a href="javascript:displayDose1();" class="fancy_action_button"  >Set user data</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 		
-
-    
+        
+        
         <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
-                document.addEventListener("deviceready", function(){
-			}, false);
-            function onDeviceReady() {
-                document.addEventListener("resume", onResume, false);
-                document.addEventListener("pause", onPause, false);
-
-            }
-            function onResume() {
-                backendCall = false;
-            }
-            function onPause() {
-                backendCall = true;
-            }
-        </script>
-
+            document.addEventListener("deviceready", function(){
+                                    
+                                      }, false);
+            </script>
+        
         
     </body>
 </html>
