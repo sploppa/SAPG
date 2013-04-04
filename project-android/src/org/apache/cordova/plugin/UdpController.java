@@ -47,8 +47,6 @@ public class UdpController extends CordovaPlugin {
 			DatagramPacket sendPacket;
 			InetAddress sendServerAddress;
 			
-			HttpConnection c = new HttpConnection();
-			c.excutePost("", "");
 	
 			// the place to store the sending and receiving data
 			byte[] inBuffer = new byte[250];

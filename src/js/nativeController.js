@@ -10,9 +10,8 @@ var ROUTER_PORT;
 
 function switchSocket(){
 	for (var i = 0; i < switchSocket.arguments.length; i++){
-    	navigator.notification.alert("switchSocket " + switchSocket.arguments[i]);
-    	
-    var body = "F" + switchSocket.arguments[i] + "=?";
+    var socket = switchSocket.arguments[i]-1;	
+    var body = "F" + socket + "=?";
 	var header = 
 		 "POST /ctrl.htm HTTP/1.1\r\n"
 		+"Host: 134.3.157.228\r\n"
@@ -30,10 +29,24 @@ function switchSocket(){
 		+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3;\r\n\r\n";
 
         cordova.exec(function(succ){
-                        navigator.notification.alert(header + "\n" + body + "\n" + succ);
+  						 var e = succ.match(/<input [^>]*>/gi);
+  						 
+  						 for(var j=0;j<e.length;++j){
+  						 	var cSocket = e[j].match(/name=F\d/);
+  						 	var cValue = e[j].match(/value=./);
+  						 	if(cSocket && cValue){
+	  						 	cSocket = cSocket[0].replace(/name=F/,'');
+	  						 	cVlaue = cValue[0].replace(/value=/,'');
+	  						 	if( cVlaue.match(/I/i)){
+	  						 		changeImage(parseInt(cSocket)+1,1);
+	  						 	}else if(cVlaue.match(/O/i)){
+	  						 		changeImage(parseInt(cSocket)+1,0);
+	  						 	}	
+  						 	}
+  						 }
                      },
                      function(err){
-                     navigator.notification.alert(err);
+                     	navigator.notification.alert(err);
                      }, "HttpController", "sendMessage",
                      [header,body,"134.3.157.228",80]);
 	}
@@ -134,5 +147,33 @@ function getExternalIp(){
 function getRouterInfo(){
 	var args = cordovaCall("UPnPController","getRouterInfo",DISCOVER_MESSAGE_ROOTDEVICE,"239.255.255.250",1900);
     navigator.notification.alert(args);
+}
+
+function checkStatus(){
+	var header = 
+		 "GET /daten.cfg HTTP/1.1\r\n"
+		+"Host: 134.3.157.228\r\n"
+		+"Proxy-Connection: keep-alive\r\n"
+		+"Authorization: Basic YWRtaW46YW5lbA==\r\n"
+		+"Accept: */*"
+		+"User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22\r\n"
+		+"Referer: http://134.3.157.228/ctrl.htm\r\n"
+		+"Accept-Encoding: gzip,deflate,sdch\r\n"
+		+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
+		+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3;\r\n\r\n";
+
+        cordova.exec(function(succ){
+        			 	var e = succ.split(";");
+        			 	var cSocket = 1;
+        			 	for(var i=5;i<8;i++){
+        			 		var j = parseInt(e[i]);
+        			 		changeImage(cSocket,j);
+        			 		cSocket++;
+        			 	}
+        			 },
+                     function(err){
+                     	navigator.notification.alert(err);
+                     }, "HttpController", "sendMessage",
+                     [header,"","134.3.157.228",80]);
 }
 

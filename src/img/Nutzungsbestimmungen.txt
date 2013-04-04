@@ -1,0 +1,20 @@
+control_icon: Allowed (Backlink to http://www.doublejdesign.co.uk required)
+heater_icon: Allowed (Backlink to http://www.iconka.com required)
+lamp_icon: in contact with skype deleket http://www.iconarchive.com/show/sleek-xp-basic-icons-by-deleket/Lamp-icon.html
+music_icon: in contact with skype deleket http://www.iconarchive.com/show/rounded-square-icons-by-deleket/Audio-icon.html
+music_icon alternative: http://www.iconarchive.com/show/ravenna-3d-icons-by-double-j-design/Sound-icon.html
+pc_icon: allowed
+power_icon: allowed
+power_off: allowed
+settings: allowed
+tv_icon: allowed
+socket_icon: allowed
+beamer_icon: allowed
+bolt_icon: allowed
+laptop_icon: allowed
+coffee_icon: allowed ( Allowed (Backlink to http://www.visualpharm.com required))
+christmas_tree_icon: allowed (Backlink to http://instatuts.com required)
+harddisk_icon: allowed (Backlink to http://www.doublejdesign.co.uk required)
+storage_icon: allowed
+dvd_icon: allowed
+launcher_icon: question pending... http://remitrom73.deviantart.com/

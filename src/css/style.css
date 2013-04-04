@@ -2,12 +2,12 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
     background-color:#404040;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:200%;
-    height:100%;
-    width:100%;
     text-align:center;
+    margin:0px;
 }
 
 .statusbar{
@@ -16,20 +16,41 @@ body {
 	width:100%;
 	background-color: #333333;
 	font-size: 40%;
-	top: -2%;
-	left: -9px;
-	margin-bottom: 10%;
+}
+
+tbody{
+	vertical-align: middle;
+}
+
+p{
+	margin:0px;
 }
 
 .socket_control{
 	position: relative;
 	width: 100%;
-	margin-top: -25px;
+	margin-top: 1%;
 }
 
 #socket_control a{
-	width: 90%;
+	width: 70%;
 	text-align: left;
+}
+
+.fancy_socket_setting{
+    -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    box-shadow:inset 0px 0px 0px 0px #ffffff;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',       endColorstr='#dfdfdf');
+    background-color:#ededed;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    color:#777777;
+    font-weight:bold;
+    height:8%;
+    display:inline;
 }
 
 .fancy_socket_button {
@@ -43,17 +64,13 @@ body {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    border:1px solid #dcdcdc;
     display:inline-block;
     color:#777777;
     font-family:arial;
     font-size:50%;
     font-weight:bold;
-    width: 95%;
     margin: 2%;
-    margin-left:-5px;
-    margin-right:10px;
-    padding: 0px 0px;
+    padding: 0px 0px 0px 0px;
     text-decoration:none;
     text-shadow:1px 1px 0px #ffffff;
 }
@@ -94,8 +111,6 @@ body {
 	height: auto !important;
 	height:30%;
 	font-size: 45%;
-	margin: 10px 0 0 -5px;
-	padding: 0px;
 }
 
 .menu_table{
@@ -112,8 +127,6 @@ body {
 	width: 100%;
 	font-size: 150%;
 	font: bold; 
-	height:60%;
-	padding-top: 10%;
 }
 
 .menu_tab img{
@@ -126,7 +139,6 @@ body {
     -moz-border-radius-topright: 12px; 
     -webkit-border-top-left-radius:12px;
     -webkit-border-top-right-radius:12px;
-    padding: 0px ;
 }
 
 #menu_tabs table tr td a{
@@ -168,7 +180,6 @@ td {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    border:1px solid #dcdcdc;
     display:inline-block;
     color:#777777;
     font-family:arial;
@@ -198,18 +209,12 @@ and (min-device-width : 480px)
 	.statusbar{
 		margin-bottom: 5%;
 		font-size: 50%;
-		top: -2%;
 	}
 	
 	.socket_control{
-		margin-top: -20px;
-	    left: -10px;
 	    font-size: 150%;
 	}
 	
-	.socket_control a{
-		margin-left: 3px;
-	}
 	.socket_status_picture{
 		height: 8%;
 	}

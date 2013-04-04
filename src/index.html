@@ -31,49 +31,27 @@
         <script type="text/javascript" src="js/cordovaInterface.js"></script>
         
         <script type="text/javascript">
+			function displayDoseOn(){
+                navigator.notification.alert('Diese Dose ist immer an!');
+			}
 			function displayDose1(){
-                
-                        switchSocket('1');
+				switchSocket('1');
 			}
 			function displayDose2(){
-				PhoneGap.exec(
-                              function(succ) {
-                              navigator.notification.alert(succ);
-                              }, function(err) {
-                              navigator.notification.alert(err);
-                              }, 'Echo', 'echo',
-                              [ "Dose 2 aktiv" ]);
+				switchSocket('2');
 			}
 			function displayDose3(){
-				PhoneGap.exec(
-                              function(succ) {
-                              navigator.notification.alert(succ);
-                              }, function(err) {
-                              navigator.notification.alert(err);
-                              }, 'Echo', 'echo',
-                              [ "Dose 3 aktiv" ]);
-			}
-			function displayDose4(){
-				PhoneGap.exec(
-                              function(succ) {
-                              navigator.notification.alert(succ);
-                              }, function(err) {
-                              navigator.notification.alert(err);
-                              }, 'Echo', 'echo',
-                              [ "Dose 4 aktiv" ]);
+				switchSocket('3');
 			}
 			
-			var c = new Array(0,0,0,0);
-			function changeImage(SocketNumber){
+			function changeImage(SocketNumber, state){
 				var powerId = 'power_status_';
 				var socketId = 'socket_status_';
-				if (c[SocketNumber-1]==0){
-					c[SocketNumber-1]=1;
+				if (state>0){
 					document.getElementById(powerId.concat(SocketNumber)).src="img/power_on.png";
 					document.getElementById(socketId.concat(SocketNumber)).style.opacity="1";
 				}
 				else{
-					c[SocketNumber-1]=0;
 					document.getElementById(powerId.concat(SocketNumber)).src="img/power_off.png";
 					document.getElementById(socketId.concat(SocketNumber)).style.opacity="0.3";
 				}
@@ -89,26 +67,35 @@
         </div>
         
         <div id="socket_control" class="socket_control">
-            <a href="javascript:displayDose1();" class="fancy_socket_button" onclick="changeImage(1)">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_1" alt="Power off">
+            <a href="javascript:displayDoseOn()" class="fancy_socket_button">
+				<img src="img/power_on.png" class="socket_status_picture" id="power_status_On" alt="Power on">
                     <b class="socket_name">Fernseher</b>
-                    <img src="img/tv_icon.png" class="socket_device_icon" id="socket_status_1" style="opacity:0.3" alt="Lamp icon">
+                    <img src="img/tv_icon.png" class="socket_device_icon" id="socket_status_On" style="opacity:1" alt="Lamp icon">
                         </a>
-            <a href="javascript:displayDose2();" class="fancy_socket_button" onclick="changeImage(2)">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_2"  alt="Power off">
+            <a href="javascript:displayDose1();" class="fancy_socket_button">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_1"  alt="Power off">
                     <b class="socket_name">Radio</b>
-                    <img src="img/music_icon.png" class="socket_device_icon" id="socket_status_2" style="opacity:0.3" alt="Lamp icon">
+                    <img src="img/music_icon.png" class="socket_device_icon" id="socket_status_1" style="opacity:0.3" alt="Lamp icon">
                         </a>
-            <a href="javascript:displayDose3();" class="fancy_socket_button" onclick="changeImage(3)">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_3"  alt="Power off">
+            <a href="settingsOneSocket.html" class="fancy_socket_setting">
+             	<img src="img/gear-icon.png" class="socket_setting" id="socket_setting" style="opacity:1" alt="Lamp icon">
+            </a>
+            <a href="javascript:displayDose2();" class="fancy_socket_button">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_2"  alt="Power off">
                     <b class="socket_name">Computer</b>
-                    <img src="img/pc_icon.png" class="socket_device_icon" id="socket_status_3" style="opacity:0.3" alt="Lamp icon">
+                    <img src="img/pc_icon.png" class="socket_device_icon" id="socket_status_2" style="opacity:0.3" alt="Lamp icon">
                         </a>
-            <a href="javascript:displayDose4();" class="fancy_socket_button" onclick="changeImage(4)">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_4"  alt="Power off">
+            <a href="settingsOneSocket.html" class="fancy_socket_setting">
+             	<img src="img/gear-icon.png" class="socket_setting" id="socket_setting" style="opacity:1" alt="Lamp icon">
+            </a>
+            <a href="javascript:displayDose3();" class="fancy_socket_button">
+				<img src="img/power_off.png" class="socket_status_picture" id="power_status_3"  alt="Power off">
                     <b class="socket_name">Laden</b>
-                    <img src="img/power_icon.png" class="socket_device_icon" id="socket_status_4" style="opacity:0.3" alt="Lamp icon">
+                    <img src="img/power_icon.png" class="socket_device_icon" id="socket_status_3" style="opacity:0.3" alt="Lamp icon">
                         </a>
+            <a href="settingsOneSocket.html" class="fancy_socket_setting">
+             	<img src="img/gear-icon.png" class="socket_setting" id="socket_setting" style="opacity:1" alt="Lamp icon">
+            </a>
             
         </div>
         
@@ -140,10 +127,10 @@
                     </tr>
                     <tr >
                         <td >
-                            <a href="javascript:displayDose1();" class="fancy_action_button"  >Switch all on/off</a>
+                            <a href="javascript:switchSocket('1','2','3');" class="fancy_action_button"  >Switch all on/off</a>
                         </td>
                         <td >
-                            <a href="javascript:displayDose2();" class="fancy_action_button" >Set countdown</a>
+                            <a href="javascript:switchSocket('1','2','3');" class="fancy_action_button" >Set countdown</a>
                         </td>
                     </tr>
                 </table>
@@ -152,15 +139,15 @@
                 <table class="actions_table" border="0" >
                     <tr >
                         <td >
-                            <a href="javascript:displayDose1();" class="fancy_action_button" >Configure socket</a>
+                            <a href="settingsSockets.html" class="fancy_action_button" >Configure socket</a>
                         </td>
                         <td >
-                            <a href="javascript:displayDose2();" class="fancy_action_button" >Rename Socket</a>
+                            <a href="settingsSockets.html" class="fancy_action_button" >Rename Socket</a>
                         </td>
                     </tr>
                     <tr >
                         <td >
-                            <a href="javascript:displayDose1();" class="fancy_action_button"  >Set user data</a>
+                            <a href="settingsSockets.html" class="fancy_action_button"  >Set user data</a>
                         </td>
                     </tr>
                 </table>
@@ -174,7 +161,7 @@
         <script type="text/javascript">
             app.initialize();
             document.addEventListener("deviceready", function(){
-                                    
+						    setTimeout("checkStatus()",10);
                                       }, false);
             </script>
         
