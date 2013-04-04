@@ -37,22 +37,6 @@ p{
 	text-align: left;
 }
 
-.fancy_socket_setting{
-    -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
-    -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
-    box-shadow:inset 0px 0px 0px 0px #ffffff;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
-    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',       endColorstr='#dfdfdf');
-    background-color:#ededed;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    color:#777777;
-    font-weight:bold;
-    height:8%;
-    display:inline;
-}
-
 .fancy_socket_button {
     -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
     -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
@@ -72,6 +56,7 @@ p{
     margin: 2%;
     padding: 0px 0px 0px 0px;
     text-decoration:none;
+    height:100%;
     text-shadow:1px 1px 0px #ffffff;
 }
 
@@ -102,8 +87,6 @@ p{
 	margin-top: 3px;
 	margin-right: 3px;
 }
-
-
 
 #menu_tabs {
 	width:100%;
@@ -250,8 +233,6 @@ and (min-device-width : 480px)
 		margin-top: 10%;
 	}
 }
-
-
 
 .event.listening {
     background-color:#333333;
