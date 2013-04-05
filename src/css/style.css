@@ -139,17 +139,43 @@ p{
 	text-shadow: #FFF 2px 2px 2px;
 }
 
-td {
-	width: 50%;
+.menu_dosen_table{
+	width:90%;
+	margin-left:5%;
+	margin-right:5%;
 }
 
-.actions_table{
-    width:100%;
-    border-spacing:0;
+.menu_dosen_tab{
+	font-size: 100%;
+	font: bold; 
 }
-#actions{
-    width:100%;
-    float:left;
+
+.menu_dosen_table tr td.active {
+	background: rgba(255,255,255, 0.8);
+}
+
+.menu_dosen_table table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+.menu_dosen_table tr td a{
+	height: 50px;
+	text-decoration: none; 
+	color: #111111;
+}
+
+.menu_dosen_table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+.menu_dosen_table tr td{
+	background: rgba(0,0,0,0.3);
+	-moz-border-radius-bottomleft: 15px; 
+    -moz-border-radius-bottomright: 15px; 
+    -webkit-border-bottom-left-radius:15px;
+    -webkit-border-bottom-right-radius:15px;
 }
 
 .fancy_action_button {
@@ -182,10 +208,18 @@ td {
 	top:1px;
 }
 
+p.bottomContent{
+	margin-left:8%;
+	margin-right:8%;
+	margin-top:1%;
+	text-align:left;
+}
+
 
 /*
  * CSS for devices with BIG screen
 */
+/*
 @media only screen 
 and (min-device-width : 480px)
 {
@@ -220,7 +254,6 @@ and (min-device-width : 480px)
 	}
 	
 	#menu_tabs ul li{
-		/*padding: top right bottom left*/
 		margin-top: -5%;
 		padding:5% 2% 2% 2%;
 	}
@@ -233,7 +266,7 @@ and (min-device-width : 480px)
 		margin-top: 10%;
 	}
 }
-
+*/
 .event.listening {
     background-color:#333333;
     display:block;

@@ -95,10 +95,10 @@
         <div id="menu_tabs" class="menu_tabs">
             <table class="menu_table" >
                 <tr >
-                    <td class ="tabs active">
+                    <td class ="tabs active" id="ctrl">
                         <a href="#steuerung" class="menu_tab" title="Steuerung"><img src="img/control.png"  alt="Control" > Control</a>
                     </td>
-                    <td class="tabs">
+                    <td class="tabs" id="admin">
                         <a href="#administration" class="menu_tab" title="Administration"><img src="img/settings.png"  alt="Settings">Settings</a>
                     </td>
                 </tr>
@@ -107,42 +107,47 @@
         
         <div class="actions" id="actions">
             <div id="steuerung">
-                <table class="actions_table" border="0" >
-                    <tr >
-                        <td >
-                            <a href="javascript:displayDose1();" class="fancy_action_button" >Switch on/off</a>
-                        </td>
-                        <td >
-                            <a href="javascript:displayDose2();" class="fancy_action_button" >Set time</a>
-                        </td>
-                    </tr>
-                    <tr >
-                        <td >
-                            <a href="javascript:switchSocket('1','2','3');" class="fancy_action_button"  >Switch all on/off</a>
-                        </td>
-                        <td >
-                            <a href="javascript:switchSocket('1','2','3');" class="fancy_action_button" >Set countdown</a>
-                        </td>
-                    </tr>
-                </table>
+	            	<table class="menu_dosen_table" >
+		                <tr >
+		                    <td class ="tabs active">
+		                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose1">Dose1</a>
+		                    </td>
+		                    <td class="tabs">
+								<a href="#doseSetting" class="menu_dosen_tab" title="Dose2">Dose2</a>
+		                    </td>
+		                    <td class="tabs">
+		                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose3">Dose3</a>
+		                    </td>
+		                </tr>
+	            	</table>
+	            	<div id="doseSetting" value="dose8">
+	            		<p class="bottomContent">
+	            				Name: <input maxlength="16" size="16" name="TN" value="Nr. 1"></br>
+								Timer 1 <input type="checkbox" name="T00"> aktiv</br>
+								<input size="7" name="T10" value="1234567">
+								<input size="4" name="T20" value="00:00"> -
+								<input size="4" name="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+								</br></br>
+								<input type="radio" name="TF" value="e">einschalten</br>
+								<input type="radio" name="TF" value="w">Zustand wiederherstellen</br>
+								<input type="radio" name="TF" value="a">ausschalten</br>
+								</br></br>
+								<input type="checkbox" name="TH"> Steuerung sperren</br>
+								<input type="button" value="Speichern" onClick="alert('hello')">
+						</p>
+	            	</div>
             </div>
             <div id="administration">
-                <table class="actions_table" border="0" >
-                    <tr >
-                        <td >
-                            <a href="settingsSockets.html" class="fancy_action_button" >Configure socket</a>
-                        </td>
-                        <td >
-                            <a href="settingsSockets.html" class="fancy_action_button" >Rename Socket</a>
-                        </td>
-                    </tr>
-                    <tr >
-                        <td >
-                            <a href="settingsSockets.html" class="fancy_action_button"  >Set user data</a>
-                        </td>
-                    </tr>
-                </table>
+					<p class="bottomContent">
+                		Name: <input maxlength="16" size="16" name="SN" value="Nr. 1"></br>
+						Port: <input size="6" name="SP" value="1234567"></br>
+						</br></br>
+						Benutzer: <input maxlength="16" size="16" name="BN" value="Nr. 1"></br>
+						Passwort: <input size="6" type="password" name="BP" value="asdfjklö"></br>
+					</p>
             </div>
+            
+            
         </div>
 		
         
