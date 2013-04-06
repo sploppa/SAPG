@@ -23,6 +23,14 @@ google.setOnLoadCallback(function(){
 				$("#doseSetting").hide();
 		 	 	$(".menu_dosen_table").hide();
 			}
+			if($("#menu").hasClass("show")){
+				$("#menu").removeClass("show");
+				$("#menu").addClass("hide");
+			}else{
+				$("#menu").removeClass("hide");
+				$("#menu").addClass("show");
+			}
+		
 	});
 	
 	$(".menu_dosen_table tr td").click(function(e){
