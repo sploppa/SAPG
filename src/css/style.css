@@ -91,6 +91,7 @@ p{
 #menu_tabs {
 	width:100%;
 	float: left;
+    font-size:45%;
 }
 
 .menu_table{
@@ -99,14 +100,12 @@ p{
 }
 
 .menu_tab{
-	display: inline-block;
 	width: 100%;
-	font-size: 130%;
 	font: bold; 
 }
 
 .menu_tab img{
-	height:30px;
+	height:20px;
 }
 
 #menu_tabs table tr td{
@@ -119,8 +118,7 @@ p{
 
 #menu_tabs table tr td a{
     height:10%;
-    margin:10%;
-	text-decoration: none; 
+    text-decoration: none;
 	color: #111111;
 }
 
