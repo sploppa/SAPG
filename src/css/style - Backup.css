@@ -1,32 +1,27 @@
-body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#404040;
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:200%;
-    height:100%;
-    width:100%;
-    text-align:center;
-}
-
 .statusbar{
 	position:relative;
 	color: #999999;
 	width:100%;
 	background-color: #333333;
 	font-size: 40%;
-	top: -2%;
-	left: -9px;
+}
+
+tbody{
+	vertical-align: middle;
+}
+
+p{
+	margin:0px;
 }
 
 .socket_control{
 	position: relative;
 	width: 100%;
+	margin-top: 1%;
 }
 
 #socket_control a{
-	width: 90%;
+	width: 70%;
 	text-align: left;
 }
 
@@ -41,20 +36,33 @@ body {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    border:1px solid #dcdcdc;
     display:inline-block;
     color:#777777;
     font-family:arial;
     font-size:50%;
     font-weight:bold;
-    width: 95%;
     margin: 2%;
-    margin-left:-5px;
-    margin-right:10px;
-    padding: 0px 0px;
+    padding: 0px 0px 0px 0px;
     text-decoration:none;
+    height:100%;
     text-shadow:1px 1px 0px #ffffff;
 }
+.button{
+	width:100%;
+}
+.button td{
+
+}
+
+.links{
+	width:1%;
+}
+.mittig{
+	vertical-align:middle;
+}
+.rechts{
+}
+
 
 .fancy_socket_button:active {
 	position:relative;
@@ -63,20 +71,19 @@ body {
 
 .socket_status_picture{
 	display: inline;
-	height: 5%;
-	margin-top: 3px;
-	margin-left: 2px;
+	margin-top: 1%;
+	margin-left: 1%;
+	margin-bottom:1%;
 }
 
 .socket_name{
-	display: inline;
+	display: inline-block;
 	position:absolute;
 	margin-left: 3%;
-	margin-top: 2%;
+	margin-top: 1%;
 }
 
 .socket_device_icon{
-	height: 5%;
 	position: static;
 	display: inline;
 	float: right;
@@ -84,30 +91,28 @@ body {
 	margin-right: 3px;
 }
 
-
-
 #menu_tabs {
-	margin: 30px 0 0 -5px;
 	width:100%;
+	height:10%;
 	float: left;
-	height: auto !important;
-	height:30%;
 }
 
 .menu_table{
 	width: 100%;
+	height:100%;
+	border: 0;
 }
 
 .menu_tab{
-	display: inline-block;
 	width: 100%;
-	font-size: 70%;
 	font: bold; 
 }
 
+.menu_tab img{
+	height:2em;
+}
 
 #menu_tabs table tr td{
-	padding:10px 10px 10px 10px;
 	background: rgba(0,0,0,0.3);
 	-moz-border-radius-topleft: 12px; 
     -moz-border-radius-topright: 12px; 
@@ -116,8 +121,7 @@ body {
 }
 
 #menu_tabs table tr td a{
-	height: 50px;
-	text-decoration: none; 
+    text-decoration: none;
 	color: #111111;
 }
 
@@ -130,17 +134,62 @@ body {
 	text-shadow: #FFF 2px 2px 2px;
 }
 
-td {
-	width: 50%;
+#menu.show
+{
+	-webkit-transition: -webkit-transform 1s linear;
+    -webkit-transform: translateY(0%);
 }
 
-.actions_table{
-    width:100%;
-    border-spacing:0;
+#menu.hide
+{
+	-webkit-transition: -webkit-transform 1s linear;
+ 	-webkit-transform: translateY(90%);
 }
-#actions{
-    width:100%;
-    float:left;
+#menu{
+    background-color:#404040;
+	bottom: 0px;
+	width:100%;
+	height:100%;
+	position:absolute;
+}
+
+.menu_dosen_table{
+	width:90%;
+	margin-left:5%;
+	margin-right:5%;
+}
+
+.menu_dosen_tab{
+	font-size: 100%;
+	font: bold; 
+}
+
+.menu_dosen_table tr td.active {
+	background: rgba(255,255,255, 0.8);
+}
+
+.menu_dosen_table table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+.menu_dosen_table tr td a{
+	height: 50px;
+	text-decoration: none; 
+	color: #111111;
+}
+
+.menu_dosen_table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+.menu_dosen_table tr td{
+	background: rgba(0,0,0,0.3);
+	-moz-border-radius-bottomleft: 15px; 
+    -moz-border-radius-bottomright: 15px; 
+    -webkit-border-bottom-left-radius:15px;
+    -webkit-border-bottom-right-radius:15px;
 }
 
 .fancy_action_button {
@@ -154,7 +203,6 @@ td {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    border:1px solid #dcdcdc;
     display:inline-block;
     color:#777777;
     font-family:arial;
@@ -164,7 +212,7 @@ td {
     margin: 2%;
     margin-left:-5px;
     margin-right:10px;
-    padding: 1em 0px;
+    padding: 1em  0px;
     text-decoration:none;
     text-shadow:1px 1px 0px #ffffff;
 }
@@ -174,121 +222,65 @@ td {
 	top:1px;
 }
 
-
-/*
- * CSS for devices with SMALL screen.
-*/
-@media only screen 
-and (min-device-width: 250px)
-and (max-device-width: 400px)
-{
-	.statusbar{
-		margin-bottom: 10%;
-	}
-	
-	.socket_control{
-		margin-top: -25px;
-	}
-	
-	#menu_tabs {
-		font-size: 45%;
-		margin: 10px 0 0 -5px;
-		padding: 0px;
-	}
-	
-	#menu_tabs table tr td{
-		padding: 0px ;
-	}
-	
-	.menu_tab{
-		font-size: 70%;
-		height:60%;
-	}
-	.menu_tab img{
-		height:50%;
-	}
-	.menu_table tr{
-		line-height: 10px;
-	}
-	
-	.fancy_action_button{
-		padding: 0px 0px;
-		margin: 0px;
-		margin-left:-5px;
- 		margin-right:10px;
-	}
+p.bottomContent{
+	margin-left:8%;
+	margin-right:8%;
+	margin-top:1%;
+	text-align:left;
 }
+
 
 /*
  * CSS for devices with BIG screen
 */
+/*
 @media only screen 
 and (min-device-width : 480px)
 {
 	.statusbar{
 		margin-bottom: 5%;
 		font-size: 50%;
-		top: -2%;
 	}
 	
 	.socket_control{
-		margin-top: -20px;
-	    left: -10px;
+	    font-size: 150%;
 	}
 	
-	#socket_control button{
-		margin-bottom: 10px;
+	.socket_status_picture{
+		height: 8%;
 	}
-	
+		
 	.socket_name{
-		margin-top: 3%;
+		margin-top: 4%;
+	}
+	
+	.socket_device_icon{
+		height: 8%;
 	}
 	
 	#menu_tabs {
-		font-size: 110%;
+		font-size: 70%;
+		padding-top: -5%;
+	}
+	
+	.menu_tab img{
+		height:100%;
 	}
 	
 	#menu_tabs ul li{
-		/*padding: top right bottom left*/
 		margin-top: -5%;
 		padding:5% 2% 2% 2%;
 	}
+	#menu_tabs table tr td{
+		padding:10px 10px 10px 10px;
+	}
+	.fancy_action_button {
+		padding: 1em 0px;
+		font-size: 70%;
+		margin-top: 10%;
+	}
 }
-
-/*
- * CSS for iPhone
- *and (min-device-width : 630px)
 */
-@media only screen
-and (max-device-width: 480px)
-{
-	.statusbar{
-		margin-bottom: 5%;
-	}
-	
-	.socket_control{
-		margin-top: -20px;
-	    left: -10px;
-	}
-	
-	#socket_control button{
-		margin-bottom: 10px;
-	}
-	
-	#socket_name{
-		display: inline; 
-		position:absolute;
-		margin-left: 3%; 
-		font-size:50px;
-		margin-top: 6%;
-	}
-	
-	#menu_tabs {
-		font-size: 105%;
-	}
-}
-
-
 .event.listening {
     background-color:#333333;
     display:block;

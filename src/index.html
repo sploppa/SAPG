@@ -67,91 +67,115 @@
         </div>
         
         <div id="socket_control" class="socket_control">
-            <a href="javascript:displayDoseOn()" class="fancy_socket_button">
-				<img src="img/power_on.png" class="socket_status_picture" id="power_status_On" alt="Power on">
-                    <b class="socket_name">Fernseher</b>
-                    <img src="img/tv_icon.png" class="socket_device_icon" id="socket_status_On" style="opacity:1" alt="Lamp icon">
-                        </a>
-            <a href="javascript:displayDose1();" class="fancy_socket_button">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_1"  alt="Power off">
-                    <b class="socket_name">Radio</b>
-                    <img src="img/music_icon.png" class="socket_device_icon" id="socket_status_1" style="opacity:0.3" alt="Lamp icon">
-                        </a>
-            <a href="javascript:displayDose2();" class="fancy_socket_button">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_2"  alt="Power off">
-                    <b class="socket_name">Computer</b>
-                    <img src="img/pc_icon.png" class="socket_device_icon" id="socket_status_2" style="opacity:0.3" alt="Lamp icon">
-                        </a>
-            <a href="javascript:displayDose3();" class="fancy_socket_button">
-				<img src="img/power_off.png" class="socket_status_picture" id="power_status_3"  alt="Power off">
-                    <b class="socket_name">Laden</b>
-                    <img src="img/power_icon.png" class="socket_device_icon" id="socket_status_3" style="opacity:0.3" alt="Lamp icon">
-                        </a>
+            <a href="javascript:displayDoseOn()" class="socket_button">
+            <table  class="tableInsideButton" border="0"><tr>
+				<td class="status_icon_td"><img src="img/power_on.png" class="socket_status_picture" id="power_status_on"  alt="Power on"></td>
+				<td class="socket_text">
+					<table  class="table_socket_text" border="0">
+						<tr><td class="socket_standard_name">Dose&nbsp;ON</td></tr>
+						<tr><td class="socket_name" id="socket_name_on">Radio</td></tr>
+					</table>
+				</td>
+				<td class="socket_icon"><img src="img/music_icon.png" class="socket_device_icon" id="socket_status_on" style="opacity:1" alt="Lamp icon"></td>
+			</tr></table>
+            </a>
+            <a href="javascript:displayDose1();" class="socket_button">
+	            <table  class="tableInsideButton" border="0"><tr>
+					<td class="status_icon_td"><img src="img/power_off.png" class="socket_status_picture" id="power_status_1"  alt="Power off"></td>
+					<td class="socket_text">
+						<table  class="table_socket_text" border="0">
+							<tr><td class="socket_standard_name">Dose&nbsp;1</td></tr>
+							<tr><td class="socket_name" id="socket_name_1">Radio</td></tr>
+						</table>
+					</td>
+					<td class="socket_icon"><img src="img/music_icon.png" class="socket_device_icon" id="socket_status_1" style="opacity:0.3" alt="Lamp icon"></td>
+				</tr></table>
+            </a>
+            <a href="javascript:displayDose2();" class="socket_button">
+	            <table  class="tableInsideButton"border="0"><tr>
+					<td class="status_icon_td"><img src="img/power_off.png" class="socket_status_picture" id="power_status_2"  alt="Power off"></td>
+					<td class="socket_text">
+						<table  class="table_socket_text" border="0">
+							<tr><td class="socket_standard_name">Dose&nbsp;2</td></tr>
+							<tr><td class="socket_name" id="socket_name_2">Computer jfksafb dfjkasjfl fsdjklfsdaj djsaklfjlkj sdjfklsjajk jsdskljdskjkjf fj ksdajljf </td></tr>
+						</table>
+					</td>
+					<td class="socket_icon"><img src="img/pc_icon.png" class="socket_device_icon" id="socket_status_2" style="opacity:0.3" alt="Lamp icon"></td>
+				</tr></table>
+            </a>
+            <a href="javascript:displayDose3();" class="socket_button">
+	            <table  class="tableInsideButton" border="0"><tr>
+					<td class="status_icon_td"><img src="img/power_off.png" class="socket_status_picture" id="power_status_3"  alt="Power off"></td>
+					<td class="socket_text">
+						<table  class="table_socket_text" border="0">
+							<tr><td class="socket_standard_name">Dose&nbsp;3</td></tr>
+							<tr><td class="socket_name" id="socket_name_3">Laden</td></tr>
+						</table>
+					</td>
+					<td class="socket_icon"><img src="img/power_icon.png" class="socket_device_icon" id="socket_status_3" style="opacity:0.3" alt="Lamp icon"></td>
+				</tr></table>                    
+            </a>
             
         </div>
         
         
         <div id="menu" class="show">
-        <div id="menu_tabs" class="menu_tabs">
-            <table class="menu_table" >
+            <table class="menu_table header" id="menu_header_table" border="0">
                 <tr >
-                    <td class ="tabs active" id="ctrl">
-                        <a href="#steuerung" class="menu_tab" title="Steuerung"><img src="img/control.png"  alt="Control" > Control</a>
+                    <td class ="tabs active" id="ctrl" href="#steuerung">
+                        	<img src="img/control.png" class="menu_header_img" alt="Control"> 
+                        	Steuerung
                     </td>
-                    <td class="tabs" id="admin">
-                        <a href="#administration" class="menu_tab" title="Administration"><img src="img/settings.png"  alt="Settings">Settings</a>
+                    <td class="tabs" id="admin" href"#administration">
+                        <img src="img/settings.png" class="menu_header_img" alt="Settings">
+						Einstellung
                     </td>
                 </tr>
             </table>
-        </div>
         
-        <div class="actions" id="actions">
-            <div id="steuerung">
-	            	<table class="menu_dosen_table" >
-		                <tr >
-		                    <td class ="tabs active">
-		                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose1">Dose1</a>
-		                    </td>
-		                    <td class="tabs">
-								<a href="#doseSetting" class="menu_dosen_tab" title="Dose2">Dose2</a>
-		                    </td>
-		                    <td class="tabs">
-		                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose3">Dose3</a>
-		                    </td>
-		                </tr>
-	            	</table>
-	            	<div id="doseSetting" value="dose8">
-	            		<p class="bottomContent">
-	            				Name: <input maxlength="16" size="16" name="TN" value="Nr. 1"></br>
-								Timer 1 <input type="checkbox" name="T00"> aktiv</br>
-								<input size="7" name="T10" value="1234567">
-								<input size="4" name="T20" value="00:00"> -
-								<input size="4" name="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+	        <div class="actions" id="actions">
+		        <div id="steuerung">
+		            	<table class="menu_table dosen" id="menu_dosen_table" border="0">
+			                <tr >
+			                    <td class ="tabs active">
+			                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose1">Dose1</a>
+			                    </td>
+			                    <td class="tabs">
+									<a href="#doseSetting" class="menu_dosen_tab" title="Dose2">Dose2</a>
+			                    </td>
+			                    <td class="tabs">
+			                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose3">Dose3</a>
+			                    </td>
+			                </tr>
+		            	</table>
+		            	<div id="doseSetting" value="dose8">
+		            		<p class="bottomContent">
+		            				Name: <input maxlength="16" size="16" name="TN" value="Nr. 1"></br>
+									Timer 1 <input type="checkbox" name="T00"> aktiv</br>
+									<input size="7" name="T10" value="1234567">
+									<input size="4" name="T20" value="00:00"> -
+									<input size="4" name="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+									</br></br>
+									<input type="radio" name="TF" value="e">einschalten</br>
+									<input type="radio" name="TF" value="w">Zustand wiederherstellen</br>
+									<input type="radio" name="TF" value="a">ausschalten</br>
+									</br></br>
+									<input type="checkbox" name="TH"> Steuerung sperren</br>
+									<input type="button" value="Speichern" onClick="alert('hello')">
+							</p>
+		            	</div>
+		            </div>
+		            <div id="administration">
+							<p class="bottomContent">
+		                		Name: <input maxlength="16" size="16" name="SN" value="Nr. 1"></br>
+								Port: <input size="6" name="SP" value="1234567"></br>
 								</br></br>
-								<input type="radio" name="TF" value="e">einschalten</br>
-								<input type="radio" name="TF" value="w">Zustand wiederherstellen</br>
-								<input type="radio" name="TF" value="a">ausschalten</br>
-								</br></br>
-								<input type="checkbox" name="TH"> Steuerung sperren</br>
-								<input type="button" value="Speichern" onClick="alert('hello')">
-						</p>
-	            	</div>
-            </div>
-            <div id="administration">
-					<p class="bottomContent">
-                		Name: <input maxlength="16" size="16" name="SN" value="Nr. 1"></br>
-						Port: <input size="6" name="SP" value="1234567"></br>
-						</br></br>
-						Benutzer: <input maxlength="16" size="16" name="BN" value="Nr. 1"></br>
-						Passwort: <input size="6" type="password" name="BP" value="asdfjklö"></br>
-					</p>
-            </div>
-            
-            
+								Benutzer: <input maxlength="16" size="16" name="BN" value="Nr. 1"></br>
+								Passwort: <input size="6" type="password" name="BP" value="asdfjklö"></br>
+							</p>
+			  		</div>
+	        </div>
         </div>
-        </div>
-		
-        
         
         <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
         <script type="text/javascript" src="js/index.js"></script>
