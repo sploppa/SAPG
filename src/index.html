@@ -137,31 +137,31 @@
 		        <div id="steuerung">
 		            	<table class="menu_table dosen" id="menu_dosen_table" border="0">
 			                <tr >
-			                    <td class ="tabs active">
-			                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose1">Dose1</a>
+			                    <td class ="tabs" id="1">
+			                       Dose1
 			                    </td>
-			                    <td class="tabs">
-									<a href="#doseSetting" class="menu_dosen_tab" title="Dose2">Dose2</a>
+			                    <td class="tabs" id="2">
+									Dose2
 			                    </td>
-			                    <td class="tabs">
-			                        <a href="#doseSetting" class="menu_dosen_tab" title="Dose3">Dose3</a>
+			                    <td class="tabs" id="3">
+			                        Dose3
 			                    </td>
 			                </tr>
 		            	</table>
 		            	<div id="doseSetting" value="dose8">
 		            		<p class="bottomContent">
 		            				Name: <input maxlength="16" size="16" name="TN" value="Nr. 1"></br>
-									Timer 1 <input type="checkbox" name="T00"> aktiv</br>
+									Timer 1 <input type="checkbox" name="T00"> aktiv
 									<input size="7" name="T10" value="1234567">
-									<input size="4" name="T20" value="00:00"> -
-									<input size="4" name="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+									<input size="5" name="T20" value="00:00"> -
+									<input size="5" name="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
 									</br></br>
 									<input type="radio" name="TF" value="e">einschalten</br>
 									<input type="radio" name="TF" value="w">Zustand wiederherstellen</br>
 									<input type="radio" name="TF" value="a">ausschalten</br>
 									</br></br>
 									<input type="checkbox" name="TH"> Steuerung sperren</br>
-									<input type="button" value="Speichern" onClick="alert('hello')">
+									<div class="saveButton" onClick="alert('hello')">Speichern</div>
 							</p>
 		            	</div>
 		            </div>

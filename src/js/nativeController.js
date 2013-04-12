@@ -177,3 +177,7 @@ function checkStatus(){
                      [header,"","134.3.157.228",80]);
 }
 
+function checkDosenSetting(doseNr){
+    alert(doseNr);
+}
+

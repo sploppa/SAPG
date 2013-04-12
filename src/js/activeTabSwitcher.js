@@ -4,20 +4,18 @@
 google.load("jquery", "1.3.1");
 google.setOnLoadCallback(function(){	
 	$(document).ready(function() {
-		// Set default to "#steuerung"
+		// Set default 
                       $(".actions").hide();
                       $("#steuerung").hide();
                       $("#administration").hide();
                       
                       if ((navigator.userAgent.match(/iPhone/)) || (navigator.userAgent.match(/iPod/))) {
-                        alert("we've got an iDevice, Scotty");
                         $("#menu").css("bottom","1em");
                       }
                       
                       if (navigator.userAgent.match(/Android/)) {
-                        alert("Droid me baby");
                       }
-		// change div on click
+		// change the menu header on click
 	    $(".header .tabs").click(function() {
 	    	if($(this).hasClass("active")){
 	    		$(this).removeClass("active");
@@ -38,6 +36,20 @@ google.setOnLoadCallback(function(){
 	    		
 	      	}
 	    });
+        $(".dosen .tabs").click(function(){
+                                if($(this).hasClass("active")){
+                                $(this).removeClass("active");
+                                
+                                $("#doseSetting").hide();
+                                }else{
+                                $(".dosen .tabs").removeClass("active");
+                                $(this).addClass("active");
+                                $("#doseSetting").attr("value",$(this).attr("id"));
+                                checkDosenSetting($(this).attr("id"));
+                                $("#doseSetting").show();
+                                }
+
+        });
 	});
 });
 
