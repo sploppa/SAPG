@@ -1,29 +1,18 @@
-var result = "null";
-var backendCall = false;
-var getLocation = function(callback){
-    navigator.geolocation.getCurrentPosition(function(pos){
-                                             succesfull(pos);
-                                             typeof callback === 'function' && callback(geoloc);
-                                             }, function(){
-                                             alert("fail");
-                                             });
-};
-function cordovaCall(Klasse, Funktion){
+function cordovaCall(callback,Klasse, Funktion){
+    var result = "null2";
    	var params = new Array();
-	for (var i = 0; i < cordovaCall.arguments.length; i++){
-    	params[i] = cordovaCall.arguments[i+2];
+	for (var i = 0; i < cordovaCall.arguments.length-3; i++){
+    	params[i] = cordovaCall.arguments[i+3];
     }
-
-	cordova.exec(
-                 function(succ){
-                    result = succ;
-                 },
+    var that = this;
+	cordova.exec(callback,
                  function(err){
                     result = err;
                  }, Klasse, Funktion,
 		params);
-    return result;
+        return result;
 }
-function getResult(){
-    return result;
+function test(c){
+    navigator.notification.alert(c);
+    return c;
 }

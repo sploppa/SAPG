@@ -7,14 +7,23 @@ body {
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     margin:0em;
     height:100%;
+    width:100%;
 }
 
 .statusbar{
-	display:inline-block;
+	display:block;
 	color: #999999;
 	width:100%;
 	background-color: #333333;
 	text-align:center;
+    font-size:1em;
+    margin:0;
+}
+p {
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
 }
 
 .socket_control{
@@ -50,12 +59,12 @@ body {
 	}
 	
 	.status_icon_td{
-		width:5em;
+		width:3em;
 		padding:1%;
 	}
 	
 	.socket_status_picture{
-		width:4em;
+		width:3em;
 	}
 	
 	.socket_text{
@@ -66,22 +75,23 @@ body {
 			width:100%;
 			height:100%;
 			vertical-align:top;
+            table-layout:fixed;
 		}
 		
 		.socket_name{
 			padding-left:1em;
-			padding-top:1em;
-			padding-bottom:1em;
+            overflow:hidden;
+            white-space:nowrap; 
 		}
 	.socket_icon{
-		width:5em;
+		width:3em;
 	}
 	
 		.socket_device_icon{
 			float:right;
-			width:5em;
+			width:3em;
 		}
-
+        
 .menu_table {
 	width:100%;
 	table-layout: fixed;
@@ -92,7 +102,7 @@ body {
 }
 
 .menu_header_img{
-	width:5em;
+	width:2em;
 	vertical-align:middle;
 }
 
@@ -104,7 +114,7 @@ body {
     -webkit-border-top-right-radius:2em;
 }
 .tabs{
-	height:8em;
+	height:4em;
 }
 
 td.active{
@@ -117,4 +127,14 @@ td.active{
 	bottom: 0em;
 	width:100%;
 	position:absolute;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color: #333333;/*#4B946A;*/
+    display:none;
 }
