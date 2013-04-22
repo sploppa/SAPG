@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -23,7 +24,7 @@ import org.teleal.common.util.ByteArray;
 public class UdpController extends CordovaPlugin {
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("switchPower")) {         
+        if (action.equals("sendBroadcastMessage")) {         
             this.switchPower(args, callbackContext);
             return true;
         }
@@ -37,57 +38,28 @@ public class UdpController extends CordovaPlugin {
         int receivePort = args.getInt(3);
 
         try {
-
-			DatagramSocket sendSocket = new DatagramSocket();
-			
-			
-			InetAddress theServer = InetAddress.getByName(ip);
-			DatagramSocket receiveSocket = new DatagramSocket(8080);
-			sendSocket.connect(theServer,sendPort);
-			DatagramPacket sendPacket;
-			InetAddress sendServerAddress;
-			
-	
-			// the place to store the sending and receiving data
-			byte[] inBuffer = new byte[250];
-			byte[] outBuffer = new byte[250];
-			String message = command;
-			
-			outBuffer = message.getBytes();
-	
-			System.out.println("Message sending is : " + message);
-	
-			DatagramPacket receivePacket = new DatagramPacket(inBuffer, inBuffer.length);
-			
-			// the server details
-			sendServerAddress = sendSocket.getInetAddress();
-	
-			// build up a packet to send to the server
-			sendPacket = new DatagramPacket(outBuffer, outBuffer.length, sendServerAddress, sendPort);
-			// send the data
-			sendSocket.send(sendPacket);
-			      
-			receiveSocket.setSoTimeout(10000);
-			
-            try {
-            	receiveSocket.receive(receivePacket);
-            	
-            	inBuffer = receivePacket.getData(); 
-            	String result = new String(inBuffer);
-    			callbackContext.success(result);
-    	        sendSocket.close();
-    	        receiveSocket.close();
-            }
-            catch (SocketTimeoutException e) {
-                // timeout exception.
-            	String result = new String(inBuffer);
-            	result= result.trim();
-            	if(result.equals("")){
-            		callbackContext.error("Timeout");
-            	}
-                sendSocket.close();
-                receiveSocket.close();
-            }    			
+        
+        	DatagramSocket serverSocket = new DatagramSocket(sendPort);
+        	 
+        	DatagramSocket clientSocket = new DatagramSocket();
+        	InetAddress IPAddress = InetAddress.getByName(ip);           
+        	byte[] sendData = new byte[256];
+        	sendData= command.getBytes();
+        	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, receivePort);
+        	clientSocket.send(sendPacket);        
+        	boolean gotIt = false;
+        	String result = null;
+        	do{
+	        	byte[] receiveData = new byte[256];
+	        	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+	        	serverSocket.receive(receivePacket);
+	        	result = new String(receivePacket.getData());
+	        	if(!result.contains("wer da")){
+	        		gotIt = true;
+	        	}
+        	}while(!gotIt);
+        	callbackContext.success(result);
+        	
 		} catch (IOException ExceIO)
 		{
 			callbackContext.error("Client getting data error : "+ExceIO.getMessage());

@@ -143,11 +143,25 @@ td.active{
     margin-right:10%;
 }
 
+.bottomContent{
+	margin-left:5%;
+	margin-right:5%;
+}
+
 .saveButton{
     float:right;
     background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #adadad) );
     -webkit-border-top-left-radius:5em;
     padding:1em;
+}
+
+#iSearchSocket{
+    background-color:#404040;
+    border:0;
+	width:100%;
+    height:100%;
+	position:absolute;
+	z-index:1;
 }
 
 .event.listening {

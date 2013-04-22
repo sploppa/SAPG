@@ -12,10 +12,13 @@ import java.util.regex.Pattern;
 import android.util.Log;
 
 public class Tcp {
+	@SuppressWarnings("finally")
 	public String sendMessage(String header,String body, String routerIp, int routerPort) {
+        String respond = "";
+        Socket socket = null ;
 		try {
 		        //Create socket
-		        Socket socket = new Socket(routerIp, routerPort);
+		        socket = new Socket(routerIp, routerPort);
 		        socket.setSoTimeout(10000);
 		        //Send header
 		        BufferedWriter  wr = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"));
@@ -30,18 +33,19 @@ public class Tcp {
 		        // Response
 		        BufferedReader rd = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		        String line;
-		        String respond = "";
+
 		        while((line = rd.readLine()) != null)
 		        	respond += line;
-		        
-		        Pattern p = Pattern.compile("errorCode");
-		        Matcher m = p.matcher(respond);
-		        if(!m.find()){
-		        	return respond;
-		        }
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		return "no Respond from " + routerIp + " on Port:" + routerPort;
+		}finally{
+	        final Pattern p = Pattern.compile("errorCode");
+	        final Matcher m = p.matcher(respond);
+	        if(!(m.find())){
+	        	return respond;
+	        }else{
+	        	return "no Respond from " + routerIp + " on Port:" + routerPort;
+	        }
+		}		
 	}
 }

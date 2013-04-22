@@ -25,10 +25,9 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <title>Hello World</title>
-        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="js/jsapi.js"></script>
 		<script type="text/javascript" src="js/activeTabSwitcher.js"></script>
         <script type="text/javascript" src="js/nativeController.js"></script>
-        <script type="text/javascript" src="js/cordovaInterface.js"></script>
         
         <script type="text/javascript">
 			function displayDoseOn(){
@@ -60,7 +59,10 @@
         
     </head>
     <body>
-        
+     	<div id="searchSocket">
+ 			<iframe id="iSearchSocket" src="searchSocket.html"></iframe>
+        </div>
+     	
         <div id="deviceready" class="statusbar">
             <p class="event listening">Connecting to Device...</p>
             <p class="event received">Device is Ready!</p>
@@ -115,7 +117,6 @@
 					<td class="socket_icon"><img src="img/power_icon.png" class="socket_device_icon" id="socket_status_3" style="opacity:0.3" alt="Lamp icon"></td>
 				</tr></table>                    
             </a>
-            
         </div>
         
         
@@ -150,41 +151,56 @@
 		            	</table>
 		            	<div id="doseSetting" value="dose8">
 		            		<p class="bottomContent">
-		            				Name: <input maxlength="16" size="16" name="TN" value="Nr. 1"></br>
-									Timer 1 <input type="checkbox" name="T00"> aktiv
-									<input size="7" name="T10" value="1234567">
-									<input size="5" name="T20" value="00:00"> -
-									<input size="5" name="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+		            				Name: <input maxlength="16" size="16" id="TN" value="Test"></br>
+									Timer 1 <input type="checkbox" id="T00"> aktiv
+									<input size="7" id="T10" value="1234567">
+									<input size="5" id="T20" value="00:00"> -
+									<input size="5" id="T30" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+									Timer 2 <input type="checkbox" id="T01"> aktiv
+									<input size="7" id="T11" value="1234567">
+									<input size="5" id="T21" value="00:00"> -
+									<input size="5" id="T31" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+									Timer 3 <input type="checkbox" id="T02"> aktiv
+									<input size="7" id="T12" value="1234567">
+									<input size="5" id="T22" value="00:00"> -
+									<input size="5" id="T32" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+									Timer 4 <input type="checkbox" id="T03"> aktiv
+									<input size="7" id="T13" value="1234567">
+									<input size="5" id="T23" value="00:00"> -
+									<input size="5" id="T33" value="23:59" style="background-color: rgb(255, 255, 255);"></br>
+									Zufallstimer <input type="checkbox" id="T04"> aktiv
+									<input size="7" id="T14" value="1234567">
+									<input size="5" id="T24" value="00:00"> -
+									<input size="5" id="T34" value="23:59" style="background-color: rgb(255, 255, 255);"></br>									
+									<input type="radio" name="TF" id="TFe" value="e">einschalten</br>
+									<input type="radio" name="TF" id="TFw" value="w">Zustand wiederherstellen</br>
+									<input type="radio" name="TF" id="TFa" value="a">ausschalten</br>
 									</br></br>
-									<input type="radio" name="TF" value="e">einschalten</br>
-									<input type="radio" name="TF" value="w">Zustand wiederherstellen</br>
-									<input type="radio" name="TF" value="a">ausschalten</br>
-									</br></br>
-									<input type="checkbox" name="TH"> Steuerung sperren</br>
-									<div class="saveButton" onClick="alert('hello')">Speichern</div>
+									<input type="checkbox" id="TH"> Steuerung sperren</br>
 							</p>
+							<div class="saveButton" id="saveDoseSetting">Speichern</div>
 		            	</div>
 		            </div>
 		            <div id="administration">
 							<p class="bottomContent">
-		                		Name: <input maxlength="16" size="16" name="SN" value="Nr. 1"></br>
-								Port: <input size="6" name="SP" value="1234567"></br>
+		                		Name: <input maxlength="16" size="16" id="SN" value="Nr. 1" readonly="true"></br>
+								Port: <input size="6" id="SP" value="default" readonly="true"></br>
 								</br></br>
-								Benutzer: <input maxlength="16" size="16" name="BN" value="Nr. 1"></br>
-								Passwort: <input size="6" type="password" name="BP" value="asdfjklö"></br>
+								Benutzer: <input maxlength="16" size="16" id="BN" value="admin"></br>
+								Passwort: <input size="6" type="password" id="BP" value="anel"></br>
+								<!--<div class="saveButton" id="saveDoseAdministration">Speichern</div>-->
 							</p>
 			  		</div>
 	        </div>
         </div>
         
+
+        
         <script type="text/javascript" src="../cordova-2.3.0.js">navigator.notification.alert("name");</script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
-            app.initialize();
-            document.addEventListener("deviceready", function(){
-						    setTimeout("checkStatus()",10);
-                                      }, false);
-            </script>
+
+       	</script>
         
         
     </body>

@@ -19,7 +19,7 @@ public class HttpController extends CordovaPlugin {
     }
 
 	private void sendMessage(JSONArray args, CallbackContext callbackContext) throws JSONException {
-		String header = args.getString(0);
+		String header = args.getString(0); 
 		String body = args.getString(1);
 		String routerIp = args.getString(2);
 		int routerPort = args.getInt(3);
