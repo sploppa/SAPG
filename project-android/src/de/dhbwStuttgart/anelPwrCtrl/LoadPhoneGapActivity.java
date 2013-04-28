@@ -8,6 +8,6 @@ public class LoadPhoneGapActivity extends DroidGap {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.loadUrl("file:///android_asset/www/src/index.html");
+        super.loadUrl("file:///android_asset/www/src/app.html");
     }    
 }

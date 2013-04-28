@@ -34,27 +34,29 @@ public class UdpController extends CordovaPlugin {
 	private void switchPower(JSONArray args, CallbackContext callbackContext) throws JSONException {
         String command = args.getString(0);
         String ip = args.getString(1);
-        int sendPort = args.getInt(2);
-        int receivePort = args.getInt(3);
+        int port = args.getInt(2);
 
         try {
         
-        	DatagramSocket serverSocket = new DatagramSocket(sendPort);
-        	 
-        	DatagramSocket clientSocket = new DatagramSocket();
+        	DatagramSocket socket = new DatagramSocket(port);
+        	socket.setBroadcast(true);
+        	socket.setSoTimeout(10000);
         	InetAddress IPAddress = InetAddress.getByName(ip);           
-        	byte[] sendData = new byte[256];
+        	byte[] sendData = new byte[1];
         	sendData= command.getBytes();
-        	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, receivePort);
-        	clientSocket.send(sendPacket);        
+        	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+        	socket.send(sendPacket);        
         	boolean gotIt = false;
         	String result = null;
+        	String pattern = "D";
         	do{
 	        	byte[] receiveData = new byte[256];
 	        	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-	        	serverSocket.receive(receivePacket);
+	        	socket.receive(receivePacket);
+	        	System.out.println(receivePacket.getLength());
 	        	result = new String(receivePacket.getData());
-	        	if(!result.contains("wer da")){
+	        	result = result.substring(0, receivePacket.getLength());
+	        	if(!result.matches("D")){
 	        		gotIt = true;
 	        	}
         	}while(!gotIt);
