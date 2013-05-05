@@ -1,0 +1,150 @@
+{
+    "type": "Ext.tab.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|animation": "fade",
+        "designer|userClassName": "BottomBar",
+        "designer|initialView": true
+    },
+    "designerId": "cd7ac7d4-0df6-4990-8085-b75425a407da",
+    "cn": [
+        {
+            "type": "Ext.tab.Bar",
+            "reference": {
+                "name": "tabBar",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": "bottom",
+                "designer|userClassName": "MyTabBar"
+            },
+            "designerId": "4a2ca8be-e476-4762-8bd3-966df982ed99"
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "title": "Home",
+                "iconCls": "home",
+                "designer|userClassName": "MyContainer1",
+                "layout": "fit"
+            },
+            "designerId": "134f1635-524d-44ff-bb0b-54b86733fea9",
+            "cn": [
+                {
+                    "type": "Ext.navigation.View",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyNavigationView1"
+                    },
+                    "designerId": "1e54390d-527f-422b-912b-29e95bda25f2",
+                    "cn": [
+                        {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "title": "Home",
+                                "designer|userClassName": "MyContainer8",
+                                "layout": null
+                            },
+                            "designerId": "cfde3c3f-8529-48f9-9145-9ce893afb1e1",
+                            "cn": [
+                                {
+                                    "type": "Ext.SegmentedButton",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "container|align": null,
+                                        "container|pack": "center",
+                                        "designer|userClassName": "MySegmentedButton"
+                                    },
+                                    "designerId": "35a5a5a7-6e8d-4f97-a9fe-d4f84dc8f367",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|userClassName": "MyButton3",
+                                                "iconCls": "add",
+                                                "text": ""
+                                            },
+                                            "designerId": "ed6100c1-c85d-477a-bdfe-c7a781f8d035"
+                                        },
+                                        {
+                                            "type": "Ext.Button",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "padding": null,
+                                                "designer|userClassName": "MyButton4",
+                                                "iconCls": "search",
+                                                "text": null
+                                            },
+                                            "designerId": "375631fa-97c3-45bf-a410-11a340cd09c2"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "margin": "10%",
+                                        "designer|userClassName": "MyButton5",
+                                        "iconCls": "reply",
+                                        "text": "erste Dose"
+                                    },
+                                    "designerId": "c8645b85-6143-4117-827f-a33bf0921db8"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "title": "Tab 3",
+                "iconCls": "info",
+                "designer|userClassName": "MyContainer8"
+            },
+            "designerId": "49502276-8198-49f9-b914-3dc31ea54ab2"
+        }
+    ]
+}

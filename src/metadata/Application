@@ -1,0 +1,17 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "views": [
+            "DetailPanel",
+            "BottomBar",
+            "Timer"
+        ],
+        "name": "MyApp"
+    },
+    "designerId": "application"
+}

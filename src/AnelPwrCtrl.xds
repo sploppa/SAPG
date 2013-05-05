@@ -1,0 +1,57 @@
+{
+    "name": "AnelPwrCtrl",
+    "settings": {},
+    "xdsVersion": "2.2.1",
+    "xdsBuild": 951,
+    "schemaVersion": 1,
+    "upgradeVersion": 210000000500,
+    "framework": "touch22",
+    "topInstanceFileMap": {
+        "63eeb65b-5544-4974-a0ad-673c6c365d65": {
+            "paths": [
+                "metadata/resource/Library"
+            ],
+            "className": "Library"
+        },
+        "05e7ac56-a9e8-4042-8cd0-f10237346d70": {
+            "paths": [
+                "metadata/view/DetailPanel",
+                "app/view/override/DetailPanel.js",
+                "app/view/DetailPanel.js"
+            ],
+            "className": "DetailPanel"
+        },
+        "cd7ac7d4-0df6-4990-8085-b75425a407da": {
+            "paths": [
+                "metadata/view/BottomBar",
+                "app/view/override/BottomBar.js",
+                "app/view/BottomBar.js"
+            ],
+            "className": "BottomBar"
+        },
+        "85954644-e4cf-4511-b5eb-da0eeda5298a": {
+            "paths": [
+                "metadata/view/Timer",
+                "app/view/override/Timer.js",
+                "app/view/Timer.js"
+            ],
+            "className": "Timer"
+        }
+    },
+    "viewOrderMap": {
+        "view": [
+            "05e7ac56-a9e8-4042-8cd0-f10237346d70",
+            "85954644-e4cf-4511-b5eb-da0eeda5298a",
+            "cd7ac7d4-0df6-4990-8085-b75425a407da"
+        ],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "63eeb65b-5544-4974-a0ad-673c6c365d65"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

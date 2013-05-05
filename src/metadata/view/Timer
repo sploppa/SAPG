@@ -1,0 +1,231 @@
+{
+    "type": "Ext.form.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "centered": false,
+        "margin": null,
+        "designer|userClassName": "Timer",
+        "layout": "vbox"
+    },
+    "designerId": "85954644-e4cf-4511-b5eb-da0eeda5298a",
+    "cn": [
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "center",
+                "container|pack": "center",
+                "height": 43,
+                "designer|userClassName": "MyContainer3",
+                "layout": "hbox"
+            },
+            "designerId": "af0daf55-88d5-4b35-a2f8-a3b6b2b17486",
+            "cn": [
+                {
+                    "type": "Ext.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "designer|userClassName": "MyTextField",
+                        "clearIcon": false,
+                        "label": "Timer 1",
+                        "labelWidth": "40%",
+                        "value": null,
+                        "autoCapitalize": false,
+                        "autoComplete": false,
+                        "autoCorrect": false,
+                        "placeHolder": "Do",
+                        "readOnly": false
+                    },
+                    "designerId": "ffd2afae-8eb9-41da-9fb0-1a468c02ed5f"
+                },
+                {
+                    "type": "Ext.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyCheckbox",
+                        "label": null,
+                        "labelAlign": "right",
+                        "name": ""
+                    },
+                    "designerId": "a779ea88-e6a9-47b1-bb64-1f6dc7419d83"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "center",
+                "container|pack": "center",
+                "height": 43,
+                "designer|userClassName": "MyContainer3",
+                "layout": "hbox"
+            },
+            "designerId": "cecabf39-9909-46ab-91ec-c3492cddfbc1",
+            "cn": [
+                {
+                    "type": "Ext.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "designer|userClassName": "MyTextField",
+                        "label": "Timer 2",
+                        "labelWidth": "40%"
+                    },
+                    "designerId": "612bd2f8-e437-47b0-a8aa-fce25931970b"
+                },
+                {
+                    "type": "Ext.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyCheckbox",
+                        "label": null,
+                        "labelAlign": "right",
+                        "name": ""
+                    },
+                    "designerId": "aad3a6b3-4e19-43db-8cb3-a0a1c79177a9"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "center",
+                "container|pack": "center",
+                "height": 43,
+                "designer|userClassName": "MyContainer3",
+                "layout": "hbox"
+            },
+            "designerId": "27b27fa9-b0f6-4e3a-baaa-a6d0b85838f7",
+            "cn": [
+                {
+                    "type": "Ext.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "designer|userClassName": "MyTextField",
+                        "label": "Timer 3",
+                        "labelWidth": "40%"
+                    },
+                    "designerId": "77fba3c8-8933-4ef9-9c1a-8a6e128a8644"
+                },
+                {
+                    "type": "Ext.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyCheckbox",
+                        "label": null,
+                        "labelAlign": "right",
+                        "name": ""
+                    },
+                    "designerId": "7ce7b689-b6c3-48c1-ba00-5e264e2a53b2"
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "container|align": "center",
+                "container|pack": "center",
+                "height": 43,
+                "designer|userClassName": "MyContainer3",
+                "layout": "hbox"
+            },
+            "designerId": "1a326155-d935-4991-8e0b-c2bad8831fed",
+            "cn": [
+                {
+                    "type": "Ext.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "height": null,
+                        "designer|userClassName": "MyTextField",
+                        "label": "Timer 4",
+                        "labelWidth": "40%"
+                    },
+                    "designerId": "f16ee4d9-166a-426c-8968-231848d6c597"
+                },
+                {
+                    "type": "Ext.field.Checkbox",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|userClassName": "MyCheckbox",
+                        "label": null,
+                        "labelAlign": "right",
+                        "name": ""
+                    },
+                    "designerId": "ca0af0e4-a181-4252-a2af-da71e5f4da2a"
+                }
+            ]
+        },
+        {
+            "type": "Ext.field.Checkbox",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "height": 44,
+                "designer|userClassName": "MyCheckbox4",
+                "label": "Dosen Sperrung",
+                "labelWidth": "50%"
+            },
+            "designerId": "c9ce9164-f1ca-4b28-bbb6-e821386e91c9"
+        }
+    ]
+}
