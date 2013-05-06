@@ -1,0 +1,97 @@
+{
+    "type": "Ext.app.Controller",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "models": [
+            "Steckdose"
+        ],
+        "stores": [
+            "Steckdosen"
+        ],
+        "designer|userClassName": "SteckdosenMaster"
+    },
+    "designerId": "e5fa0596-dbcc-48d6-86ce-1ce04b7a1eec",
+    "cn": [
+        {
+            "type": "controllerref",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "mySteckdosenList",
+                "ref": "mySteckdosenList",
+                "selector": "steckdosenList",
+                "xtype": null
+            },
+            "designerId": "b961aeda-d127-4ae8-afe8-7b55e9d85fd4"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "onListActivate",
+                "fn": "onListActivate",
+                "implHandler": [
+                    "console.log('Main container is active');"
+                ],
+                "name": "activate",
+                "designer|targetType": "SteckdosenList",
+                "designer|controlQuery": "list"
+            },
+            "designerId": "69ec79f6-e16d-403e-80e1-96514fd17259"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "onListItemTap",
+                "fn": "onListItemTap",
+                "implHandler": [
+                    "alert('Hello')"
+                ],
+                "name": "itemtap",
+                "designer|targetType": "SteckdosenList",
+                "designer|controlQuery": "list"
+            },
+            "designerId": "7f4a7b98-dd89-4941-9699-7f3a5c5a0a1e"
+        },
+        {
+            "type": "controlleraction",
+            "reference": {
+                "name": "listeners",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|userClassName": "onAddSteckdose",
+                "fn": "onAddSteckdose",
+                "implHandler": [
+                    "var employeeForm = Ext.Viewport.down(\"steckdosenEdit\");\r",
+                    "  //create the employee edit window if it doesn't exists\r",
+                    "  if(!employeeForm){\r",
+                    "   employeeForm = Ext.widget(\"steckdosenEdit\");\r",
+                    "  } \r",
+                    "  employeeForm.showBy(button);"
+                ],
+                "name": "tap",
+                "designer|targetType": "Ext.Button",
+                "designer|controlQuery": "button[itemId=addSteckdose]"
+            },
+            "designerId": "7fbb201d-94c2-4b1e-9935-c039cb9ec2a5"
+        }
+    ]
+}

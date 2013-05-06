@@ -1,0 +1,79 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "Steckdose"
+    },
+    "designerId": "67ce4eb2-acf8-4eae-939c-7ad1ff385e06",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "name",
+                "designer|userClassName": "field"
+            },
+            "designerId": "129f0702-4c75-4f40-b6d7-80f8f0a5e1e6"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "externalIp",
+                "designer|userClassName": "field1"
+            },
+            "designerId": "d6d725c7-5dc0-4d8f-9bb6-7cce2176ae57"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "internalIp",
+                "designer|userClassName": "field2"
+            },
+            "designerId": "b44fd7e8-2d3a-4910-bacd-eb1df52e05c9"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "httpPort",
+                "designer|userClassName": "field3"
+            },
+            "designerId": "35af42e4-23f2-4b2f-a2a5-6c9f9eecd10e"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "typ",
+                "designer|userClassName": "field4"
+            },
+            "designerId": "22da8cc6-ae6f-4bd9-9ed3-cad18f834286"
+        }
+    ]
+}
