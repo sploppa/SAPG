@@ -45,14 +45,14 @@ Ext.define('MyApp.view.DetailPanel', {
                         xtype: 'container',
                         layout: {
                             pack: 'center',
-                            type: 'hbox',
-                            width: '100%'
+                            type: 'hbox'
                         },
                         items: [
                             {
                                 xtype: 'togglefield',
                                 docked: 'left',
                                 id: 'socket1',
+                                width: '80%',
                                 label: 'Dose 1',
                                 labelWidth: '40%',
                                 labelWrap: true
@@ -62,13 +62,7 @@ Ext.define('MyApp.view.DetailPanel', {
                                 docked: 'left',
                                 icon: 'true',
                                 iconAlign: 'center',
-                                iconCls: 'settings',
-                            	handler: function(button){
-                                    			Ext.getComponentManager('NavigationView').push({
-                                    				xtype: 'MyApp.view.Timer',
-                                    				title: 'Timer'
-                                    			});
-                                    		 }                                
+                                iconCls: 'settings'
                             }
                         ]
                     },

@@ -15,8 +15,7 @@
 
 Ext.define('MyApp.view.Timer', {
     extend: 'Ext.form.Panel',
-	alias: 'widget.timerpanel',
-	
+
     config: {
         centered: false,
         layout: {

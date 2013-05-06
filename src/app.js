@@ -19,10 +19,21 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
+    models: [
+        'Steckdose'
+    ],
+    stores: [
+        'Steckdosen'
+    ],
     views: [
         'DetailPanel',
         'BottomBar',
-        'Timer'
+        'Timer',
+        'SteckdosenList',
+        'SteckdosenEdit'
+    ],
+    controllers: [
+        'SteckdosenMaster'
     ],
     name: 'MyApp',
 

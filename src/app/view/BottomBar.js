@@ -16,6 +16,10 @@
 Ext.define('MyApp.view.BottomBar', {
     extend: 'Ext.tab.Panel',
 
+    requires: [
+        'MyApp.view.SteckdosenList'
+    ],
+
     config: {
         layout: {
             animation: 'fade',
@@ -32,44 +36,40 @@ Ext.define('MyApp.view.BottomBar', {
                 layout: {
                     type: 'fit'
                 },
+                scrollable: false,
                 items: [
                     {
                         xtype: 'navigationview',
-                        id:'Navigation',
+                        navigationBar: {
+                            docked: 'top',
+                            items: [
+                                {
+                                    xtype: 'button',
+                                    align: 'right',
+                                    hidden: false,
+                                    itemId: 'addSteckdose',
+                                    ui: 'action',
+                                    iconCls: 'add'
+                                },
+                                {
+                                    xtype: 'button',
+                                    align: 'right',
+                                    itemId: 'searchSteckdose',
+                                    ui: 'action',
+                                    iconCls: 'search'
+                                }
+                            ]
+                        },
                         items: [
                             {
                                 xtype: 'container',
                                 title: 'Home',
+                                layout: {
+                                    type: 'fit'
+                                },
                                 items: [
                                     {
-                                        xtype: 'segmentedbutton',
-                                        layout: {
-                                            pack: 'center',
-                                            type: 'hbox'
-                                        },
-                                        items: [
-                                            {
-                                                xtype: 'button',
-                                                iconCls: 'add',
-                                                text: ''
-                                            },
-                                            {
-                                                xtype: 'button',
-                                                iconCls: 'search'
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        xtype: 'button',
-                                        margin: '10%',
-                                        iconCls: 'reply',
-                                        text: 'erste Dose',
-                                       	handler: function(button){
-                                        			button.up('navigationview').push({
-                                        				xtype: 'detailpanel',
-                                        				title: 'Details'
-                                        			});
-                                        		 }
+                                        xtype: 'steckdosenList'
                                     }
                                 ]
                             }
