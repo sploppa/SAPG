@@ -29,31 +29,130 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         },
 
         control: {
-            "list": {
+            "steckdosenList": {
                 activate: 'onListActivate',
-                itemtap: 'onListItemTap'
+                itemtaphold: 'onListItemTapHold'
             },
             "button[itemId=addSteckdose]": {
                 tap: 'onAddSteckdose'
-            }
+            },
+            "button[itemId=searchSteckdose]": {
+                tap: 'onSearchSteckdose'
+            },
+		   "button[itemId=save]" : {
+		    	tap : 'onSaveSteckdose'
+		   }
         }
     },
 
     onListActivate: function(container, newActiveItem, oldActiveItem, eOpts) {
         console.log('Main container is active');
+        Ext.getStore('Steckdosen').load();
     },
 
-    onListItemTap: function(dataview, index, target, record, e, eOpts) {
-        alert('Hello')
+    onListItemTapHold: function(view, index, target, record, event) {
+    	var editForm = Ext.getCmp('menuListItem');
+    	console.log(record.get('mySteckdoseKey'));
+    	console.log(record.get('Id'));
+    	console.log(index);
+    	console.log(record.getId());
+    	if(!editForm){
+	        editForm = Ext.create('Ext.form.Panel',{
+	        		alias: 'menuListItem',
+	        		id:'menuListItem',
+			        fullscreen: false,
+			        left: 0,
+			        top: 0,
+			        tplWriteMode: 'insertAfter',
+			        hideOnMaskTap: true,
+			        layout: {
+			            type: 'fit'
+			        },
+			        modal: true,
+			        scrollable: false,
+			        defaults: {
+			            margin: '0 0 5 0',
+			            labelWidth: '30%'
+			        },
+			        items: [
+			            {
+			                xtype: 'button',
+			                docked: 'left',
+			                itemId: 'edit',
+			                iconCls: 'action',
+			                text: 'bearbeiten',
+			                handler:function(button){
+							    //create the steckdosen edit window if it doesn't exists
+							    console.log('Bearbeiten Klick');
+							    steckdosenForm = Ext.Viewport.down('steckdosenEdit');
+							    if(!steckdosenForm){
+							   		steckdosenForm = Ext.widget("steckdosenEdit");
+							   	}
+			                	steckdosenForm.setRecord(record);
+			                	steckdosenForm.showBy(target);
+			                }		                
+			            },
+			            {
+			                xtype: 'button',
+			                docked: 'left',
+			                iconCls: 'delete',
+			                itemId: 'delete',
+			                text: 'l&ouml;schen',
+			                handler:function(button){
+			                console.log(record);
+			                	var store = Ext.getStore('Steckdosen');
+			                	store.remove(store.getById(record.getId()));
+			                	Ext.getStore('Steckdosen').sync();
+			                }
+			            }
+			        ]
+		        });
+		    }
+	        editForm.showBy(target);
     },
 
     onAddSteckdose: function(button, e, eOpts) {
-        var employeeForm = Ext.Viewport.down("steckdosenEdit");
-        //create the employee edit window if it doesn't exists
-        if(!employeeForm){
-            employeeForm = Ext.widget("steckdosenEdit");
+        var steckdosenForm = Ext.Viewport.down("steckdosenEdit");
+        //create the steckdosen edit window if it doesn't exists
+        if(!steckdosenForm){
+            steckdosenForm = Ext.widget("steckdosenEdit");
         } 
-        employeeForm.showBy(button);
-    }
+        steckdosenForm.reset();
+        steckdosenForm.showBy(button);
+    },
+    
+    onSearchSteckdose: function(button, e, eOpts) {
+       xhttp=new XMLHttpRequest();
 
+		var OPEN = 'http://192.168.1.9/dd.htm?DD2';
+	
+		xhttp.open('POST',OPEN,false);
+		xhttp.setRequestHeader("Content-type","text/plain");
+		xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
+		xhttp.send('TN=Bla');
+		alert(xhttp.responseText + " " + xhttp.status);
+    },
+    
+    onSaveSteckdose: function(button, e, eOpts) {
+	  console.log('Button Click for Save');
+	  var form = button.up('panel');
+	  //get the record 
+	  var record = form.getRecord();
+	  //get the form values
+	  var values = form.getValues();
+	  console.log(values);
+	  //if a new employee
+	  if(!record){
+	   var newRecord = new MyApp.model.Steckdose(values);
+	   newRecord.setDirty();
+	   Ext.getStore('Steckdosen').add(newRecord);
+	  }
+	  //existing employee
+	  else {
+	   record.set(values);
+	  }
+	  form.hide();
+	  //save the data to the Web local Storage
+	  Ext.getStore('Steckdosen').sync();
+    }
 });

@@ -14,8 +14,9 @@
  */
 
 Ext.define('MyApp.view.SteckdosenEdit', {
-    extend: 'Ext.Panel',
+    extend: 'Ext.form.Panel',
     alias: 'widget.steckdosenEdit',
+    id: 'steckdosenEdit',
 
     config: {
         fullscreen: false,
@@ -48,39 +49,40 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'selectfield',
                 centered: false,
                 docked: 'top',
+                usePicker: false,
                 itemId: 'typ',
                 label: 'Typ',
                 name: 'typ',
                 options: [
                     {
                         text: 'Home',
-                        value: 'H'
+                        value: 'Home'
                     },
                     {
                         text: 'Pro',
-                        value: 'P'
+                        value: 'Pro'
                     },
                     {
                         text: 'ADV',
-                        value: 'a'
+                        value: 'ADV'
                     },
                     {
                         text: 'HUT',
-                        value: 'h'
+                        value: 'HUT'
                     },
                     {
                         text: 'IO',
-                        value: 'i'
+                        value: 'IO'
                     }
                 ]
             },
             {
                 xtype: 'textfield',
                 docked: 'top',
-                itemId: 'externalIP',
+                itemId: 'externalIp',
                 label: 'externe IP',
                 labelWidth: '40%',
-                name: 'externalIP'
+                name: 'externalIp'
             },
             {
                 xtype: 'textfield',

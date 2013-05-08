@@ -9,5 +9,9 @@ public class LoadPhoneGapActivity extends DroidGap {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.loadUrl("file:///android_asset/www/src/app.html");
+        super.appView.getSettings().setAllowFileAccess(true);        
+        super.appView.getSettings().setDatabaseEnabled(true);
+        super.appView.getSettings().setDatabasePath("/data/data/" + appView.getContext().getPackageName() + "/databases/");
+        super.appView.getSettings().setDomStorageEnabled(true);
     }    
 }

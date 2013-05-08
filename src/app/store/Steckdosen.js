@@ -21,39 +21,12 @@ Ext.define('MyApp.store.Steckdosen', {
     ],
 
     config: {
-        autoLoad: true,
-        data: [
-            {
-                key: '1',
-                name: 'Jack',
-                externalIp: '192.168.1.8',
-                internalIp: 'test',
-                typ: 'H',
-                httpPort: '90'
-            },
-            {
-                key: '2',
-                name: 'Jack',
-                externalIp: '192.168.1.8',
-                internalIp: 'test',
-                typ: 'H',
-                httpPort: '90'
-            },
-            {
-                key: '3',
-                name: 'Jack',
-                externalIp: '192.168.1.8',
-                internalIp: 'test',
-                typ: 'H',
-                httpPort: '90'
-            },
-            
-        ],
         model: 'MyApp.model.Steckdose',
         storeId: 'Steckdosen',
+        autoLoad: true,
         proxy: {
             type: 'localstorage',
-            id: 'mySteckdosenKey'
+            id: 'mySteckdoseKey'
         }
     }
 });

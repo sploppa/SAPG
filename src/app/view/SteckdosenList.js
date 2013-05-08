@@ -18,17 +18,14 @@ Ext.define('MyApp.view.SteckdosenList', {
     alias: 'widget.steckdosenList',
 
     config: {
-        disabled: false,
         styleHtmlContent: true,
-        hideOnMaskTap: true,
-        modal: true,
-        emptyText: 'Noch keine Steckdose angelegt. Bitte hinzufügen !',
+        emptyText: 'Noch keine Steckdose angelegt. Bitte hinzuf&uuml;gen !',
         loadingText: 'Laden...',
         store: 'Steckdosen',
-        onItemDisclosure: false,
         variableHeights: true,
+        id:'SteckdosenListe',
         itemTpl: [
-            '<div class="steckdosenItem"><div>Name: <b>{name}</b></div><div>Externe IP: <b>{externalIp}</b> interne IP: <b>{internalIp}</b></div><div>Http Port: <b>{httpPort}</b></div></div>'
+            '<div class="steckdosenItem"><div>Name: <b>{name}</b></div><div>Externe IP: <b>{externalIp}</b></div><div>interne IP: <b>{internalIp}</b></div><div>Http Port: <b>{httpPort}</b></div></div>'
         ]
     }
 

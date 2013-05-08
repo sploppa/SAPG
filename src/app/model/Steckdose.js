@@ -18,21 +18,11 @@ Ext.define('MyApp.model.Steckdose', {
 
     config: {
         fields: [
-            {
-                name: 'name'
-            },
-            {
-                name: 'externalIp'
-            },
-            {
-                name: 'internalIp'
-            },
-            {
-                name: 'httpPort'
-            },
-            {
-                name: 'typ'
-            }
+		    'name',
+		    'internalIp',
+		    'externalIp',
+		    'typ',
+		    'httpPort'
         ]
     }
 });
