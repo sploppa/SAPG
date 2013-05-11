@@ -40,6 +40,7 @@ Ext.define('MyApp.view.BottomBar', {
                 items: [
                     {
                         xtype: 'navigationview',
+                        id:'navigationview',
                         navigationBar: {
                             docked: 'top',
                             items: [
@@ -48,6 +49,7 @@ Ext.define('MyApp.view.BottomBar', {
                                     align: 'right',
                                     hidden: false,
                                     itemId: 'addSteckdose',
+                                    id: 'addSteckdose',
                                     ui: 'action',
                                     iconCls: 'add'
                                 },
@@ -55,6 +57,7 @@ Ext.define('MyApp.view.BottomBar', {
                                     xtype: 'button',
                                     align: 'right',
                                     itemId: 'searchSteckdose',
+                                    id:'searchSteckdose',
                                     ui: 'action',
                                     iconCls: 'search'
                                 }
@@ -64,6 +67,7 @@ Ext.define('MyApp.view.BottomBar', {
                             {
                                 xtype: 'container',
                                 title: 'Home',
+                                id: 'home',
                                 layout: {
                                     type: 'fit'
                                 },

@@ -12,7 +12,14 @@
  *
  * Do NOT hand edit this file.
  */
-
+var tapEventTime;
+var tapOnTimer;
+var DISCOVER_MESSAGE_ROOTDEVICE =
+    "M-SEARCH * HTTP/1.1\r\n" +
+    "ST: urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n" +
+    "MX: 4\r\n" +
+    "MAN: \"ssdp:discover\"\r\n" +
+    "HOST: 239.255.255.250:1900\r\n\r\n";
 Ext.define('MyApp.controller.SteckdosenMaster', {
     extend: 'Ext.app.Controller',
 
@@ -31,7 +38,11 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         control: {
             "steckdosenList": {
                 activate: 'onListActivate',
-                itemtaphold: 'onListItemTapHold'
+                itemtaphold: 'onListItemTapHold',
+                itemtap: 'onShowDetails'
+            },
+            "#DosenList":{
+            	itemtap: 'onSwitchSocket'
             },
             "button[itemId=addSteckdose]": {
                 tap: 'onAddSteckdose'
@@ -41,6 +52,9 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
             },
 		   "button[itemId=save]" : {
 		    	tap : 'onSaveSteckdose'
+		   },
+		   "#ext-button-1" : {
+		   		tap : 'onBackButtonTap'
 		   }
         }
     },
@@ -51,6 +65,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     },
 
     onListItemTapHold: function(view, index, target, record, event) {
+    	tapEventTime = new Date();
     	var editForm = Ext.getCmp('menuListItem');
     	console.log(record.get('mySteckdoseKey'));
     	console.log(record.get('Id'));
@@ -90,6 +105,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 							   	}
 			                	steckdosenForm.setRecord(record);
 			                	steckdosenForm.showBy(target);
+			                	editForm.destroy();
 			                }		                
 			            },
 			            {
@@ -103,6 +119,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			                	var store = Ext.getStore('Steckdosen');
 			                	store.remove(store.getById(record.getId()));
 			                	Ext.getStore('Steckdosen').sync();
+			                	editForm.destroy();
 			                }
 			            }
 			        ]
@@ -122,7 +139,145 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     },
     
     onSearchSteckdose: function(button, e, eOpts) {
-       xhttp=new XMLHttpRequest();
+    	var networkState = navigator.network.connection.type;
+	    if(networkState == Connection.WIFI){
+	    	cordova.exec(function(succ){
+						var respond = succ.split("\n");
+					    steckdosenForm = Ext.Viewport.down('steckdosenEdit');
+					    if(!steckdosenForm){
+					   		steckdosenForm = Ext.widget("steckdosenEdit");
+					   	}
+	                	var name = respond[0];
+	                	var internalIp = respond[4];
+	                	cordova.exec(function(succ){alert(succ);},function(err){alert(err);},"UPnPController","getRouterInfo",[DISCOVER_MESSAGE_ROOTDEVICE,"239.255.255.250",1900]);
+	                	steckdosenForm.getComponent('name').setValue(name);
+	                	steckdosenForm.getComponent('internalIp').setValue(internalIp);
+	                	steckdosenForm.showBy(button);
+                     },
+                     function(err){
+                     	alert(err);
+                     }, "UdpController", "sendBroadcastMessage",
+                     ["D","255.255.255.255",30303]
+     		);
+	    }else{
+	    	Ext.Msg.alert('Suchen einer Steckdose im Netzwerk','Diese Funktion ist nur im Wifi-Netzwerk verf&uumlgbar.',Ext.emptyFn);
+	    }
+    },
+    
+    onSaveSteckdose: function(button, e, eOpts) {
+		console.log('Button Click for Save');
+		var form = button.up('panel');
+		//get the record 
+		var record = form.getRecord();
+		//get the form values
+		var values = form.getValues();
+		console.log(values);
+		//if a new employee
+		if(!record){
+			var newRecord = new MyApp.model.Steckdose(values);
+			newRecord.setDirty();
+		   	Ext.getStore('Steckdosen').add(newRecord);
+		}
+		//existing employee
+		else {
+			record.set(values);
+		}
+		form.destroy();
+		//save the data to the Web local Storage
+		Ext.getStore('Steckdosen').sync();
+    },
+    
+    onShowDetails: function(view, index, target, record, event) {
+		console.log(record);
+		console.log(tapEventTime);
+    	if (!tapEventTime || (new Date() - tapEventTime > 1000)) {
+    		tapEventTime = null;
+		   	Ext.getCmp("addSteckdose").hide();
+		   	Ext.getCmp("searchSteckdose").hide();
+			var details = 	Ext.create('Ext.form.Panel',{
+								title: record.data.name,
+								items:[
+									{
+					                	xtype: 'container',
+					                	layout: 'vbox',
+					                	items:[
+					                		{
+					                			xtype: 'list',
+					                			id:'DosenList',
+					                			layout: 'fit',
+								                styleHtmlContent: true,
+										        emptyText: 'Laden...',
+										        loadingText: 'Laden...',
+										        store: 'Dosen',
+										        height: '20em',
+										        variableHeights: true,
+										        margin: '20',
+										        scrollable: false,
+										        itemTpl: [
+											    	'<img src="{status_url}" width="40" height="40">{idName}:{name}<img class="photo" src="{photo_url}" width="40" height="40"/>'								                
+										        ],
+										        onItemDisclosure: function(record) {
+										        	tapOnTimer = true;
+										        	console.log("Show Timer");
+													console.log(record);
+													var timer = 	Ext.create('Ext.form.Panel',{
+														title: record.data.name,
+														items:[
+														{		
+															xtype: 'list',
+								                			layout: 'fit',
+											                styleHtmlContent: true,
+													        emptyText: 'Laden...',
+													        loadingText: 'Laden...',
+													        store: 'Timers',
+													        height: '20em',
+													        variableHeights: true,
+													        margin: '20',
+													        scrollable: false,
+													        itemTpl: [
+														    	'ID:{id};Timer:{name};Time:{startTime}-{endTime};Active:{activated}'								                
+													        ]
+													 	}]
+													});										
+													Ext.getCmp('navigationview').push(timer);
+												}
+					                		}, {
+												xtype: 'button',
+												margin: '1% 30% 1% 30%',
+												padding: '1%',
+												text: 'Alle umschalten'					                		
+					                		}, {
+												xtype: 'button',
+												margin: '1% 30% 1% 30%',
+												padding: '1%',
+												text: 'Alle einschalten'					                		
+					                		}, {
+												xtype: 'button',
+												margin: '1% 30% 1% 30%',
+												padding: '1%',
+												text: 'Alle ausschalten'					                		
+					                		}
+					                	]
+						            }
+								]
+			  				});
+		  	view.up('navigationview').push(details);
+		}
+    },
+    
+    onBackButtonTap: function(button){
+    	Ext.getCmp("addSteckdose").show();
+	   	Ext.getCmp("searchSteckdose").show();
+    },
+    onSwitchSocket: function(view, index, target, record, event){
+    	if(!tapOnTimer){
+			console.log("Switch Socket");
+			console.log(record);
+		}
+		tapOnTimer = false;
+    },
+    onBackup: function(button){
+       	xhttp=new XMLHttpRequest();
 
 		var OPEN = 'http://192.168.1.9/dd.htm?DD2';
 	
@@ -131,28 +286,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
 		xhttp.send('TN=Bla');
 		alert(xhttp.responseText + " " + xhttp.status);
-    },
-    
-    onSaveSteckdose: function(button, e, eOpts) {
-	  console.log('Button Click for Save');
-	  var form = button.up('panel');
-	  //get the record 
-	  var record = form.getRecord();
-	  //get the form values
-	  var values = form.getValues();
-	  console.log(values);
-	  //if a new employee
-	  if(!record){
-	   var newRecord = new MyApp.model.Steckdose(values);
-	   newRecord.setDirty();
-	   Ext.getStore('Steckdosen').add(newRecord);
-	  }
-	  //existing employee
-	  else {
-	   record.set(values);
-	  }
-	  form.hide();
-	  //save the data to the Web local Storage
-	  Ext.getStore('Steckdosen').sync();
     }
+    
 });

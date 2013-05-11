@@ -26,7 +26,7 @@ Ext.define('MyApp.view.SteckdosenList', {
         id:'SteckdosenListe',
         itemTpl: [
             '<div class="steckdosenItem"><div>Name: <b>{name}</b></div><div>Externe IP: <b>{externalIp}</b></div><div>interne IP: <b>{internalIp}</b></div><div>Http Port: <b>{httpPort}</b></div></div>'
-        ]
+        ]        
     }
 
 });

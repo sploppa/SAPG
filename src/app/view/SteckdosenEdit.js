@@ -38,7 +38,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'textfield',
                 centered: false,
                 docked: 'top',
-                itemId: 'steckdosenName',
+                itemId: 'name',
                 label: 'Name',
                 name: 'name',
                 autoCapitalize: false,

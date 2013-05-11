@@ -20,10 +20,14 @@ Ext.Loader.setConfig({
 
 Ext.application({
     models: [
-        'Steckdose'
+        'Steckdose',
+        'Dose',
+        'Timer'
     ],
     stores: [
-        'Steckdosen'
+        'Steckdosen',
+        'Dosen',
+        'Timers'
     ],
     views: [
         'DetailPanel',

@@ -4,18 +4,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.MulticastSocket;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.nio.channels.DatagramChannel;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.teleal.common.util.ByteArray;
 
 
 /**
@@ -25,13 +18,13 @@ public class UdpController extends CordovaPlugin {
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("sendBroadcastMessage")) {         
-            this.switchPower(args, callbackContext);
+            this.sendBroadcastMessage(args, callbackContext);
             return true;
         }
         return false;
     }
 
-	private void switchPower(JSONArray args, CallbackContext callbackContext) throws JSONException {
+	private void sendBroadcastMessage(JSONArray args, CallbackContext callbackContext) throws JSONException {
         String command = args.getString(0);
         String ip = args.getString(1);
         int port = args.getInt(2);
@@ -48,7 +41,6 @@ public class UdpController extends CordovaPlugin {
         	socket.send(sendPacket);        
         	boolean gotIt = false;
         	String result = null;
-        	String pattern = "D";
         	do{
 	        	byte[] receiveData = new byte[256];
 	        	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -56,10 +48,12 @@ public class UdpController extends CordovaPlugin {
 	        	System.out.println(receivePacket.getLength());
 	        	result = new String(receivePacket.getData());
 	        	result = result.substring(0, receivePacket.getLength());
-	        	if(!result.matches("D")){
+	        	if(!result.matches(command)){
 	        		gotIt = true;
+	        		result += "\n" + receivePacket.getAddress().toString().replace("/", "");
 	        	}
         	}while(!gotIt);
+        	socket.close();
         	callbackContext.success(result);
         	
 		} catch (IOException ExceIO)
@@ -67,13 +61,4 @@ public class UdpController extends CordovaPlugin {
 			callbackContext.error("Client getting data error : "+ExceIO.getMessage());
 		}
     }
-private String toString(byte[] byteArray){
-    char[] charray = new char[byteArray.length]; 
-    for (int i=0;i<=byteArray.length-1;i++) 
-    { 
-      Byte bt = new Byte(byteArray[i]); 
-      charray[i]=(char) bt.intValue(); 
-    } 
-    return new String (charray); 
-}
 }
