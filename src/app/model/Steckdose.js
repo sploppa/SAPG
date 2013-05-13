@@ -22,7 +22,9 @@ Ext.define('MyApp.model.Steckdose', {
 		    'internalIp',
 		    'externalIp',
 		    'typ',
-		    'httpPort'
+		    'httpPort',
+		    'userName',
+		    'password'
         ]
     }
 });

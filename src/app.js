@@ -30,11 +30,12 @@ Ext.application({
         'Timers'
     ],
     views: [
-        'DetailPanel',
-        'BottomBar',
+        'DosenPanel',
+        'NavigationTabs',
         'Timer',
         'SteckdosenList',
-        'SteckdosenEdit'
+        'SteckdosenEdit',
+        'MenuTapHold'
     ],
     controllers: [
         'SteckdosenMaster'
@@ -43,7 +44,7 @@ Ext.application({
 
     launch: function() {
 
-        Ext.create('MyApp.view.BottomBar', {fullscreen: true});
+        Ext.create('MyApp.view.NavigationTabs', {fullscreen: true});
     }
 
 });

@@ -14,6 +14,7 @@
  */
 var tapEventTime;
 var tapOnTimer;
+var currentTapLvl=0;
 var DISCOVER_MESSAGE_ROOTDEVICE =
     "M-SEARCH * HTTP/1.1\r\n" +
     "ST: urn:schemas-upnp-org:device:InternetGatewayDevice:1\r\n" +
@@ -39,7 +40,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
             "steckdosenList": {
                 activate: 'onListActivate',
                 itemtaphold: 'onListItemTapHold',
-                itemtap: 'onShowDetails'
+                itemtap: 'onShowDosenPanel'
             },
             "#DosenList":{
             	itemtap: 'onSwitchSocket'
@@ -72,60 +73,32 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     	console.log(index);
     	console.log(record.getId());
     	if(!editForm){
-	        editForm = Ext.create('Ext.form.Panel',{
-	        		alias: 'menuListItem',
-	        		id:'menuListItem',
-			        fullscreen: false,
-			        left: 0,
-			        top: 0,
-			        tplWriteMode: 'insertAfter',
-			        hideOnMaskTap: true,
-			        layout: {
-			            type: 'fit'
-			        },
-			        modal: true,
-			        scrollable: false,
-			        defaults: {
-			            margin: '0 0 5 0',
-			            labelWidth: '30%'
-			        },
-			        items: [
-			            {
-			                xtype: 'button',
-			                docked: 'left',
-			                itemId: 'edit',
-			                iconCls: 'action',
-			                text: 'bearbeiten',
-			                handler:function(button){
-							    //create the steckdosen edit window if it doesn't exists
-							    console.log('Bearbeiten Klick');
-							    steckdosenForm = Ext.Viewport.down('steckdosenEdit');
-							    if(!steckdosenForm){
-							   		steckdosenForm = Ext.widget("steckdosenEdit");
-							   	}
-			                	steckdosenForm.setRecord(record);
-			                	steckdosenForm.showBy(target);
-			                	editForm.destroy();
-			                }		                
-			            },
-			            {
-			                xtype: 'button',
-			                docked: 'left',
-			                iconCls: 'delete',
-			                itemId: 'delete',
-			                text: 'l&ouml;schen',
-			                handler:function(button){
-			                console.log(record);
-			                	var store = Ext.getStore('Steckdosen');
-			                	store.remove(store.getById(record.getId()));
-			                	Ext.getStore('Steckdosen').sync();
-			                	editForm.destroy();
-			                }
-			            }
-			        ]
-		        });
-		    }
-	        editForm.showBy(target);
+	        editForm = Ext.widget("menuTapHold");
+		}
+        editForm.showBy(target);
+        //Action: Button Tap Edit -> Anzeige Bearbeitungsview
+        editForm.down("button[itemId=edit]").on("tap",
+	        function(){
+	        	console.log('Bearbeiten Klick');
+			    steckdosenForm = Ext.Viewport.down('steckdosenEdit');
+			    if(!steckdosenForm){
+			   		steckdosenForm = Ext.widget("steckdosenEdit");
+			   	}
+            	steckdosenForm.setRecord(record);
+            	steckdosenForm.showBy(target);
+            	editForm.destroy();
+	        }
+	    );
+	    //Action: Button Tap Delete -> Löschen des Listenelements
+        editForm.down("button[itemId=delete]").on("tap",
+        	function(){
+        		console.log(record);
+            	var store = Ext.getStore('Steckdosen');
+            	store.remove(store.getById(record.getId()));
+            	Ext.getStore('Steckdosen').sync();
+            	editForm.destroy();
+        	}
+        );
     },
 
     onAddSteckdose: function(button, e, eOpts) {
@@ -167,112 +140,114 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     onSaveSteckdose: function(button, e, eOpts) {
 		console.log('Button Click for Save');
 		var form = button.up('panel');
-		//get the record 
 		var record = form.getRecord();
-		//get the form values
 		var values = form.getValues();
 		console.log(values);
-		//if a new employee
 		if(!record){
 			var newRecord = new MyApp.model.Steckdose(values);
 			newRecord.setDirty();
 		   	Ext.getStore('Steckdosen').add(newRecord);
 		}
-		//existing employee
 		else {
 			record.set(values);
 		}
 		form.destroy();
-		//save the data to the Web local Storage
 		Ext.getStore('Steckdosen').sync();
     },
     
-    onShowDetails: function(view, index, target, record, event) {
+    onShowDosenPanel: function(view, index, target, record, event) {
 		console.log(record);
-		console.log(tapEventTime);
     	if (!tapEventTime || (new Date() - tapEventTime > 1000)) {
+    		currentTapLvl += 1;
     		tapEventTime = null;
 		   	Ext.getCmp("addSteckdose").hide();
 		   	Ext.getCmp("searchSteckdose").hide();
-			var details = 	Ext.create('Ext.form.Panel',{
-								title: record.data.name,
-								items:[
-									{
-					                	xtype: 'container',
-					                	layout: 'vbox',
-					                	items:[
-					                		{
-					                			xtype: 'list',
-					                			id:'DosenList',
-					                			layout: 'fit',
-								                styleHtmlContent: true,
-										        emptyText: 'Laden...',
-										        loadingText: 'Laden...',
-										        store: 'Dosen',
-										        height: '20em',
-										        variableHeights: true,
-										        margin: '20',
-										        scrollable: false,
-										        itemTpl: [
-											    	'<img src="{status_url}" width="40" height="40">{idName}:{name}<img class="photo" src="{photo_url}" width="40" height="40"/>'								                
-										        ],
-										        onItemDisclosure: function(record) {
-										        	tapOnTimer = true;
-										        	console.log("Show Timer");
-													console.log(record);
-													var timer = 	Ext.create('Ext.form.Panel',{
-														title: record.data.name,
-														items:[
-														{		
-															xtype: 'list',
-								                			layout: 'fit',
-											                styleHtmlContent: true,
-													        emptyText: 'Laden...',
-													        loadingText: 'Laden...',
-													        store: 'Timers',
-													        height: '20em',
-													        variableHeights: true,
-													        margin: '20',
-													        scrollable: false,
-													        itemTpl: [
-														    	'ID:{id};Timer:{name};Time:{startTime}-{endTime};Active:{activated}'								                
-													        ]
-													 	}]
-													});										
-													Ext.getCmp('navigationview').push(timer);
-												}
-					                		}, {
-												xtype: 'button',
-												margin: '1% 30% 1% 30%',
-												padding: '1%',
-												text: 'Alle umschalten'					                		
-					                		}, {
-												xtype: 'button',
-												margin: '1% 30% 1% 30%',
-												padding: '1%',
-												text: 'Alle einschalten'					                		
-					                		}, {
-												xtype: 'button',
-												margin: '1% 30% 1% 30%',
-												padding: '1%',
-												text: 'Alle ausschalten'					                		
-					                		}
-					                	]
-						            }
-								]
-			  				});
-		  	view.up('navigationview').push(details);
+			var dosenPanel = Ext.widget('dosenPanel');
+			dosenPanel.config.title = record.data.name;
+			var store = Ext.create('Ext.data.Store', {
+			        model: 'MyApp.model.Dose',
+			        storeId: 'Dosen',
+			        autoLoad: true,
+			        data: [
+				    	{
+				    		id:'1',
+				    		idName: 'Dose 1',
+					        name: 'Lampe',
+					        status_url: 'img/power_on.png'
+				    	}, {
+				    		id:'2',
+				    		idName: 'Dose 2',
+				    		name: 'Netzwerk',
+				    		status_url: 'img/power_on.png'
+				    	}, {
+				    		id:'3',
+				    		idName: 'Dose 3',
+				    		name: 'Netzwerk',
+				    		status_url: 'img/power_on.png'
+				    	}, {
+				    		id:'4',
+				    		idName: 'Dose 4',
+				    		name: 'Netzwerk',
+				    		status_url: 'img/power_on.png'
+				    	}
+					],
+			        proxy: {
+			            type: 'memory'
+			        }
+			});
+			store.add({
+				    		id:'5',
+				    		idName: 'Dose 5',
+				    		name: 'Bla',
+				    		status_url: 'img/power_off.png'
+				    	});
+			dosenPanel.down('#DosenList').setStore(store);
+		  	view.up('navigationview').push(dosenPanel);
+		  	
+		  	
 		}
     },
     
     onBackButtonTap: function(button){
-    	Ext.getCmp("addSteckdose").show();
-	   	Ext.getCmp("searchSteckdose").show();
+    	currentTapLvl -= 1;
+    	if(currentTapLvl <= 0){
+    		Ext.getCmp("addSteckdose").show();
+	   		Ext.getCmp("searchSteckdose").show();
+	   	}
     },
     onSwitchSocket: function(view, index, target, record, event){
     	if(!tapOnTimer){
-			console.log("Switch Socket");
-			console.log(record);
+    		if(index==0){
+    			Ext.Msg.alert('Nicht m&ouml;glich', 'Steckdose 1 kann nicht geschaltet werden.\nSie ist dauerhaft an.');
+    		}else{
+				console.log("Switch Socket");
+				console.log(record);
+				index = index - 1 ; // Socket 1 refers as 'F0'
+				console.log(index);
+				xhttp=new XMLHttpRequest();
+	
+				var OPEN = 'http://192.168.178.117/ctrl.htm';
+			
+				// Send switch request to the socket
+				xhttp.open('POST',OPEN,false);
+				xhttp.setRequestHeader("Content-type","text/plain");
+				xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
+				xhttp.send('F' + index + '=Switch');
+				
+				// Get status
+				OPEN = 'http://192.168.178.117/strg.cfg';
+				xhttp.open('GET',OPEN,false);
+				xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
+				xhttp.send("");
+				var state = xhttp.responseText.split(";")[20+index];
+				if(state==0){
+					record.set('status_url','img/power_off.png');
+				} else if (state==1){
+					record.set('status_url','img/power_on.png');
+				} else {
+					Ext.Msg.alert('Fehler', 'Der Status der Steckdose konnte nicht abgefragt werden.\nBitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind.')
+				}
+    		}
 		}
 		tapOnTimer = false;
     },

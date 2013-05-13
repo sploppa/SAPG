@@ -19,7 +19,7 @@ Ext.define('MyApp.view.SteckdosenList', {
 
     config: {
         styleHtmlContent: true,
-        emptyText: 'Noch keine Steckdose angelegt. Bitte hinzuf&uuml;gen !',
+        emptyText: 'Noch keine Steckdose angelegt. \nBitte auf die Lupe rechts oben tippen, um nach Steckdosen im Netzwerk zu suchen!',
         loadingText: 'Laden...',
         store: 'Steckdosen',
         variableHeights: true,
