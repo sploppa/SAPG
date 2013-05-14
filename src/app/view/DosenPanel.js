@@ -14,71 +14,37 @@
  */
 
 Ext.define('MyApp.view.DosenPanel', {
-			extend: 'Ext.form.Panel',
+			extend: 'Ext.Container',
 			alias: 'widget.dosenPanel',
 			config: {
+				layout: {
+            		type: 'vbox'
+        		},
+        		recordbla: 'something',
 				items:[
 					{
-		            	xtype: 'container',
-		            	layout: 'vbox',
-		            	items:[
-		            		{
-		            			xtype: 'list',
-		            			id:'DosenList',
-		            			layout: 'fit',
-				                styleHtmlContent: true,
-						        emptyText: 'Laden...',
-						        loadingText: 'Laden...',
-						        height: '20em',
-						        variableHeights: true,
-						        margin: '20',
-						        scrollable: false,
-						        itemTpl: [
-							    	'<img src="{status_url}" width="40" height="40">{idName}:{name}'								                
-						        ],
-						        onItemDisclosure: function(record) {
-						        	tapOnTimer = true;
-						        	console.log("Show Timer");
-									console.log(record);
-									var timer = 	Ext.create('Ext.form.Panel',{
-										title: record.data.name,
-										items:[
-										{		
-											xtype: 'list',
-				                			layout: 'fit',
-							                styleHtmlContent: true,
-									        emptyText: 'Laden...',
-									        loadingText: 'Laden...',
-									        store: 'Timers',
-									        height: '20em',
-									        variableHeights: true,
-									        margin: '20',
-									        scrollable: false,
-									        itemTpl: [
-										    	'ID:{id};Timer:{name};Time:{startTime}-{endTime};Active:{activated}'								                
-									        ]
-									 	}]
-									});										
-									Ext.getCmp('navigationview').push(timer);
-								}
-		            		}, {
-								xtype: 'button',
-								margin: '1% 30% 1% 30%',
-								padding: '1%',
-								text: 'Alle umschalten'					                		
-		            		}, {
-								xtype: 'button',
-								margin: '1% 30% 1% 30%',
-								padding: '1%',
-								text: 'Alle einschalten'					                		
-		            		}, {
-								xtype: 'button',
-								margin: '1% 30% 1% 30%',
-								padding: '1%',
-								text: 'Alle ausschalten'					                		
-		            		}
-		            	]
-		            }
+                        xtype: 'dosenList',
+                        flex: 1,
+                        scrollable: true
+            		}, {
+						xtype: 'button',
+						itemId: 'alleUmschalten',
+						margin: '3% 25% 1% 25%',
+						padding: '1%',
+						text: 'Alle umschalten',										                		
+            		}, {
+						xtype: 'button',
+						itemId: 'alleEinschalten',
+						margin: '1% 25% 1% 25%',
+						padding: '1%',
+						text: 'Alle einschalten'					                		
+            		}, {
+						xtype: 'button',
+						itemId: 'alleAusschalten',
+						margin: '1% 25% 3% 25%',
+						padding: '1%',
+						text: 'Alle ausschalten'					                		
+            		}
 				]
 			}
 });

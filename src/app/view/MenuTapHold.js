@@ -17,7 +17,6 @@ Ext.define('MyApp.view.MenuTapHold', {
     extend: 'Ext.form.Panel',
     alias: 'widget.menuTapHold',
     id: 'menuTapHold',
-
     config: {
         fullscreen: false,
 			        left: 0,
@@ -39,18 +38,7 @@ Ext.define('MyApp.view.MenuTapHold', {
 			                docked: 'left',
 			                itemId: 'edit',
 			                iconCls: 'action',
-			                text: 'bearbeiten',
-			                handler:function(button){
-							    //create the steckdosen edit window if it doesn't exists
-							    console.log('Bearbeiten Klick');
-							    steckdosenForm = Ext.Viewport.down('steckdosenEdit');
-							    if(!steckdosenForm){
-							   		steckdosenForm = Ext.widget("steckdosenEdit");
-							   	}
-			                	steckdosenForm.setRecord(record);
-			                	steckdosenForm.showBy(target);
-			                	editForm.destroy();
-			                }		                
+			                text: 'bearbeiten',                
 			            },
 			            {
 			                xtype: 'button',
@@ -58,13 +46,6 @@ Ext.define('MyApp.view.MenuTapHold', {
 			                iconCls: 'delete',
 			                itemId: 'delete',
 			                text: 'l&ouml;schen',
-			                handler:function(button){
-			                console.log(record);
-			                	var store = Ext.getStore('Steckdosen');
-			                	store.remove(store.getById(record.getId()));
-			                	Ext.getStore('Steckdosen').sync();
-			                	editForm.destroy();
-			                }
 			            }
 			        ]
     }

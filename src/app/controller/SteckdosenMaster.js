@@ -39,20 +39,29 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         control: {
             "steckdosenList": {
                 activate: 'onListActivate',
-                itemtaphold: 'onListItemTapHold',
-                itemtap: 'onShowDosenPanel'
+                itemtaphold: 'onSteckdosenListItemTapHold',
+                itemtap: 'onSteckdosenListItemTap'
             },
-            "#DosenList":{
-            	itemtap: 'onSwitchSocket'
+            "dosenList":{
+            	itemtap: 'onSwitchSocketTap'
             },
             "button[itemId=addSteckdose]": {
-                tap: 'onAddSteckdose'
+                tap: 'onAddSteckdoseTap'
             },
             "button[itemId=searchSteckdose]": {
-                tap: 'onSearchSteckdose'
+                tap: 'onSearchSteckdoseTap'
             },
 		   "button[itemId=save]" : {
-		    	tap : 'onSaveSteckdose'
+		    	tap : 'onSaveSteckdoseTap'
+		   },
+		   "button[itemId=alleUmschalten]" : {
+		    	tap : 'onAlleUmschaltenTap'
+		   },
+		   "button[itemId=alleEinschalten]" : {
+		    	tap : 'onAlleEinschaltenTap'
+		   },
+		   "button[itemId=alleAusschalten]" : {
+		    	tap : 'onAlleAusschaltenTap'
 		   },
 		   "#ext-button-1" : {
 		   		tap : 'onBackButtonTap'
@@ -65,13 +74,9 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         Ext.getStore('Steckdosen').load();
     },
 
-    onListItemTapHold: function(view, index, target, record, event) {
+    onSteckdosenListItemTapHold: function(view, index, target, record, event) {
     	tapEventTime = new Date();
     	var editForm = Ext.getCmp('menuListItem');
-    	console.log(record.get('mySteckdoseKey'));
-    	console.log(record.get('Id'));
-    	console.log(index);
-    	console.log(record.getId());
     	if(!editForm){
 	        editForm = Ext.widget("menuTapHold");
 		}
@@ -92,16 +97,19 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 	    //Action: Button Tap Delete -> Löschen des Listenelements
         editForm.down("button[itemId=delete]").on("tap",
         	function(){
-        		console.log(record);
-            	var store = Ext.getStore('Steckdosen');
-            	store.remove(store.getById(record.getId()));
-            	Ext.getStore('Steckdosen').sync();
-            	editForm.destroy();
+        		editForm.destroy();
+        		Ext.Msg.confirm("Sicherheitsabfrage","Sind Sie sicher das Element zu entfernen?", function(antwort){
+        			if(antwort=='yes'){
+        				var store = Ext.getStore('Steckdosen');
+		            	store.remove(store.getById(record.getId()));
+		            	Ext.getStore('Steckdosen').sync();
+        			}
+        		});
         	}
         );
     },
 
-    onAddSteckdose: function(button, e, eOpts) {
+    onAddSteckdoseTap: function(button, e, eOpts) {
         var steckdosenForm = Ext.Viewport.down("steckdosenEdit");
         //create the steckdosen edit window if it doesn't exists
         if(!steckdosenForm){
@@ -111,7 +119,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         steckdosenForm.showBy(button);
     },
     
-    onSearchSteckdose: function(button, e, eOpts) {
+    onSearchSteckdoseTap: function(button, e, eOpts) {
     	var networkState = navigator.network.connection.type;
 	    if(networkState == Connection.WIFI){
 	    	cordova.exec(function(succ){
@@ -137,7 +145,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 	    }
     },
     
-    onSaveSteckdose: function(button, e, eOpts) {
+    onSaveSteckdoseTap: function(button, e, eOpts) {
 		console.log('Button Click for Save');
 		var form = button.up('panel');
 		var record = form.getRecord();
@@ -155,7 +163,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		Ext.getStore('Steckdosen').sync();
     },
     
-    onShowDosenPanel: function(view, index, target, record, event) {
+    onSteckdosenListItemTap: function(view, index, target, record, event) {
 		console.log(record);
     	if (!tapEventTime || (new Date() - tapEventTime > 1000)) {
     		currentTapLvl += 1;
@@ -164,6 +172,12 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		   	Ext.getCmp("searchSteckdose").hide();
 			var dosenPanel = Ext.widget('dosenPanel');
 			dosenPanel.config.title = record.data.name;
+			dosenPanel.config.internalIp = record.data.internalIp;
+			dosenPanel.config.externalIp = record.data.externalIp;
+			dosenPanel.config.name = record.data.name;
+			dosenPanel.config.httpPort = record.data.httpPort;
+			
+			alert(dosenPanel.config.rec);
 			var store = Ext.create('Ext.data.Store', {
 			        model: 'MyApp.model.Dose',
 			        storeId: 'Dosen',
@@ -196,12 +210,12 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			        }
 			});
 			store.add({
-				    		id:'5',
-				    		idName: 'Dose 5',
-				    		name: 'Bla',
-				    		status_url: 'img/power_off.png'
-				    	});
-			dosenPanel.down('#DosenList').setStore(store);
+	    		id:'5',
+	    		idName: 'Dose 5',
+	    		name: 'Bla',
+	    		status_url: 'img/power_off.png'
+			});
+			dosenPanel.down('dosenList').setStore(store);
 		  	view.up('navigationview').push(dosenPanel);
 		  	
 		  	
@@ -215,7 +229,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 	   		Ext.getCmp("searchSteckdose").show();
 	   	}
     },
-    onSwitchSocket: function(view, index, target, record, event){
+    onSwitchSocketTap: function(view, index, target, record, event){
     	if(!tapOnTimer){
     		if(index==0){
     			Ext.Msg.alert('Nicht m&ouml;glich', 'Steckdose 1 kann nicht geschaltet werden.\nSie ist dauerhaft an.');
@@ -251,6 +265,16 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		}
 		tapOnTimer = false;
     },
+    onAlleUmschaltenTap: function(button){
+    	alert('onAlleUmschaltenTap');
+		alert(button.up('container').config.internalIp);
+    },
+    onAlleEinschaltenTap: function(button){
+    	alert('onAlleEinschaltenTap');
+    },
+    onAlleAusschaltenTap: function(button){
+    	alert('onAlleAusschaltenTap');
+    },
     onBackup: function(button){
        	xhttp=new XMLHttpRequest();
 
@@ -261,6 +285,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
 		xhttp.send('TN=Bla');
 		alert(xhttp.responseText + " " + xhttp.status);
-    }
+    },
     
 });
