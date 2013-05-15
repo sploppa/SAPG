@@ -22,7 +22,8 @@ Ext.define('MyApp.model.Dose', {
 		   'idName',
 		   'name', 
 		   'status_url', 
-		   'photo_url'
+		   'photo_url',
+		   'status'
         ]
     }
 });

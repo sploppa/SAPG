@@ -76,7 +76,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 
     onSteckdosenListItemTapHold: function(view, index, target, record, event) {
     	tapEventTime = new Date();
-    	var editForm = Ext.getCmp('menuListItem');
+    	var editForm = Ext.getCmp('menuTapHold');
     	if(!editForm){
 	        editForm = Ext.widget("menuTapHold");
 		}
@@ -91,13 +91,13 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			   	}
             	steckdosenForm.setRecord(record);
             	steckdosenForm.showBy(target);
-            	editForm.destroy();
+            	editForm.hide();
 	        }
 	    );
 	    //Action: Button Tap Delete -> Löschen des Listenelements
         editForm.down("button[itemId=delete]").on("tap",
         	function(){
-        		editForm.destroy();
+        		editForm.hide();
         		Ext.Msg.confirm("Sicherheitsabfrage","Sind Sie sicher das Element zu entfernen?", function(antwort){
         			if(antwort=='yes'){
         				var store = Ext.getStore('Steckdosen');
@@ -176,45 +176,60 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			dosenPanel.config.externalIp = record.data.externalIp;
 			dosenPanel.config.name = record.data.name;
 			dosenPanel.config.httpPort = record.data.httpPort;
+			dosenPanel.config.typ = record.data.typ;
 			
-			alert(dosenPanel.config.rec);
-			var store = Ext.create('Ext.data.Store', {
+			if(Ext.getStore(record.data.name)){
+				var store = Ext.getStore(record.data.name);
+			}else{
+				var store = Ext.create('Ext.data.Store', {
 			        model: 'MyApp.model.Dose',
-			        storeId: 'Dosen',
+			        storeId: record.data.name,
 			        autoLoad: true,
-			        data: [
-				    	{
-				    		id:'1',
-				    		idName: 'Dose 1',
-					        name: 'Lampe',
-					        status_url: 'img/power_on.png'
-				    	}, {
-				    		id:'2',
-				    		idName: 'Dose 2',
-				    		name: 'Netzwerk',
-				    		status_url: 'img/power_on.png'
-				    	}, {
-				    		id:'3',
-				    		idName: 'Dose 3',
-				    		name: 'Netzwerk',
-				    		status_url: 'img/power_on.png'
-				    	}, {
-				    		id:'4',
-				    		idName: 'Dose 4',
-				    		name: 'Netzwerk',
-				    		status_url: 'img/power_on.png'
-				    	}
-					],
 			        proxy: {
-			            type: 'memory'
+			            type: 'localstorage'
 			        }
-			});
-			store.add({
-	    		id:'5',
-	    		idName: 'Dose 5',
-	    		name: 'Bla',
-	    		status_url: 'img/power_off.png'
-			});
+				});
+			}
+			var anzahlDosen 	= 0;
+			var anzahlIo 		= 0;
+			var blockedDosen 	= 0;
+			switch(record.data.typ){
+					case "Home":
+						anzahlDosen = 3;
+						blockedDosen = 1;
+						break;
+					case "Pro":
+					case "ADV":
+						anzahlDosen = 8;
+						break;
+					case "HUT":
+					case "IO":
+						anzahlDosen = 8;
+						anzahlIo = 8;
+						break;
+					default:
+						anzahlDosen = 8;
+						break;
+			}
+			for(var i=1;i<=anzahlDosen;i++){
+				if(i<=blockedDosen){
+					store.add({
+			    		id: 'on',
+			    		idName: 'Dose On',
+			    		name: 'Dosenname',
+			    		status_url: 'img/power_on.png'
+					});
+					blockedDosen -= 1;
+					i = 0;
+				}else{
+					store.add({
+			    		id: i,
+			    		idName: 'Dose '+i,
+			    		name: 'Dosenname',
+			    		status_url: 'img/power_off.png'
+					});
+				}
+			}
 			dosenPanel.down('dosenList').setStore(store);
 		  	view.up('navigationview').push(dosenPanel);
 		  	
@@ -267,7 +282,12 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     },
     onAlleUmschaltenTap: function(button){
     	alert('onAlleUmschaltenTap');
-		alert(button.up('container').config.internalIp);
+		alert(
+			'internalIp: ' + button.up('container').config.internalIp +
+			'\nexternalIp: ' + button.up('container').config.externalIp +
+			'\nname: ' + button.up('container').config.name +
+			'\nhttpPort: ' + button.up('container').config.httpPort
+		);
     },
     onAlleEinschaltenTap: function(button){
     	alert('onAlleEinschaltenTap');

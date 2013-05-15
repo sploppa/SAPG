@@ -23,6 +23,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
         left: 0,
         top: 0,
         tplWriteMode: 'insertAfter',
+        floating: true,
         hideOnMaskTap: true,
         layout: {
             type: 'fit'

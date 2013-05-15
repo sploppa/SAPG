@@ -27,7 +27,6 @@ Ext.define('MyApp.view.MenuTapHold', {
 			            type: 'fit'
 			        },
 			        modal: true,
-			        scrollable: false,
 			        defaults: {
 			            margin: '0 0 5 0',
 			            labelWidth: '30%'
