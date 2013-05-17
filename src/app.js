@@ -23,7 +23,8 @@ Ext.application({
     stores: [
         'Steckdosen',
         'Dosen',
-        'Timers'
+        'Timers',
+        'TempSteckdosen'
     ],
     views: [
         'DosenPanel',
@@ -32,7 +33,9 @@ Ext.application({
         'SteckdosenList',
         'SteckdosenEdit',
         'MenuTapHold',
-        'DosenList'
+        'DosenList',
+        'SteckdosenSearch',
+        'SteckdosenSearchList'
     ],
     controllers: [
         'SteckdosenMaster'

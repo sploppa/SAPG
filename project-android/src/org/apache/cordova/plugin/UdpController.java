@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketTimeoutException;
 
 import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
@@ -15,6 +16,8 @@ import org.json.JSONException;
  * This class echoes a string called from JavaScript.
  */
 public class UdpController extends CordovaPlugin {
+	String result="";
+	
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("sendBroadcastMessage")) {         
@@ -28,37 +31,46 @@ public class UdpController extends CordovaPlugin {
         String command = args.getString(0);
         String ip = args.getString(1);
         int port = args.getInt(2);
-
+        DatagramSocket socket = null;
         try {
-        
-        	DatagramSocket socket = new DatagramSocket(port);
+        	//result = "";
+        	socket = new DatagramSocket(port);
+        	socket.setSoTimeout(3000);
         	socket.setBroadcast(true);
-        	socket.setSoTimeout(10000);
         	InetAddress IPAddress = InetAddress.getByName(ip);           
         	byte[] sendData = new byte[1];
         	sendData= command.getBytes();
         	DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
         	socket.send(sendPacket);        
         	boolean gotIt = false;
-        	String result = null;
         	do{
+        		String temp = null;
 	        	byte[] receiveData = new byte[256];
 	        	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 	        	socket.receive(receivePacket);
 	        	System.out.println(receivePacket.getLength());
-	        	result = new String(receivePacket.getData());
-	        	result = result.substring(0, receivePacket.getLength());
-	        	if(!result.matches(command)){
-	        		gotIt = true;
-	        		result += "\n" + receivePacket.getAddress().toString().replace("/", "");
+	        	temp = new String(receivePacket.getData());
+	        	temp = temp.substring(0, receivePacket.getLength());
+	        	if(!temp.matches(command)){
+	        		temp += "\n" + receivePacket.getAddress().toString().replace("/", "");
+	        		if(result == ""){
+	        			result = temp;
+	        		}else{
+	        			result += ";"+temp;
+	        		}
 	        	}
         	}while(!gotIt);
         	socket.close();
         	callbackContext.success(result);
         	
-		} catch (IOException ExceIO)
+		} catch(SocketTimeoutException e){
+			callbackContext.success(result);
+		}
+        catch (IOException ExceIO)
 		{
 			callbackContext.error("Client getting data error : "+ExceIO.getMessage());
+		}finally{
+			socket.close();
 		}
     }
 }

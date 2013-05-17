@@ -21,6 +21,8 @@ var DISCOVER_MESSAGE_ROOTDEVICE =
     "MX: 4\r\n" +
     "MAN: \"ssdp:discover\"\r\n" +
     "HOST: 239.255.255.250:1900\r\n\r\n";
+var DISCOVER_MESSAGE_IP = "239.255.255.250";
+var DISCOVER_MESSAGE_PORT = 1900;
 Ext.define('MyApp.controller.SteckdosenMaster', {
     extend: 'Ext.app.Controller',
 
@@ -44,6 +46,9 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
             },
             "dosenList":{
             	itemtap: 'onSwitchSocketTap'
+            },
+            "steckdosenSearchList":{
+            	itemtap: 'onSteckdosenSearchListItemTap'
             },
             "button[itemId=addSteckdose]": {
                 tap: 'onAddSteckdoseTap'
@@ -91,13 +96,13 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			   	}
             	steckdosenForm.setRecord(record);
             	steckdosenForm.showBy(target);
-            	editForm.hide();
+            	editForm.destroy();
 	        }
 	    );
 	    //Action: Button Tap Delete -> Löschen des Listenelements
         editForm.down("button[itemId=delete]").on("tap",
         	function(){
-        		editForm.hide();
+        		editForm.destroy();
         		Ext.Msg.confirm("Sicherheitsabfrage","Sind Sie sicher das Element zu entfernen?", function(antwort){
         			if(antwort=='yes'){
         				var store = Ext.getStore('Steckdosen');
@@ -122,27 +127,111 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     onSearchSteckdoseTap: function(button, e, eOpts) {
     	var networkState = navigator.network.connection.type;
 	    if(networkState == Connection.WIFI){
+	    	var tempStore = Ext.getStore('TempSteckdosen');
+	    		tempStore.removeAll();
+	    	var ListPanel = Ext.Viewport.down('steckdosenSearch');
+	    	if(!ListPanel){
+	    		ListPanel = Ext.widget("steckdosenSearch");
+	    	}
+	        ListPanel.showBy(button);
 	    	cordova.exec(function(succ){
-						var respond = succ.split("\n");
-					    steckdosenForm = Ext.Viewport.down('steckdosenEdit');
-					    if(!steckdosenForm){
-					   		steckdosenForm = Ext.widget("steckdosenEdit");
-					   	}
-	                	var name = respond[0];
-	                	var internalIp = respond[4];
-	                	cordova.exec(function(succ){alert(succ);},function(err){alert(err);},"UPnPController","getRouterInfo",[DISCOVER_MESSAGE_ROOTDEVICE,"239.255.255.250",1900]);
-	                	steckdosenForm.getComponent('name').setValue(name);
-	                	steckdosenForm.getComponent('internalIp').setValue(internalIp);
-	                	steckdosenForm.showBy(button);
+	    				tempStore.removeAll();
+	    				alert(succ);
+						var steckdosenArray = succ.split(";");
+						for(var i in steckdosenArray){
+						    var currentSteckdose = steckdosenArray[i];
+							var respond = currentSteckdose.split("\n");
+		                	var name = respond[0];
+		                	var mac = respond[1];
+		                	var version = respond[2];
+		                	var httpPort = respond[3];
+		                	var internalIp = respond[4];
+		                	var externalIp = null;
+		                	cordova.exec(
+		                		function(succ2){
+		                			var result = succ2.split(":");
+									DELIVERY_PATH = result[0];
+									ROUTER_IP = result[1];
+									ROUTER_PORT = result[2];
+		                			var SOAP_ACTION = "urn:schemas-upnp-org:service:WANIPConnection:1#GetExternalIPAddress";
+				                	var body = 	
+										 "<?xml version='1.0' encoding='utf-8'?>"
+										+"<s:Envelope s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/' xmlns:s='http://schemas.xmlsoap.org/soap/envelope/'>"
+										+"<s:Body>"
+										+ "<u:GetExternalIPAddress xmlns:u='urn:schemas-upnp-org:service:WANIPConnection:1'>"
+										+ "</u:GetExternalIPAddress>"
+										+"</s:Body>"
+										+"</s:Envelope>";
+									  	  
+									var header = 
+										 "POST " + DELIVERY_PATH + " HTTP/1.1\n"
+										+"Host: "+ROUTER_IP+":"+ROUTER_PORT+"\r\n"
+										+"SOAPACTION: "+ SOAP_ACTION +"\r\n"
+										+"Content-Length: " + body.length +"\r\n"
+										+"Content-Type: text/xml; charset='utf-8'\r\n"
+										+"\r\n";
+										
+									cordova.exec(
+				                		function(succ3){
+				                			var e = succ3.match(/<NewExternalIPAddress[^>]*>.*<\/NewExternalIPAddress[^>]*>/gi);
+					  						for(var j=0;j<e.length;++j){
+					  							externalIp = e[j].match(/\d*[.]\d*[.]\d*[.]\d*/);
+					  						}
+					  	                	tempStore.add({
+						                		name: name,
+						                		httpPort: httpPort,
+						                		internalIp: internalIp,
+						                		externalIp: externalIp,
+						                		mac: mac,
+						                		version: version
+						                	});
+				                		},
+				                		function(err3){
+				                			console.log(err3);
+				                			Ext.Msg.alert('ExternalIp Error','Es gab leider ein Problem beim Abfragen der Externen IP');
+				                			tempStore.add({
+						                		name: name,
+						                		httpPort: httpPort,
+						                		internalIp: internalIp,
+						                		externalIp: externalIp,
+						                		mac: mac,
+						                		version: version
+						                	});
+				                		},
+				                		"HttpController", 
+				 						"sendMessage",
+				 						[header,body,ROUTER_IP,ROUTER_PORT]
+				                	);
+		                		},
+		                		function(err2){},
+		                		"UPnPController", 
+		 						"getRouterInfo",
+		 						[DISCOVER_MESSAGE_ROOTDEVICE,DISCOVER_MESSAGE_IP,DISCOVER_MESSAGE_PORT]
+		                	);
+						}
                      },
                      function(err){
-                     	alert(err);
+                     	console.log(err);
+                     	
                      }, "UdpController", "sendBroadcastMessage",
                      ["D","255.255.255.255",30303]
      		);
 	    }else{
 	    	Ext.Msg.alert('Suchen einer Steckdose im Netzwerk','Diese Funktion ist nur im Wifi-Netzwerk verf&uumlgbar.',Ext.emptyFn);
 	    }
+    },
+    
+    onSteckdosenSearchListItemTap:function(view, index, target, record, event) {
+    	var steckdosenStore = Ext.getStore('Steckdosen');
+    	steckdosenStore.add(record);
+    	var tempSteckdosenStore = Ext.getStore('TempSteckdosen');
+    	if(tempSteckdosenStore.getCount() > 1){
+    		Ext.Msg.confirm("Weiter ?","M&oumlchten Sie noch weitere Dosen aus der Suche hinzuf&uumlgen?", function(antwort){
+        			if(antwort=='no'){
+        				view.up('panel').hide();
+        			}
+        		});
+    	}
     },
     
     onSaveSteckdoseTap: function(button, e, eOpts) {
