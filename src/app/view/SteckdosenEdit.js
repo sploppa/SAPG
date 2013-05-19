@@ -20,20 +20,12 @@ Ext.define('MyApp.view.SteckdosenEdit', {
 
     config: {
         fullscreen: false,
-        left: 0,
-        top: 0,
-        tplWriteMode: 'insertAfter',
-        floating: true,
         hideOnMaskTap: true,
         layout: {
             type: 'fit'
         },
         modal: true,
-        scrollable: false,
-        defaults: {
-            margin: '0 0 5 0',
-            labelWidth: '30%'
-        },
+        scrollable: true,
         items: [
             {
                 xtype: 'textfield',
@@ -100,6 +92,22 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 label: 'HTTP Port',
                 labelWidth: '40%',
                 name: 'httpPort'
+            },
+            {
+                xtype: 'textfield',
+                docked: 'top',
+                itemId: 'userName',
+                label: 'Benutzername',
+                labelWidth: '40%',
+                name: 'userName'
+            },
+            {
+                xtype: 'passwordfield',
+                docked: 'top',
+                itemId: 'password',
+                label: 'Passwort',
+                labelWidth: '40%',
+                name: 'password'
             },
             {
                 xtype: 'button',

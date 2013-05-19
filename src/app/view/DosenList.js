@@ -18,6 +18,7 @@ Ext.define('MyApp.view.DosenList', {
     alias: 'widget.dosenList',
 
     config: {
+    	onItemDisclosure:true,
         styleHtmlContent: true,
         emptyText: 'Laden...',
         loadingText: 'Laden...',  

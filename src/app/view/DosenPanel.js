@@ -20,7 +20,6 @@ Ext.define('MyApp.view.DosenPanel', {
 				layout: {
             		type: 'vbox'
         		},
-        		recordbla: 'something',
 				items:[
 					{
                         xtype: 'dosenList',

@@ -29,7 +29,7 @@ Ext.application({
     views: [
         'DosenPanel',
         'NavigationTabs',
-        'Timer',
+        'TimerPanel',
         'SteckdosenList',
         'SteckdosenEdit',
         'MenuTapHold',
@@ -43,6 +43,21 @@ Ext.application({
     name: 'MyApp',
 
     launch: function() {
+    
+    	// set up a listener to handle the back button for Android 
+        if (Ext.os.is('Android')) {
+          document.addEventListener("backbutton", Ext.bind(onBackKeyDown, this), false);  // add back button listener
+ 
+          function onBackKeyDown(e) {
+          		Ext.Msg.confirm("Verlassen ? ","M&oumlchten Sie die Anwendung verlassen?", function(antwort){
+        			if(antwort=='no'){
+        				e.preventDefault();
+        			}else{
+        				navigator.app.exitApp();
+        			}
+        		});
+          }
+       }
 
         Ext.create('MyApp.view.NavigationTabs', {fullscreen: true});
     }

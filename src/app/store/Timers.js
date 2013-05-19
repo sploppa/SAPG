@@ -28,9 +28,9 @@ Ext.define('MyApp.store.Timers', {
 	    	{
 	    		id:'4',
 	    		name:'Morgens',
-	    		startTime:'1500',
-	    		endTime:'1800',
-	    		activated:'true'
+	    		startTime:'15:00',
+	    		endTime:'18:00',
+	    		checked:'checked'
 	    	}
 		],
         proxy: {

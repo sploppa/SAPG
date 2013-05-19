@@ -23,6 +23,16 @@ var DISCOVER_MESSAGE_ROOTDEVICE =
     "HOST: 239.255.255.250:1900\r\n\r\n";
 var DISCOVER_MESSAGE_IP = "239.255.255.250";
 var DISCOVER_MESSAGE_PORT = 1900;
+
+var internalIp = null;
+var externalIp = null;
+var steckdosenName = null;
+var dosenName = null;
+var dosenId = null;
+var typ = null;
+var httpPort = null;
+var userName = null;
+var password = null;
 Ext.define('MyApp.controller.SteckdosenMaster', {
     extend: 'Ext.app.Controller',
 
@@ -45,7 +55,8 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
                 itemtap: 'onSteckdosenListItemTap'
             },
             "dosenList":{
-            	itemtap: 'onSwitchSocketTap'
+            	itemtap: 'onSwitchSocketTap',
+            	disclose: 'disclose'
             },
             "steckdosenSearchList":{
             	itemtap: 'onSteckdosenSearchListItemTap'
@@ -76,7 +87,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 
     onListActivate: function(container, newActiveItem, oldActiveItem, eOpts) {
         console.log('Main container is active');
-        Ext.getStore('Steckdosen').load();
     },
 
     onSteckdosenListItemTapHold: function(view, index, target, record, event) {
@@ -96,13 +106,13 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			   	}
             	steckdosenForm.setRecord(record);
             	steckdosenForm.showBy(target);
-            	editForm.destroy();
+            	editForm.hide();
 	        }
 	    );
 	    //Action: Button Tap Delete -> Löschen des Listenelements
         editForm.down("button[itemId=delete]").on("tap",
         	function(){
-        		editForm.destroy();
+        		editForm.hide();
         		Ext.Msg.confirm("Sicherheitsabfrage","Sind Sie sicher das Element zu entfernen?", function(antwort){
         			if(antwort=='yes'){
         				var store = Ext.getStore('Steckdosen');
@@ -116,7 +126,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 
     onAddSteckdoseTap: function(button, e, eOpts) {
         var steckdosenForm = Ext.Viewport.down("steckdosenEdit");
-        //create the steckdosen edit window if it doesn't exists
+        //Erstellen eines SteckdosenEdit Views, wenn er noch nicht existiert
         if(!steckdosenForm){
             steckdosenForm = Ext.widget("steckdosenEdit");
         } 
@@ -136,12 +146,11 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 	        ListPanel.showBy(button);
 	    	cordova.exec(function(succ){
 	    				tempStore.removeAll();
-	    				alert(succ);
 						var steckdosenArray = succ.split(";");
 						for(var i in steckdosenArray){
 						    var currentSteckdose = steckdosenArray[i];
 							var respond = currentSteckdose.split("\n");
-		                	var name = respond[0];
+		                	var steckdosenName = respond[0];
 		                	var mac = respond[1];
 		                	var version = respond[2];
 		                	var httpPort = respond[3];
@@ -178,7 +187,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 					  							externalIp = e[j].match(/\d*[.]\d*[.]\d*[.]\d*/);
 					  						}
 					  	                	tempStore.add({
-						                		name: name,
+						                		name: steckdosenName,
 						                		httpPort: httpPort,
 						                		internalIp: internalIp,
 						                		externalIp: externalIp,
@@ -190,7 +199,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 				                			console.log(err3);
 				                			Ext.Msg.alert('ExternalIp Error','Es gab leider ein Problem beim Abfragen der Externen IP');
 				                			tempStore.add({
-						                		name: name,
+						                		name: steckdosenName,
 						                		httpPort: httpPort,
 						                		internalIp: internalIp,
 						                		externalIp: externalIp,
@@ -231,6 +240,8 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         				view.up('panel').hide();
         			}
         		});
+    	}else{
+    		view.up('panel').hide();
     	}
     },
     
@@ -248,7 +259,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		else {
 			record.set(values);
 		}
-		form.destroy();
+		form.hide();
 		Ext.getStore('Steckdosen').sync();
     },
     
@@ -257,48 +268,34 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     	if (!tapEventTime || (new Date() - tapEventTime > 1000)) {
     		currentTapLvl += 1;
     		tapEventTime = null;
-		   	Ext.getCmp("addSteckdose").hide();
-		   	Ext.getCmp("searchSteckdose").hide();
 			var dosenPanel = Ext.widget('dosenPanel');
 			dosenPanel.config.title = record.data.name;
-			dosenPanel.config.internalIp = record.data.internalIp;
-			dosenPanel.config.externalIp = record.data.externalIp;
-			dosenPanel.config.name = record.data.name;
-			dosenPanel.config.httpPort = record.data.httpPort;
-			dosenPanel.config.typ = record.data.typ;
+			internalIp = record.data.internalIp;
+			externalIp = record.data.externalIp;
+			steckdosenName = record.data.name;
+			httpPort = record.data.httpPort;
+			typ = record.data.typ;
+			userName = record.data.userName;
+			password = record.data.password;
 			
-			if(Ext.getStore(record.data.name)){
-				var store = Ext.getStore(record.data.name);
+			if(Ext.getStore(steckdosenName)){
+				var store = Ext.getStore(steckdosenName);
 			}else{
 				var store = Ext.create('Ext.data.Store', {
 			        model: 'MyApp.model.Dose',
-			        storeId: record.data.name,
+			        storeId: steckdosenName,
 			        autoLoad: true,
 			        proxy: {
-			            type: 'localstorage'
+			            type: 'localstorage',
+			            id: 'id'
 			        }
 				});
 			}
-			var anzahlDosen 	= 0;
-			var anzahlIo 		= 0;
-			var blockedDosen 	= 0;
-			switch(record.data.typ){
-					case "Home":
-						anzahlDosen = 3;
-						blockedDosen = 1;
-						break;
-					case "Pro":
-					case "ADV":
-						anzahlDosen = 8;
-						break;
-					case "HUT":
-					case "IO":
-						anzahlDosen = 8;
-						anzahlIo = 8;
-						break;
-					default:
-						anzahlDosen = 8;
-						break;
+			var dosenInfo = this.getDosenInfo(typ);
+			var anzahlDosen = dosenInfo.split(":")[0];
+			var blockedDosen = dosenInfo.split(":")[1];
+			if(anzahlDosen<store.getCount){
+				store.removeAll();
 			}
 			for(var i=1;i<=anzahlDosen;i++){
 				if(i<=blockedDosen){
@@ -320,9 +317,20 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 				}
 			}
 			dosenPanel.down('dosenList').setStore(store);
+			
+			var ip = null;
+			if(externalIp){
+				ip = externalIp;
+			}else{
+				ip = internalIp;
+			}
+			var dosenInfo = this.getDosenInfo(typ);
+			var anzahlDosen = dosenInfo.split(":")[0];
+			this.read_rel(ip, userName, password,  steckdosenName, anzahlDosen);
 		  	view.up('navigationview').push(dosenPanel);
 		  	
-		  	
+		  	Ext.getCmp("addSteckdose").hide();
+		   	Ext.getCmp("searchSteckdose").hide();
 		}
     },
     
@@ -335,54 +343,38 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     },
     onSwitchSocketTap: function(view, index, target, record, event){
     	if(!tapOnTimer){
-    		if(index==0){
+    		if(index==0 && typ == 'Home'){
     			Ext.Msg.alert('Nicht m&ouml;glich', 'Steckdose 1 kann nicht geschaltet werden.\nSie ist dauerhaft an.');
     		}else{
-				console.log("Switch Socket");
-				console.log(record);
-				index = index - 1 ; // Socket 1 refers as 'F0'
-				console.log(index);
-				xhttp=new XMLHttpRequest();
-	
-				var OPEN = 'http://192.168.178.117/ctrl.htm';
-			
-				// Send switch request to the socket
-				xhttp.open('POST',OPEN,false);
-				xhttp.setRequestHeader("Content-type","text/plain");
-				xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
-				xhttp.send('F' + index + '=Switch');
-				
-				// Get status
-				OPEN = 'http://192.168.178.117/strg.cfg';
-				xhttp.open('GET',OPEN,false);
-				xhttp.setRequestHeader("Authorization","Basic " + Base64.encode('admin:anel'));
-				xhttp.send("");
-				var state = xhttp.responseText.split(";")[20+index];
-				if(state==0){
-					record.set('status_url','img/power_off.png');
-				} else if (state==1){
-					record.set('status_url','img/power_on.png');
-				} else {
-					Ext.Msg.alert('Fehler', 'Der Status der Steckdose konnte nicht abgefragt werden.\nBitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind.')
+				var ip = null;
+				if(externalIp){
+					ip = externalIp;
+				}else{
+					ip = internalIp;
 				}
+				console.log("Switch Socket " + index);
+				// Set status
+				var indexArray = new Array();
+				indexArray[0]=record.data.id;
+				this.set_rel(indexArray,ip, userName,password);
+				
+				var dosenInfo = this.getDosenInfo(typ);
+				var anzahlDosen = dosenInfo.split(":")[0];
+
+				// Get status
+				this.read_rel(ip,userName,password,steckdosenName,anzahlDosen);
     		}
 		}
 		tapOnTimer = false;
     },
     onAlleUmschaltenTap: function(button){
-    	alert('onAlleUmschaltenTap');
-		alert(
-			'internalIp: ' + button.up('container').config.internalIp +
-			'\nexternalIp: ' + button.up('container').config.externalIp +
-			'\nname: ' + button.up('container').config.name +
-			'\nhttpPort: ' + button.up('container').config.httpPort
-		);
+		this.buttonDosenPanelTap(button,'s');
     },
     onAlleEinschaltenTap: function(button){
-    	alert('onAlleEinschaltenTap');
+    	this.buttonDosenPanelTap(button,'1');
     },
     onAlleAusschaltenTap: function(button){
-    	alert('onAlleAusschaltenTap');
+    	this.buttonDosenPanelTap(button,'0');
     },
     onBackup: function(button){
        	xhttp=new XMLHttpRequest();
@@ -395,5 +387,183 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		xhttp.send('TN=Bla');
 		alert(xhttp.responseText + " " + xhttp.status);
     },
-    
+    getDosenInfo: function(typ){
+    		var anzahlDosen 	= 0;
+			var anzahlIo 		= 0;
+			var blockedDosen 	= 0;
+			switch(typ){
+					case "Home":
+						anzahlDosen = 3;
+						blockedDosen = 1;
+						break;
+					case "Pro":
+					case "ADV":
+						anzahlDosen = 8;
+						break;
+					case "HUT":
+					case "IO":
+						anzahlDosen = 8;
+						anzahlIo = 8;
+						break;
+					default:
+						anzahlDosen = 8;
+						break;
+			}
+			return anzahlDosen+":"+blockedDosen;
+    },
+    read_rel: function(ip,user,pass, steckdosenName, anzahlDosen){
+		xhttp=new XMLHttpRequest();
+	
+		var OPEN = 'http://' + ip + '/strg.cfg?Auth:'+ user+pass 
+		// z.B. "http://net-control/strg.cfg?Auth:user7anel"
+	
+		xhttp.open('GET',OPEN,false);
+		xhttp.send("");
+		
+		var Strg_Var = xhttp.responseText.split(";");
+		
+		if(Strg_Var[58]=='end') // Prüft ob die Übertragung vollständig ist. 
+		{
+			var Geraetename 	= Strg_Var[0];
+			var Hostname 	= Strg_Var[1];
+			var IP 			= Strg_Var[2];
+			var Maske 		= Strg_Var[3];
+			var Gateway 	= Strg_Var[4];
+			var MAC 		= Strg_Var[5];
+			var Port 		= Strg_Var[6];
+			
+			var Temteratur 	= Strg_Var[7];
+			var	Typ 		= Strg_Var[8];
+			
+			var Rel_Name = new Array();
+			var Rel_Stand = new Array();
+			var Rel_Dis = new Array();
+			var Rel_Info = new Array();
+			var Rel_TK = new Array();
+			var store = Ext.getStore(steckdosenName);
+			for(i=0;i<anzahlDosen;i++)
+			{
+				Rel_Name[i] 	= Strg_Var[10+i];
+				Rel_Stand[i] 	= Strg_Var[20+i];
+				Rel_Dis[i] 		= Strg_Var[30+i];
+				Rel_Info[i] 	= Strg_Var[40+i];
+				Rel_TK[i] 		= Strg_Var[50+i];
+				var index = store.find('id',i+1);
+				var element = store.getAt(index);
+				element.set('name',Rel_Name[i]);
+				element.set('status',Rel_Stand[i]);
+				if(Rel_Stand[i]==0){
+					element.set('status_url','img/power_off.png');
+				}else{
+					element.set('status_url','img/power_on.png');
+				}
+				
+			}
+			console.log('Relais &Uumlbertragung vollst&aumlndig.');
+		}
+		else Ext.Msg.alert('Verbindungsprobleme!');
+    },
+    set_rel: function(DosenIndexArray, ip, user, pass){
+		for(var i in DosenIndexArray){
+			console.log((DosenIndexArray[i])+ " wird geschaltet");
+			xhttp=new XMLHttpRequest();
+		
+			var OPEN = 'http://' + ip + '/ctrl.htm?Auth:' + user + pass;
+			// z.B. "http://net-control/ctrl.htm?Auth:user7anel"
+		
+			xhttp.open('POST',OPEN,false);
+			xhttp.setRequestHeader("Content-type","text/plain");
+			xhttp.send("F"+(DosenIndexArray[i]-1)+"=S");
+		}
+	},
+	buttonDosenPanelTap: function(button,task){
+		var ip = null;
+		if(externalIp){
+			ip = externalIp;
+		}else{
+			ip = internalIp;
+		}
+		var indexArray = new Array();
+		var anzahlDosen = this.getDosenInfo(typ).split(':')[0];
+		var store = Ext.getStore(steckdosenName);
+		for(var i=0;i<anzahlDosen;i++){
+			var index = store.find('id',i+1);
+			var element = store.getAt(index);
+			switch(task){
+				case '0':
+					if(element.get('status') == 1){
+						indexArray.push(i+1);
+					}
+					break;
+				case '1':
+					if(element.get('status') == 0){
+						indexArray.push(i+1);
+					}
+					break;
+				case 's':
+					indexArray.push(i+1);
+					break;
+			}
+		}
+		this.set_rel(indexArray, ip, userName, password);
+		this.read_rel(ip,userName,password, steckdosenName, anzahlDosen);
+	},
+	disclose: function(list, record, node, index, event, eOpts){
+		currentTapLvl += 1;
+		event.stopEvent(); //stop listItemTap 
+		timerView = Ext.widget('timer');
+		dosenName = record.data.name;
+		dosenId   = record.data.id;
+		timerView.config.title = dosenName;
+		timerView.down('textfield').setValue(record.data.name);
+		var timerStore = Ext.create('Ext.data.Store', {
+			        model: 'MyApp.model.Timer',
+			        storeId: dosenName+dosenId,
+			        autoLoad: true,
+			        proxy: {
+			            type: 'localstorage',
+			            id: 'id'
+			        }
+				});
+		timerView.down('list').setStore(timerStore);
+		Ext.getCmp('DosenList').up('navigationview').push(timerView);
+		this.checkDosenTimer();
+	},
+    checkDosenTimer: function(){
+    	var ip = null;
+		if(externalIp){
+			ip = externalIp;
+		}else{
+			ip = internalIp;
+		}
+    	var header =
+			"GET /dd.htm?DD" + dosenId + " HTTP/1.1\r\n"
+			+"Host: " + ip + "\r\n"
+			+"Connection: keep-alive\r\n"
+			+"Authorization: Basic " + Base64.encode(userName+":"+password) + "\r\n"
+			+"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n"
+			+"User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31\r\n"
+			+"Referer: http://" + ip + "\r\n"
+			+"Accept-Encoding: gzip,deflate,sdch\r\n"
+			+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
+			+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3;\r\n\r\n";
+			
+		cordova.exec(
+			function(succ){
+				var e = succ.match(/.*<html>/gi);
+				var domText = succ.replace(e,"<html>");
+				alert(domText);
+				var doc = document.implementation.createHTMLDocument("example");
+				doc.documentElement.innerHTML = domText;
+				alert(doc.body.textContent);
+				alert(doc.getElementsByName("TN")[0].getAttribute("value"));
+			},
+			function(err){
+				alert(err);
+			},
+			"HttpController",
+			"sendMessage",
+			[header,"",ip,httpPort]
+		);
+    }
 });
