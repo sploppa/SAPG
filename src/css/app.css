@@ -1,0 +1,29 @@
+.timer{
+	min-height: 50px;
+}
+.timer div{
+	float: left;
+	margin: 1%;
+}
+.day{
+
+}
+.wdhDay{
+	font-weight: bold;
+}
+.noWdhDay{
+	color: #8b8989;
+}
+.timerName{
+	font-weight: bold;
+}
+.timerCheckBox{
+	float: right;
+}
+.time{
+	padding: 1%;
+	background: #696969;
+	color: #eee9e9;
+}
+.timerName{
+}

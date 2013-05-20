@@ -25,15 +25,33 @@ Ext.define('MyApp.view.TimerPanel', {
         items: [
         	{
         		xtype: 'textfield',
+        		id: 'dosenName',
                 docked: 'top',
                 label: 'Name',
         	},
         	{
         		xtype:'list',
         		flex: 1,
-        		itemTpl: ['{startTime}-{endTime} {name} <input type="checkbox" {checked}="true"/>']
+        		variableHeights: true,
+        		styleHtmlContent: true,
+        		itemTpl: [
+        			'<div class=timer><div class="time">{startTime}</div><div class="time">{endTime}</div><div class="timerName">{name}</div><br/>'+
+        			'<div class="{MO}">Mo</div>'+
+        			'<div class="{DI}">Di</div>'+
+        			'<div class="{MI}">Mi</div>'+
+        			'<div class="{DO}">Do</div>'+
+        			'<div class="{FR}">Fr</div>'+
+        			'<div class="{SA}">Sa</div>'+
+        			'<div class="{SO}">So</div>'+ '<input class="timerCheckBox" type="checkbox" {checked}/></div>'
+        		]
+        	},
+        	{
+				xtype: 'button',
+				itemId: 'saveTimer',
+				margin: '1% 25% 5% 25%',
+				padding: '1%',
+				text: 'speichern'      	
         	}
-                  
         ]
     }
 

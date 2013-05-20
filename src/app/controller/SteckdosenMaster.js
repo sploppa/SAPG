@@ -79,6 +79,9 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		   "button[itemId=alleAusschalten]" : {
 		    	tap : 'onAlleAusschaltenTap'
 		   },
+		   "button[itemId=saveTimer]" : {
+		    	tap : 'onSaveTimerButtonTap'
+		   },
 		   "#ext-button-1" : {
 		   		tap : 'onBackButtonTap'
 		   }
@@ -246,7 +249,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
     },
     
     onSaveSteckdoseTap: function(button, e, eOpts) {
-		console.log('Button Click for Save');
+		console.log('Button Click for Save new Steckdose');
 		var form = button.up('panel');
 		var record = form.getRecord();
 		var values = form.getValues();
@@ -550,20 +553,150 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			
 		cordova.exec(
 			function(succ){
+				var timerStore = Ext.getStore(dosenName+dosenId);
+			
 				var e = succ.match(/.*<html>/gi);
 				var domText = succ.replace(e,"<html>");
-				alert(domText);
 				var doc = document.implementation.createHTMLDocument("example");
 				doc.documentElement.innerHTML = domText;
-				alert(doc.body.textContent);
-				alert(doc.getElementsByName("TN")[0].getAttribute("value"));
+				
+				dosenName = doc.getElementsByName("TN")[0].getAttribute("value");
+				
+				var parameterPerDose = 4;
+				var maxTimerAnzahl = 10;
+				var bezeichner = "T";
+				
+				for(var i = 0; i < maxTimerAnzahl; i++){
+					var checked = null;
+					var days = null;
+					var startTime = null;
+					var endTime = null;
+					
+					for(var j = 0; j < parameterPerDose;j++){
+						switch(j){
+							case 0:
+								checked = doc.getElementsByName((bezeichner + j ) + i )[0].hasAttribute("checked");
+								if(checked){checked = 'checked'}else{checked = 'unchecked'};
+								break;
+							case 1:
+								days = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
+								break;
+							case 2:
+								startTime = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
+								break;
+							case 3:
+								endTime = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
+								break;
+						}
+					}
+					
+					//Format der Wiederholen an Store anpassen
+					var MO = DI = MI = DO = FR = SA = SO = 'noWdhDay';
+					var daysNumbers = days;				
+					var days = days.split('');
+					for(var k in days){
+						var day = days[k];
+						switch(day){
+							case "1":
+								MO = "wdhDay";
+								break;
+							case "2":
+								DI = "wdhDay";
+								break;
+							case "3":
+								MI = "wdhDay";
+								break;
+							case "4":
+								DO = "wdhDay";
+								break;
+							case "5":
+								FR = "wdhDay";
+								break;
+							case "6":
+								SA = "wdhDay";
+								break;
+							case "7":
+								SO = "wdhDay";
+								break;
+						}
+					}
+					timerStore.add({
+					    id: (i+1), 
+					    name: 'Timer '+(i+1),
+					    MO: MO,
+					    DI: DO,
+					    MI: MO,
+					    DO: DO,
+					    FR: FR,
+					    SA: SA,
+					    SO: SO,
+					    days: daysNumbers,
+					    startTime: startTime, 
+					    endTime: endTime, 
+					    checked: checked,
+					});
+				}
+			},
+			function(err){
+				console.log("Error bei HTTPController sendMessage: "+err);
+			},
+			"HttpController",
+			"sendMessage",
+			[header,"",ip,httpPort]
+		);
+    },
+    onSaveTimerButtonTap: function(button){
+		var timerStore = Ext.getStore(dosenName+dosenId);
+
+		dosenName = Ext.getCmp('dosenName').getValue();
+		var body = "TN="+dosenName;
+		for(var i = 1; i <= timerStore.getCount(); i++){
+			var index = timerStore.find('id',i);
+			var timer = timerStore.getAt(index)
+			var startTime = timer.data.startTime;
+			var endTime = timer.data.endTime;
+			var days = timer.data.days;
+			var checked = timer.data.checked;
+			if(checked=="checked"){
+				checked="on";
+			}else{
+				checked="off";
+			}
+			body += ("&T0"+(i-1))+"="+checked+("&T1"+(i-1))+"="+startTime+("&T2"+(i-1))+"="+endTime+("&T3"+(i-1))+"="+days;
+		}
+		body += "&TS=speichern";
+		var ip = null;
+		if(externalIp){
+			ip = externalIp;
+		}else{
+			ip = internalIp;
+		}
+		var header =
+			"POST /dd.htm HTTP/1.1\r\n"
+			+"Host: "+ip+"\r\n"
+			+"Connection: keep-alive\r\n"
+			+"Content-Length: " + body.length + "\r\n"
+			+"Cache-Control: max-age=0\r\n"
+			+"Authorization: Basic " + Base64.encode(userName+":"+password) + "\r\n"
+			+"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n"
+			+"Origin: "+ip+"\r\n"
+			+"User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31\r\n"
+			+"Content-Type: application/x-www-form-urlencoded\r\n"
+			+"Referer: http://"+ip+"/dd.htm?DD" + dosenId + "\r\n"
+			+"Accept-Encoding: gzip,deflate,sdch\r\n"
+			+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
+			+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n\r\n";
+		
+		cordova.exec(
+			function(succ){
+				alert(succ);
 			},
 			function(err){
 				alert(err);
 			},
 			"HttpController",
 			"sendMessage",
-			[header,"",ip,httpPort]
+			[header, body, ip, httpPort]
 		);
     }
 });

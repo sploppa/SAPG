@@ -20,11 +20,17 @@ Ext.define('MyApp.model.Timer', {
         fields: [
 		    'id', 
 		    'name',
+		    'MO',
+		    'DI',
+		    'MI',
+		    'DO',
+		    'FR',
+		    'SA',
+		    'SO',
+		    'days',
 		    'startTime', 
 		    'endTime', 
 		    'checked',
-		    'TF',
-		    'TH'
         ]
     }
 });
