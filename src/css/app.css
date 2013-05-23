@@ -27,3 +27,35 @@
 }
 .timerName{
 }
+.abschaltFieldset, .einschaltFieldset{
+	background: #fff,
+  	border: 1px solid #fffs,
+  	color: #fff;
+}
+
+.x-field-checkbox .x-field-mask::after
+ {
+     right: auto;
+ }
+ 
+.x-list .x-list-disclosure:before{
+	content: '.';
+}
+
+.x-list .x-list-disclosure{
+	border: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	-ms-border-radius: 0;
+	-o-border-radius: 0;
+	border-radius: 0;
+	height: 50%;
+	margin-right: 3%;
+	margin-left: 3%;
+	margin-top: auto;
+	z-index: 1;
+}
+
+.x-list .x-list-item-tpl .x-list-disclosure {
+	top: 25%;
+}

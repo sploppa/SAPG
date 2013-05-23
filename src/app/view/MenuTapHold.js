@@ -19,34 +19,34 @@ Ext.define('MyApp.view.MenuTapHold', {
     id: 'menuTapHold',
     config: {
         fullscreen: false,
-			        left: 0,
-			        top: 0,
-			        tplWriteMode: 'insertAfter',
-			        hideOnMaskTap: true,
-			        layout: {
-			            type: 'fit'
-			        },
-			        modal: true,
-			        defaults: {
-			            margin: '0 0 5 0',
-			            labelWidth: '30%'
-			        },
-			        items: [
-			            {
-			                xtype: 'button',
-			                docked: 'left',
-			                itemId: 'edit',
-			                iconCls: 'action',
-			                text: 'bearbeiten',                
-			            },
-			            {
-			                xtype: 'button',
-			                docked: 'left',
-			                iconCls: 'delete',
-			                itemId: 'delete',
-			                text: 'l&ouml;schen',
-			            }
-			        ]
+        left: 0,
+        top: 0,
+        tplWriteMode: 'insertAfter',
+        hideOnMaskTap: true,
+        layout: {
+            type: 'fit'
+        },
+        modal: true,
+        defaults: {
+            margin: '0 0 5 0',
+            labelWidth: '30%'
+        },
+        items: [
+            {
+                xtype: 'button',
+                docked: 'left',
+                itemId: 'edit',
+                iconCls: 'action',
+                text: 'bearbeiten',                
+            },
+            {
+                xtype: 'button',
+                docked: 'left',
+                iconCls: 'delete',
+                itemId: 'delete',
+                text: 'l&ouml;schen',
+            }
+        ]
     }
 
 });

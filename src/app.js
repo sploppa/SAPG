@@ -35,7 +35,9 @@ Ext.application({
         'MenuTapHold',
         'DosenList',
         'SteckdosenSearch',
-        'SteckdosenSearchList'
+        'SteckdosenSearchList',
+        'TimerEdit',
+        'TimerList',
     ],
     controllers: [
         'SteckdosenMaster'

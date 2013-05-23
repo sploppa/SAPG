@@ -16,6 +16,7 @@
 Ext.define('MyApp.view.DosenPanel', {
 			extend: 'Ext.Container',
 			alias: 'widget.dosenPanel',
+			itemId: 'dosenPanel',
 			config: {
 				layout: {
             		type: 'vbox'

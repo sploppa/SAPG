@@ -33,8 +33,10 @@ var typ = null;
 var httpPort = null;
 var userName = null;
 var password = null;
+var timerViewPanel = null;
 Ext.define('MyApp.controller.SteckdosenMaster', {
     extend: 'Ext.app.Controller',
+    alias: 'widget.steckdosenMaster',
 
     config: {
         models: [
@@ -60,6 +62,9 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
             },
             "steckdosenSearchList":{
             	itemtap: 'onSteckdosenSearchListItemTap'
+            },
+            "timerList":{
+            	itemtap: 'onTimerListItemTap'
             },
             "button[itemId=addSteckdose]": {
                 tap: 'onAddSteckdoseTap'
@@ -205,7 +210,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 						                		name: steckdosenName,
 						                		httpPort: httpPort,
 						                		internalIp: internalIp,
-						                		externalIp: externalIp,
 						                		mac: mac,
 						                		version: version
 						                	});
@@ -331,12 +335,168 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			var anzahlDosen = dosenInfo.split(":")[0];
 			this.read_rel(ip, userName, password,  steckdosenName, anzahlDosen);
 		  	view.up('navigationview').push(dosenPanel);
-		  	
+		  	view.up('navigationview').getNavigationBar().getBackButton().setText("Home");
 		  	Ext.getCmp("addSteckdose").hide();
 		   	Ext.getCmp("searchSteckdose").hide();
 		}
     },
-    
+    onTimerListItemTap: function(view, index, target, record, event){
+    	var HOURS = [];
+    	var MINUTES = [];
+    	
+    	for (var j = 0; j < 60; j++) {
+            var text;
+            text = (j < 10) ? ('0' + j) : j; //Add leading zero
+            MINUTES.push({text:text, value:j});
+        }
+        
+      	for (var j = 0; j < 24; j++) {
+            var text;
+            text = (j < 10) ? ('0' + j) : j; //Add leading zero
+            HOURS.push({text:text, value:j});
+        }
+    	editForm = Ext.create('Ext.picker.Picker',{
+    	        doneButton: {
+            		docked: 'right',
+            		text: 'annehmen'
+       			 },
+       			cancelButton: {
+       				text: 'abbrechen',
+       				docket: 'left'
+       			},
+    			slots: [
+		            {
+		                xtype: 'pickerslot',
+		                name: 'startTimeHours',
+		                itemId: 'startTimeHours',
+		                align: 'right',
+		                title: 'H',
+		                data: HOURS
+		            },
+		            {
+		                xtype: 'pickerslot',
+		                name: 'seperator',
+		                align: 'center',
+		                title: ' ',
+		                data: [
+		                    {
+		                        text: ':',
+		                        value: ':'
+		                    }
+		                ]
+		            },
+		            {
+		                xtype: 'pickerslot',
+		                name: 'startTimeMinutes',
+		                itemId: 'startTimeMinutes',
+		                align: 'left',
+		                title: 'm',
+		                data: MINUTES
+		            },
+					{
+		                xtype: 'pickerslot',
+		                name: 'endTimeHours',
+		                align: 'right',
+		                title: 'H',
+		                data: HOURS
+		            },
+		            {
+		                xtype: 'pickerslot',
+		                name: 'seperator',
+		                align: 'center',
+		                title: ' ',
+		                data: [
+		                    {
+		                        text: ':',
+		                        value: ':'
+		                    }
+		                ]
+		            },
+		            {
+		                xtype: 'pickerslot',
+		                name: 'endTimeMinutes',
+		                itemId: 'endTimeMinutes',
+		                align: 'left',
+		                title: 'm',
+		                data: MINUTES
+		            }		            		            
+        		],
+        		toolbar: {
+		            xtype: 'toolbar',
+		            docked: 'top',
+		            items: [
+		                {
+		                    xtype: 'container',
+		                    docked: 'bottom',
+		                    layout: {
+		                        type: 'hbox',
+		                        pack: 'justify'
+		                    },
+		                    defaults: {
+								xtype: 'checkboxfield',
+								labelAlign:'top',
+								flex:1,
+							},
+		                    items: [  
+		                    	{label:'Mo', itemId:'Mo'},{label:'Di', itemId:'Di'},{label:'Mi', itemId:'Mi'},{label:'Do', itemId:'Do'},{label:'Fr', itemId:'Fr'},{label:'Sa', itemId:'Sa'},{label:'So', itemId:'So'}                 
+		                    ]
+		                }
+		            ]
+		        }
+    	});
+    	
+    	editForm.on('change', function(picker, button){
+    		var startTimeHours = picker.getValue()['startTimeHours'];
+    		var startTimeMinutes = picker.getValue()['startTimeMinutes'];
+    		
+    		var endTimeHours = picker.getValue()['endTimeHours'];
+    		var endTimeMinutes = picker.getValue()['endTimeMinutes'];
+    		
+    		var startTime = ((startTimeHours < 10) ? ('0' + startTimeHours) : startTimeHours) +':'+ ((startTimeMinutes < 10) ? ('0' + startTimeMinutes): startTimeMinutes); //Add leading zero
+    		var endTime = ((endTimeHours < 10) ? ('0' + endTimeHours) : endTimeHours) +':'+ ((endTimeMinutes < 10) ? ('0' + endTimeMinutes): endTimeMinutes); //Add leading zero
+    	
+    		record.set({startTime:startTime});
+    		record.set({endTime:endTime});
+    		
+    		Ext.getStore(dosenName+dosenId).sync();
+    	});
+    	var startTime = (record.data.startTime).split(':');
+    	var endTime = (record.data.endTime).split(':');
+    	editForm.setValue({startTimeHours:parseInt(startTime[0])});
+    	editForm.setValue({startTimeMinutes:parseInt(startTime[1])});
+    	editForm.setValue({endTimeHours:parseInt(endTime[0])});
+    	editForm.setValue({endTimeMinutes:parseInt(endTime[1])});
+    	
+    	var days = (record.data.days).split('');
+    	for(var i in days){
+    		var day = days[i];
+    		switch(day){
+    			case "1":
+    				editForm.down('#Mo').setChecked(true);
+    				break;
+    			case "2":
+    				editForm.down('#Di').setChecked(true);
+    				break;
+    			case "3":
+    				editForm.down('#Mi').setChecked(true);
+    				break;
+    			case "4":
+    				editForm.down('#Do').setChecked(true);
+    				break;
+    			case "5":
+    				editForm.down('#Fr').setChecked(true);
+    				break;
+    			case "6":
+    				editForm.down('#Sa').setChecked(true);
+    				break;
+    			case "7":
+    				editForm.down('#So').setChecked(true);
+    				break;
+    		}
+    	}
+    	
+    	editForm.show();
+    },    
     onBackButtonTap: function(button){
     	currentTapLvl -= 1;
     	if(currentTapLvl <= 0){
@@ -514,10 +674,11 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 	disclose: function(list, record, node, index, event, eOpts){
 		currentTapLvl += 1;
 		event.stopEvent(); //stop listItemTap 
-		timerView = Ext.widget('timer');
+		var timerView = Ext.widget('timer');
 		dosenName = record.data.name;
 		dosenId   = record.data.id;
 		timerView.config.title = dosenName;
+		timerViewPanel = timerView;
 		timerView.down('textfield').setValue(record.data.name);
 		var timerStore = Ext.create('Ext.data.Store', {
 			        model: 'MyApp.model.Timer',
@@ -550,92 +711,10 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			+"Accept-Encoding: gzip,deflate,sdch\r\n"
 			+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
 			+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3;\r\n\r\n";
-			
+		var that = this;	
 		cordova.exec(
 			function(succ){
-				var timerStore = Ext.getStore(dosenName+dosenId);
-			
-				var e = succ.match(/.*<html>/gi);
-				var domText = succ.replace(e,"<html>");
-				var doc = document.implementation.createHTMLDocument("example");
-				doc.documentElement.innerHTML = domText;
-				
-				dosenName = doc.getElementsByName("TN")[0].getAttribute("value");
-				
-				var parameterPerDose = 4;
-				var maxTimerAnzahl = 10;
-				var bezeichner = "T";
-				
-				for(var i = 0; i < maxTimerAnzahl; i++){
-					var checked = null;
-					var days = null;
-					var startTime = null;
-					var endTime = null;
-					
-					for(var j = 0; j < parameterPerDose;j++){
-						switch(j){
-							case 0:
-								checked = doc.getElementsByName((bezeichner + j ) + i )[0].hasAttribute("checked");
-								if(checked){checked = 'checked'}else{checked = 'unchecked'};
-								break;
-							case 1:
-								days = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
-								break;
-							case 2:
-								startTime = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
-								break;
-							case 3:
-								endTime = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
-								break;
-						}
-					}
-					
-					//Format der Wiederholen an Store anpassen
-					var MO = DI = MI = DO = FR = SA = SO = 'noWdhDay';
-					var daysNumbers = days;				
-					var days = days.split('');
-					for(var k in days){
-						var day = days[k];
-						switch(day){
-							case "1":
-								MO = "wdhDay";
-								break;
-							case "2":
-								DI = "wdhDay";
-								break;
-							case "3":
-								MI = "wdhDay";
-								break;
-							case "4":
-								DO = "wdhDay";
-								break;
-							case "5":
-								FR = "wdhDay";
-								break;
-							case "6":
-								SA = "wdhDay";
-								break;
-							case "7":
-								SO = "wdhDay";
-								break;
-						}
-					}
-					timerStore.add({
-					    id: (i+1), 
-					    name: 'Timer '+(i+1),
-					    MO: MO,
-					    DI: DO,
-					    MI: MO,
-					    DO: DO,
-					    FR: FR,
-					    SA: SA,
-					    SO: SO,
-					    days: daysNumbers,
-					    startTime: startTime, 
-					    endTime: endTime, 
-					    checked: checked,
-					});
-				}
+				that.processTimerResult(succ);
 			},
 			function(err){
 				console.log("Error bei HTTPController sendMessage: "+err);
@@ -658,13 +737,15 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			var days = timer.data.days;
 			var checked = timer.data.checked;
 			if(checked=="checked"){
-				checked="on";
+				checked=("&T0"+(i-1))+"=on";
 			}else{
-				checked="off";
+				//no parameter set if socket is unset
+				checked="";
 			}
-			body += ("&T0"+(i-1))+"="+checked+("&T1"+(i-1))+"="+startTime+("&T2"+(i-1))+"="+endTime+("&T3"+(i-1))+"="+days;
+			body += checked+("&T1"+(i-1))+"="+days+("&T2"+(i-1))+"="+escape(startTime)+("&T3"+(i-1))+"="+escape(endTime);
 		}
 		body += "&TS=speichern";
+		alert(body);
 		var ip = null;
 		if(externalIp){
 			ip = externalIp;
@@ -686,10 +767,10 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			+"Accept-Encoding: gzip,deflate,sdch\r\n"
 			+"Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4\r\n"
 			+"Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n\r\n";
-		
+		var that = this;
 		cordova.exec(
 			function(succ){
-				alert(succ);
+				that.processTimerResult(succ);
 			},
 			function(err){
 				alert(err);
@@ -698,5 +779,90 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			"sendMessage",
 			[header, body, ip, httpPort]
 		);
+    },
+    processTimerResult: function(respond){
+    	var timerStore = Ext.getStore(dosenName+dosenId);
+				
+		var e = respond.match(/.*<html>/gi);
+		var domText = respond.replace(e,"<html>");
+		var doc = document.implementation.createHTMLDocument("example");
+		doc.documentElement.innerHTML = domText;
+		
+		dosenName = doc.getElementsByName("TN")[0].getAttribute("value");
+		Ext.getCmp("navigationview").getNavigationBar().setTitle(dosenName);
+		var parameterPerDose = 4;
+		var maxTimerAnzahl = 10;
+		var bezeichner = "T";
+		
+		for(var i = 0; i < maxTimerAnzahl; i++){
+			var checked = null;
+			var days = null;
+			var startTime = null;
+			var endTime = null;
+			
+			for(var j = 0; j < parameterPerDose;j++){
+				switch(j){
+					case 0:
+						checked = doc.getElementsByName((bezeichner + j ) + i )[0].hasAttribute("checked");
+						if(checked){checked = 'checked'}else{checked = 'unchecked'};
+						break;
+					case 1:
+						days = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
+						break;
+					case 2:
+						startTime = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
+						break;
+					case 3:
+						endTime = doc.getElementsByName((bezeichner + j) + i )[0].getAttribute("value"); 
+						break;
+				}
+			}
+			
+			//Format der Wiederholen an Store anpassen
+			var MO = DI = MI = DO = FR = SA = SO = 'noWdhDay';
+			var daysNumbers = days;				
+			var days = days.split('');
+			for(var k in days){
+				var day = days[k];
+				switch(day){
+					case "1":
+						MO = "wdhDay";
+						break;
+					case "2":
+						DI = "wdhDay";
+						break;
+					case "3":
+						MI = "wdhDay";
+						break;
+					case "4":
+						DO = "wdhDay";
+						break;
+					case "5":
+						FR = "wdhDay";
+						break;
+					case "6":
+						SA = "wdhDay";
+						break;
+					case "7":
+						SO = "wdhDay";
+						break;
+				}
+			}
+			timerStore.add({
+			    id: (i+1), 
+			    name: 'Timer '+(i+1),
+			    MO: MO,
+			    DI: DO,
+			    MI: MO,
+			    DO: DO,
+			    FR: FR,
+			    SA: SA,
+			    SO: SO,
+			    days: daysNumbers,
+			    startTime: startTime, 
+			    endTime: endTime, 
+			    checked: checked,
+			});
+		}
     }
 });

@@ -38,6 +38,9 @@ public class Tcp {
 		        	respond += line;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (Error e){
+			e.printStackTrace();
+			
 		}finally{
 	        final Pattern p = Pattern.compile("errorCode");
 	        final Matcher m = p.matcher(respond);
