@@ -1,0 +1,298 @@
+.statusbar{
+	position:relative;
+	color: #999999;
+	width:100%;
+	background-color: #333333;
+	font-size: 40%;
+}
+
+tbody{
+	vertical-align: middle;
+}
+
+p{
+	margin:0px;
+}
+
+.socket_control{
+	position: relative;
+	width: 100%;
+	margin-top: 1%;
+}
+
+#socket_control a{
+	width: 70%;
+	text-align: left;
+}
+
+.fancy_socket_button {
+    -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    box-shadow:inset 0px 0px 0px 0px #ffffff;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',       endColorstr='#dfdfdf');
+    background-color:#ededed;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    display:inline-block;
+    color:#777777;
+    font-family:arial;
+    font-size:50%;
+    font-weight:bold;
+    margin: 2%;
+    padding: 0px 0px 0px 0px;
+    text-decoration:none;
+    height:100%;
+    text-shadow:1px 1px 0px #ffffff;
+}
+.button{
+	width:100%;
+}
+.button td{
+
+}
+
+.links{
+	width:1%;
+}
+.mittig{
+	vertical-align:middle;
+}
+.rechts{
+}
+
+
+.fancy_socket_button:active {
+	position:relative;
+	top:1px;
+}
+
+.socket_status_picture{
+	display: inline;
+	margin-top: 1%;
+	margin-left: 1%;
+	margin-bottom:1%;
+}
+
+.socket_name{
+	display: inline-block;
+	position:absolute;
+	margin-left: 3%;
+	margin-top: 1%;
+}
+
+.socket_device_icon{
+	position: static;
+	display: inline;
+	float: right;
+	margin-top: 3px;
+	margin-right: 3px;
+}
+
+#menu_tabs {
+	width:100%;
+	height:10%;
+	float: left;
+}
+
+.menu_table{
+	width: 100%;
+	height:100%;
+	border: 0;
+}
+
+.menu_tab{
+	width: 100%;
+	font: bold; 
+}
+
+.menu_tab img{
+	height:2em;
+}
+
+#menu_tabs table tr td{
+	background: rgba(0,0,0,0.3);
+	-moz-border-radius-topleft: 12px; 
+    -moz-border-radius-topright: 12px; 
+    -webkit-border-top-left-radius:12px;
+    -webkit-border-top-right-radius:12px;
+}
+
+#menu_tabs table tr td a{
+    text-decoration: none;
+	color: #111111;
+}
+
+#menu_tabs table tr td.active {
+	background: rgba(255,255,255, 0.8);
+}
+
+#menu_tabs table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+#menu.show
+{
+	-webkit-transition: -webkit-transform 1s linear;
+    -webkit-transform: translateY(0%);
+}
+
+#menu.hide
+{
+	-webkit-transition: -webkit-transform 1s linear;
+ 	-webkit-transform: translateY(90%);
+}
+#menu{
+    background-color:#404040;
+	bottom: 0px;
+	width:100%;
+	height:100%;
+	position:absolute;
+}
+
+.menu_dosen_table{
+	width:90%;
+	margin-left:5%;
+	margin-right:5%;
+}
+
+.menu_dosen_tab{
+	font-size: 100%;
+	font: bold; 
+}
+
+.menu_dosen_table tr td.active {
+	background: rgba(255,255,255, 0.8);
+}
+
+.menu_dosen_table table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+.menu_dosen_table tr td a{
+	height: 50px;
+	text-decoration: none; 
+	color: #111111;
+}
+
+.menu_dosen_table tr td.active a{
+	color: #505050;
+	text-shadow: #FFF 2px 2px 2px;
+}
+
+.menu_dosen_table tr td{
+	background: rgba(0,0,0,0.3);
+	-moz-border-radius-bottomleft: 15px; 
+    -moz-border-radius-bottomright: 15px; 
+    -webkit-border-bottom-left-radius:15px;
+    -webkit-border-bottom-right-radius:15px;
+}
+
+.fancy_action_button {
+    -moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
+    box-shadow:inset 0px 0px 0px 0px #ffffff;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+    background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',       endColorstr='#dfdfdf');
+    background-color:#ededed;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    display:inline-block;
+    color:#777777;
+    font-family:arial;
+    font-size:50%;
+    font-weight:bold;
+    width: 95%;
+    margin: 2%;
+    margin-left:-5px;
+    margin-right:10px;
+    padding: 1em  0px;
+    text-decoration:none;
+    text-shadow:1px 1px 0px #ffffff;
+}
+
+.fancy_action_button:active {
+	position:relative;
+	top:1px;
+}
+
+p.bottomContent{
+	margin-left:8%;
+	margin-right:8%;
+	margin-top:1%;
+	text-align:left;
+}
+
+
+/*
+ * CSS for devices with BIG screen
+*/
+/*
+@media only screen 
+and (min-device-width : 480px)
+{
+	.statusbar{
+		margin-bottom: 5%;
+		font-size: 50%;
+	}
+	
+	.socket_control{
+	    font-size: 150%;
+	}
+	
+	.socket_status_picture{
+		height: 8%;
+	}
+		
+	.socket_name{
+		margin-top: 4%;
+	}
+	
+	.socket_device_icon{
+		height: 8%;
+	}
+	
+	#menu_tabs {
+		font-size: 70%;
+		padding-top: -5%;
+	}
+	
+	.menu_tab img{
+		height:100%;
+	}
+	
+	#menu_tabs ul li{
+		margin-top: -5%;
+		padding:5% 2% 2% 2%;
+	}
+	#menu_tabs table tr td{
+		padding:10px 10px 10px 10px;
+	}
+	.fancy_action_button {
+		padding: 1em 0px;
+		font-size: 70%;
+		margin-top: 10%;
+	}
+}
+*/
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color: #333333;/*#4B946A;*/
+    display:none;
+}
+
+.blink {
+    animation:fade 300ms infinite;
+    -webkit-animation:fade 300ms infinite;
+    width:100%;
+}

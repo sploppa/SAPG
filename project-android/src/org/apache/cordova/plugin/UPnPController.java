@@ -1,15 +1,11 @@
 package org.apache.cordova.plugin;
 
-import java.io.IOException;
-
 import org.apache.cordova.api.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.apache.cordova.api.CordovaPlugin;
-import org.apache.http.client.ClientProtocolException;
 
 public class UPnPController extends CordovaPlugin{
-	
 	@Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if (action.equals("getRouterInfo")){
@@ -26,6 +22,5 @@ public class UPnPController extends CordovaPlugin{
 		UPnPProtocol upnp = new UPnPProtocol();
 		String result = upnp.getRouterInfo(DISCOVER_MESSAGE_ROOTDEVICE, MULTICAST_ADDRESS, MULTICAST_PORT);
 		callbackContext.success(result);
-		
 	}
 }

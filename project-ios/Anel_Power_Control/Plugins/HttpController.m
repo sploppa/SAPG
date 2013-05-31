@@ -42,7 +42,7 @@ NSString* respond_http =@"nil";
 
     
     [tcpSocket_Http readDataWithTimeout:-1 tag:0];
-    [self waitForConditionWithTimeout:1];
+    [self waitForConditionWithTimeout:5];
     if (respond_http != nil && [respond_http length] > 0) {
         pluginResult_HTTP = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:respond_http];
     } else {
@@ -92,7 +92,6 @@ NSString* respond_http =@"nil";
 
     NSString* tmp = [[NSString alloc] initWithFormat:@"%@", msg];
     respond_http = [[NSString alloc] initWithFormat:@"%@%@", respond_http, tmp];
-
     NSLog(respond_http);
 }
 @end

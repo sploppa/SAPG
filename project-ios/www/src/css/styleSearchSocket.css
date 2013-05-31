@@ -1,0 +1,49 @@
+body{
+	margin:0;
+}
+#searchSocketCtrl{
+	background:rgba(10, 10, 10, 0.4);
+	padding: 0.5%;
+}
+
+#searchSocketCtrl div{
+	display:inline;
+}
+
+#searchSocketCtrl table{
+	width:100%;
+	color:#777777;
+    font-family:arial;
+    font-weight:bold;
+}
+
+.imgCtrl{
+	width:3em;
+}
+#searchSocketCtrlImg{
+	width:10%;
+}
+
+#searchSocketCtrlText{
+}
+
+#searchSocketCtrlAdd, #searchSocketCtrlSetting{
+	text-align:center;
+	width:7%;
+}
+
+#socketImg{
+	width:6em;
+}
+
+.verticalLine {
+    border-left: medium solid rgba(10, 10, 10, 0.4);
+}
+
+.socketListItem{
+	margin:1%;
+}
+
+.socketListItem table{
+	width:100%;
+}

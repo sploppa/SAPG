@@ -15,7 +15,7 @@
 NSString *result=nil;
 GCDAsyncUdpSocket *udpSocket;
 GCDAsyncSocket *tcpSocket;
-CDVPluginResult* pluginResult = nil;
+CDVPluginResult* pluginResult_Udp = nil;
 
 NSMutableData *webData;
 NSXMLParser *xmlParser;
@@ -23,168 +23,59 @@ NSString *finaldata;
 NSString *convertToStringData;
 NSMutableString *nodeContent;
 
-- (void)switchPower:(CDVInvokedUrlCommand *)command
+- (void)sendBroadcastMessage:(CDVInvokedUrlCommand *)command
 {
 	
-    NSString* string = [command.arguments objectAtIndex:0];
+    NSString* message = [command.arguments objectAtIndex:0];
     NSString* ip = [command.arguments objectAtIndex:1];
-    int sendPort = [[command.arguments objectAtIndex:2] intValue];
-    int receivePort = [[command.arguments objectAtIndex:3] intValue];
+    int port = [[command.arguments objectAtIndex:2] intValue];
     
-        tcpSocket =  [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSData* messageD = [message dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *host1 = @"192.168.1.1";
-    int port1 =  49000;
-    NSError *err = nil;
-    [tcpSocket connectToHost:host1 onPort:port1 error:&err];
-    NSString *body = [NSString stringWithFormat:
-                            @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                            "<s:Envelope s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                            "<s:Body>\n"
-                            "<u:AddPortMapping xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">"
-                            "<NewRemoteHost></NewRemoteHost>"
-                            "<NewExternalPort>5190</NewExternalPort>"
-                            "<NewProtocol>UDP</NewProtocol>"
-                            "<NewInternalPort>5190</NewInternalPort>"
-                            "<NewInternalClient>192.168.1.8</NewInternalClient>"
-                            "<NewEnabled>1</NewEnabled>"
-                            "<NewPortMappingDescription>My New Port Mapping</NewPortMappingDescription>"
-                            "<NewLeaseDuration>0</NewLeaseDuration>"
-                            "</u:AddPortMapping>"
-                            "</s:Body>\n"
-                            "</s:Envelope>\n"];
-        
-    int bodyLength = body.length;
-    NSString *length = [NSString stringWithFormat:@"%d", bodyLength];
-    NSString *header=@
-    "POST /upnp/control/WANIPConn1 HTTP/1.1\r\n"
-    "Host: 192.168.1.1:49000\r\n"
-    "SOAPACTION: urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping\r\n"
-    "Content-Length: ";
-    header = [NSString stringWithFormat:@"%@%@", header, length];
-    header = [NSString stringWithFormat:@"%@%@", header, @"\r\n"
-              "Content-Type: text/xml; charset='utf-8'\r\n"
-              "\n"];
-    NSLog(@"The request format is: \n%@",header);
-    NSData* headerD = [header dataUsingEncoding:NSUTF8StringEncoding];
-    NSData* bodyD = [body dataUsingEncoding:NSUTF8StringEncoding];
-    [tcpSocket writeData:headerD withTimeout:-1 tag:0];
-    [tcpSocket writeData:bodyD withTimeout:-1 tag:1];
+    udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
-    [tcpSocket readDataWithTimeout:-1 tag:0];
-    nodeContent = [[NSMutableString alloc]init];
-    
-    NSString *soapFormat = [NSString stringWithFormat:
-                            @ "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                            "<s:Envelope s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                            "<s:Body>\n"
-                            "<u:AddPortMapping xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">"
-                            "<NewRemoteHost></NewRemoteHost>"
-                            "<NewExternalPort>5190</NewExternalPort>"
-                            "<NewProtocol>UDP</NewProtocol>"
-                            "<NewInternalPort>5190</NewInternalPort>"
-                            "<NewInternalClient>192.168.1.100</NewInternalClient>"
-                            "<NewEnabled>1</NewEnabled>"
-                            "<NewPortMappingDescription>My New Port Mapping</NewPortMappingDescription>"
-                            "<NewLeaseDuration>0</NewLeaseDuration>"
-                            "</u:AddPortMapping>"
-                            "</s:Body>\n"
-                            "</s:Envelope>\n"];
-    
-    
-    
-    NSLog(@"The request format is: \n%@",soapFormat);
-    
-    NSURL *locationOfWebService = [NSURL URLWithString:@"http://192.168.1.1:49000"];
-    
-    NSLog(@"web url = %@",locationOfWebService);
-    
-    NSMutableURLRequest *theRequest = [[NSMutableURLRequest alloc]initWithURL:locationOfWebService];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%d",[soapFormat length]];
-    
-    
-    [theRequest addValue:@"text/xml; charset='utf-8'" forHTTPHeaderField:@"Content-Type"];
-    [theRequest addValue:@"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping" forHTTPHeaderField:@"SOAPAction"];
-    [theRequest addValue:msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest addValue:@"192.168.1.1:49000" forHTTPHeaderField:@"Host"];
-    [theRequest setHTTPMethod:@"POST"];
-    //the below encoding is used to send data over the net
-    [theRequest setHTTPBody:[soapFormat dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    NSURLConnection *connect = [[NSURLConnection alloc]initWithRequest:theRequest delegate:self];
-    
-    if (connect) {
-        webData = [[NSMutableData alloc]init];
-    }
-    else {
-        NSLog(@"No Connection established");
-    }
-    
-    // GET ROUTER IP
-    NSString *address = @"error";
-    struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    int success = 0;
-    // retrieve the current interfaces - returns 0 on success
-    success = getifaddrs(&interfaces);
-    if (success == 0) {
-        // Loop through linked list of interfaces
-        temp_addr = interfaces;
-        while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                // Check if interface is en0 which is the wifi connection on the iPhone
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
-                    // Get NSString from C String
-                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-                    
-                }
-                
-            }
-            
-            temp_addr = temp_addr->ifa_next;
-        }
-    }
-    // Free memory
-    freeifaddrs(interfaces);
-
-     udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    
-    NSString *host = ip;
-    int port =  sendPort;
-    [udpSocket connectToHost:host onPort:port error:nil];
-    
-    NSData* data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    
-    int tag = 1;
-    [udpSocket sendData:data withTimeout:-1 tag:tag];
-
     NSError *error = nil;
-     udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [udpSocket bindToPort:1027 error:&error];
-    if(error != nil)
-    {
-        NSString * message = [NSString stringWithFormat: @"Something horrible went wrong: %@", [error userInfo]];
-        
-        NSLog(@"%@", message);
-    }
-    [udpSocket receiveOnce:&error];
-    [self waitForConditionWithTimeout:10.0];
     
-        if (result != nil && [result length] > 0) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-        }
-        
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    if (![udpSocket bindToPort:port error:&error])
+    {
+        NSLog(@"Error binding: %@", [error description]);
+        return;
+    }
+    if (![udpSocket beginReceiving:&error])
+    {
+        NSLog(@"Error receiving: %@", [error description]);
+        return;
+    }
+    
+    [udpSocket enableBroadcast:YES error:&error];
+    if (error != nil)
+    {
+        NSLog(@"Error enableing broadcast: %@", [error description]);
+        return;
+    }
+    
+    NSLog(@"Socket Created");
+    
+  
+    [udpSocket sendData:messageD toHost:ip port:port withTimeout:-1 tag:0];
+  
+    [self waitForConditionWithTimeout:2.0];
+    NSLog(@"Sent Data");
+    NSLog(result);
+    
+    if (result != nil && [result length] > 0) {
+        pluginResult_Udp = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
+    } else {
+        pluginResult_Udp = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    }
+    
+    [self.commandDelegate sendPluginResult:pluginResult_Udp callbackId:command.callbackId];
+    
     [udpSocket close];
-}
+  }
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
-      fromAddress:(NSData *)address
-withFilterContext:(id)filterContext
+      fromAddress:(NSData *)address withFilterContext:(id)filterContext
 {
     NSLog(@"niets.");
     NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -202,12 +93,8 @@ withFilterContext:(id)filterContext
     //[udpSocket sendData:data toAddress:address withTimeout:-1 tag:0];
     NSLog(@"HMMMM");
     result = [[NSString alloc] initWithFormat:@"%@", msg];
+
     [self signalCondition];
-}
--(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag{
-    
-    NSLog(@"MESSAGE: %@", [NSString stringWithUTF8String:[data bytes]]);
-    
 }
 - (BOOL)waitForConditionWithTimeout:(NSTimeInterval)aTimeout
 {
