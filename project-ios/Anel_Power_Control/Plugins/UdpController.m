@@ -79,22 +79,29 @@ NSMutableString *nodeContent;
 {
     NSLog(@"niets.");
     NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    if (msg)
-    {
-        NSLog(@"iets gekregen");
-    }
-    else
-    {
-        NSLog(@"Error convertion");
+    if(![msg isEqualToString:@"D"]){
+        NSString *host = nil;
+        uint16_t port = 0;
+        [GCDAsyncUdpSocket getHost:&host port:&port fromAddress:address];
+        if (msg)
+        {
+            NSLog(@"iets gekregen");
+        }
+        else
+        {
+            NSLog(@"Error convertion");
         //[self logError:@"Error converting received data into UTF-8 String"];
-    }
+        }
     //NSString *test = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     //NSLog(@"%@",test);
     //[udpSocket sendData:data toAddress:address withTimeout:-1 tag:0];
-    NSLog(@"HMMMM");
-    result = [[NSString alloc] initWithFormat:@"%@", msg];
-
-    [self signalCondition];
+        NSLog(@"HMMMM");
+        result = [[NSString alloc] initWithFormat:@"%@\r\n%@", msg, host];
+        [self signalCondition];
+    }else{
+        NSError *error = nil;
+        [udpSocket beginReceiving:&error];
+    }
 }
 - (BOOL)waitForConditionWithTimeout:(NSTimeInterval)aTimeout
 {

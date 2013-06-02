@@ -71,6 +71,8 @@ CDVPluginResult* pluginResult_UPnP = nil;
     
     NSLog(respond);
     error = NULL;
+    respond = [respond stringByReplacingOccurrencesOfString:@"\r\n"
+                                         withString:@"\n"];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"HTTP/1.1 200 OK" options:NSRegularExpressionCaseInsensitive error:&error];
     
     NSUInteger numberOfMatches = [regex numberOfMatchesInString:respond options:0 range:NSMakeRange(0, [respond length])];
@@ -97,7 +99,8 @@ CDVPluginResult* pluginResult_UPnP = nil;
                     
                     NSString *xmlDescriptor = [self getDataFrom:url];
                     NSLog(xmlDescriptor);
-                    
+                    xmlDescriptor = [xmlDescriptor stringByReplacingOccurrencesOfString:@"\r\n"
+                                                                 withString:@"\n"];
                     regex = [NSRegularExpression regularExpressionWithPattern:@"<serviceList>([(\\n)](.*))*</serviceList>" options:NSRegularExpressionCaseInsensitive error:&error];
                     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:xmlDescriptor options:0 range:NSMakeRange(0, [xmlDescriptor length])];
                     if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {

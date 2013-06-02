@@ -41,14 +41,13 @@
 		9E8E51C8175906E10086CD01 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E51B21758FE4D0086CD01 /* icon@2x.png */; };
 		9E8E51C9175906E10086CD01 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E51B01758FE420086CD01 /* icon.png */; };
 		9E8E51CA175906E10086CD01 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8E51AE1758FD8F0086CD01 /* Default.png */; };
+		9E8E51CF175B5B7C0086CD01 /* UdpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8E51CE175B5B7C0086CD01 /* UdpController.m */; };
 		9EA60E8916FEE08D00C9CF36 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA60E8616FEE08D00C9CF36 /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		9EA60E8A16FEE08D00C9CF36 /* UPnPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA60E8816FEE08D00C9CF36 /* UPnPController.m */; };
 		9EA60E8C16FEE0A500C9CF36 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA60E8B16FEE0A500C9CF36 /* Security.framework */; };
 		9EA60E8F16FEEA3400C9CF36 /* HttpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA60E8E16FEEA3400C9CF36 /* HttpController.m */; };
 		9EA60E9216FF035E00C9CF36 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA60E9116FF035E00C9CF36 /* XMLReader.m */; };
 		9EA90F0A16DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		9EA90F0B16DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA90F0916DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m */; };
-		9EF6030316CE589F00B953D1 /* UdpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6030216CE589F00B953D1 /* UdpController.m */; settings = {COMPILER_FLAGS = "-v"; }; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +72,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Anel Pwr-Ctrl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anel Pwr-Ctrl.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Anel PwrCtrl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Anel PwrCtrl.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1F766FDD13BBADB100FB74C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
@@ -118,6 +117,8 @@
 		9E8E51BA1758FF330086CD01 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9E8E51BC1758FF4C0086CD01 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		9E8E51BE1758FF520086CD01 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		9E8E51CD175B5B7C0086CD01 /* UdpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpController.h; sourceTree = "<group>"; };
+		9E8E51CE175B5B7C0086CD01 /* UdpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdpController.m; sourceTree = "<group>"; };
 		9EA60E8516FEE08D00C9CF36 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		9EA60E8616FEE08D00C9CF36 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		9EA60E8716FEE08D00C9CF36 /* UPnPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPnPController.h; sourceTree = "<group>"; };
@@ -129,10 +130,6 @@
 		9EA60E9116FF035E00C9CF36 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		9EA90F0616DC1E9F0030E7F4 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
-		9EA90F0816DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GCDAsyncUdpSocket+sendString.h"; sourceTree = "<group>"; };
-		9EA90F0916DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GCDAsyncUdpSocket+sendString.m"; sourceTree = "<group>"; };
-		9EF6030116CE589F00B953D1 /* UdpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpController.h; sourceTree = "<group>"; };
-		9EF6030216CE589F00B953D1 /* UdpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UdpController.m; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Anel_Power_Control/config.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,7 +177,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Anel Pwr-Ctrl.app */,
+				1D6058910D05DD3D006BFB54 /* Anel PwrCtrl.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,18 +282,16 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				9EA60E8516FEE08D00C9CF36 /* GCDAsyncSocket.h */,
-				9EA60E8616FEE08D00C9CF36 /* GCDAsyncSocket.m */,
-				9EA60E8716FEE08D00C9CF36 /* UPnPController.h */,
-				9EA60E8816FEE08D00C9CF36 /* UPnPController.m */,
-				9EA90F0616DC1E9F0030E7F4 /* GCDAsyncUdpSocket.h */,
-				9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */,
-				9EA90F0816DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.h */,
-				9EA90F0916DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m */,
-				9EF6030116CE589F00B953D1 /* UdpController.h */,
-				9EF6030216CE589F00B953D1 /* UdpController.m */,
 				9EA60E8D16FEEA3400C9CF36 /* HttpController.h */,
 				9EA60E8E16FEEA3400C9CF36 /* HttpController.m */,
+				9EA60E8716FEE08D00C9CF36 /* UPnPController.h */,
+				9EA60E8816FEE08D00C9CF36 /* UPnPController.m */,
+				9E8E51CD175B5B7C0086CD01 /* UdpController.h */,
+				9E8E51CE175B5B7C0086CD01 /* UdpController.m */,
+				9EA60E8516FEE08D00C9CF36 /* GCDAsyncSocket.h */,
+				9EA60E8616FEE08D00C9CF36 /* GCDAsyncSocket.m */,
+				9EA90F0616DC1E9F0030E7F4 /* GCDAsyncUdpSocket.h */,
+				9EA90F0716DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m */,
 				9EA60E9016FF035E00C9CF36 /* XMLReader.h */,
 				9EA60E9116FF035E00C9CF36 /* XMLReader.m */,
 			);
@@ -363,7 +358,7 @@
 			);
 			name = Anel_Power_Control;
 			productName = Anel_Power_Control;
-			productReference = 1D6058910D05DD3D006BFB54 /* Anel Pwr-Ctrl.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Anel PwrCtrl.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -465,13 +460,12 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				9EF6030316CE589F00B953D1 /* UdpController.m in Sources */,
 				9EA90F0A16DC1E9F0030E7F4 /* GCDAsyncUdpSocket.m in Sources */,
-				9EA90F0B16DC1E9F0030E7F4 /* GCDAsyncUdpSocket+sendString.m in Sources */,
 				9EA60E8916FEE08D00C9CF36 /* GCDAsyncSocket.m in Sources */,
 				9EA60E8A16FEE08D00C9CF36 /* UPnPController.m in Sources */,
 				9EA60E8F16FEEA3400C9CF36 /* HttpController.m in Sources */,
 				9EA60E9216FF035E00C9CF36 /* XMLReader.m in Sources */,
+				9E8E51CF175B5B7C0086CD01 /* UdpController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +531,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Anel_Power_Control/Anel_Power_Control-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "Anel Pwr-Ctrl";
+				PRODUCT_NAME = "Anel PwrCtrl";
 				PROVISIONING_PROFILE = "A57A7766-97FE-4A38-9980-14C4589EC230";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
