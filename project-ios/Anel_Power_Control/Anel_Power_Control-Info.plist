@@ -16,10 +16,10 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>icon-72@2x.png</string>
 				<string>icon.png</string>
 				<string>icon@2x.png</string>
 				<string>icon-72.png</string>
-				<string>icon-72@2x.png</string>
 			</array>
 		</dict>
 	</dict>
@@ -39,6 +39,10 @@
 	<true/>
 	<key>NSMainNibFile~ipad</key>
 	<string></string>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

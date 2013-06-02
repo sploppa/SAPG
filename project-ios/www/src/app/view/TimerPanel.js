@@ -18,101 +18,104 @@ Ext.define('MyApp.view.TimerPanel', {
     alias: 'widget.timer',
 
     config: {
-        layout: {
-            type: 'vbox',
-           
-        },
-        scrollable: false,
-        items: [
-        	{
-        		xtype: 'container',
-                docked: 'top',
-                height: 50,
-                layout: {
-                    type: 'hbox'
-                },
-                items: [
-                   	{
-                		xtype: 'image',
-                		itemId: 'imageIcon',
-                		flex: 1,
-                		height: 50,
-                		width: 50,
-                        src: 'img/beamer_icon.png'
-                	},
-                	{
-                		xtype: 'textfield',
-		        		id: 'dosenName',
-		        		itemId: 'dosenName',
-		                flex: 3,
-		                label: 'Name',
-		                labelAlign: 'left'
-                	}
-                ]
-        	},
-        	{
-        		xtype:'timerList',
-        		flex: 10,
-        		variableHeights: true,
-        		scrollable: true
-        	},
-        	{
-				xtype: 'checkboxfield',
-				itemId: 'sperren',
-                id: 'sperren',
-                flex: 2,
-                cls: 'sperren',
-				label: 'sperren',
-                labelWidth: '50%',
-				labelAlign: 'left'
-        	},
-			{
-				xtype: 'container',
-				layout:{
-					type: 'hbox'
-				},
-				items: [
-			            {
-							xtype: 'radiofield',
-							itemId: 'ausfallEinschalten',
+       layout: {
+       	type: 'fit',
+	   },
+	   scrollable: false,
+       items: [
+            {
+               xtype: 'container',
+               layout:{
+                type: 'vbox',
+               },
+               items: [
+                       {
+                            xtype: 'container',
+			                docked: 'top',
+			                height: 50,
+			                layout: {
+			                    type: 'hbox'
+			                },
+			                items: [
+			                   	{
+			                		xtype: 'image',
+			                		itemId: 'imageIcon',
+			                		flex: 1,
+			                		height: 50,
+			                		width: 50,
+			                        src: 'img/beamer_icon.png'
+            					},
+			                	{
+			                		xtype: 'textfield',
+					        		id: 'dosenName',
+					        		itemId: 'dosenName',
+					                flex: 3,
+					                label: 'Name',
+					                labelAlign: 'left'
+			                	}
+            				]
+            			},
+				        {
+				        	xtype:'timerList',
+				        	flex: 9,
+			        		variableHeights: true,
+			        		scrollable: true
+			        	},
+			        	{
+							xtype: 'checkboxfield',
+							itemId: 'sperren',
+			                id: 'sperren',
 			                flex: 2,
-			                name: 'TF',
-			                value: 'e',
-							label: 'einschalten',
+			                cls: 'sperren',
+							label: 'sperren',
 			                labelWidth: '50%',
-							labelAlign: 'top'
-			            },
-			            {
-							xtype: 'radiofield',
-							itemId: 'ausfallWiederherstellen',
-			                labelWidth: '50%',
-			                flex: 3,
-			                name: 'TF',
-			                value: 'w',
-							label: 'wiederherstellen',
-							labelAlign: 'top'
-			            },
-			            {
-							xtype: 'radiofield',
-							itemId: 'ausfallAusschalten',
-			                flex: 2,
-			                name: 'TF',
-			                value: 'a',
-			                labelWidth: '50%',
-							label: 'ausschalten',
-							labelAlign: 'top'
-			            }
-				]
-			},
-        	{
-				xtype: 'button',
-                flex: 1,
-				itemId: 'saveTimer',
-				margin: '1% 25% 5% 25%',
-				padding: '1%',
-				text: 'speichern'      	
-        	}
-        ]
+							labelAlign: 'left'
+			        	},
+						{
+							xtype: 'container',
+							layout:{
+								type: 'hbox',
+							},
+							items: [
+						            {
+										xtype: 'radiofield',
+										itemId: 'ausfallEinschalten',
+						                name: 'TF',
+						                value: 'e',
+						                flex: 1,
+										label: 'einschalten',
+										labelAlign: 'top'
+						            },
+						            {
+										xtype: 'radiofield',
+										itemId: 'ausfallWiederherstellen',
+						                name: 'TF',
+						                value: 'w',
+						                flex: 1,
+										label: 'wiederherstellen',
+										labelAlign: 'top'
+						            },
+						            {
+										xtype: 'radiofield',
+										itemId: 'ausfallAusschalten',
+						                name: 'TF',
+						                value: 'a',
+						                flex: 1,
+										label: 'ausschalten',
+										labelAlign: 'top'
+						            }
+							]
+						},
+			        	{
+							xtype: 'button',
+			                flex: 1,
+							itemId: 'saveTimer',
+							margin: '1% 25% 5% 25%',
+							padding: '1%',
+							text: 'speichern'      	
+			        	}
+                    ]
+			}
+    	]	
     }
-
 });

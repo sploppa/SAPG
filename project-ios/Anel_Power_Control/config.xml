@@ -32,7 +32,7 @@
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="OpenAllWhitelistURLsInWebView" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
-
+    
     <plugins>
         <plugin name="Device" value="CDVDevice" />
         <plugin name="Logger" value="CDVLogger" />
