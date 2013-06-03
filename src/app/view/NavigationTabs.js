@@ -22,7 +22,7 @@ Ext.define('MyApp.view.NavigationTabs', {
 
     config: {
         layout: {
-            animation: 'fade',
+            animation: 'flip',
             type: 'card'
         },
         tabBar: {
@@ -101,8 +101,31 @@ Ext.define('MyApp.view.NavigationTabs', {
             },
             {
                 xtype: 'container',
-                title: 'Tab 3',
-                iconCls: 'info'
+                title: 'Credits',
+                iconCls: 'info',
+                layout: {
+                    type: 'fit'
+                },
+               	items: [
+               		{
+               			xtype: 'titlebar',
+               			docked: 'top',
+               			title: 'Credits Anel PwrCtrl'
+               		},
+               		{
+               			 html: 
+							'<div id="creditsBody">Diese App entstand in Zusammenarbeit von'
+							+'<div class="name">Sebastian Ploppa</div>' 
+							+'und'
+							+'<div class="name">Markus Sch&aumlufler</div>'
+							+'im Zuge einer Studienarbeit an der DHBW Stuttgart.'
+							+'Beim Testen wurden keine Tiere verletzt.'
+							+'Daher kann es vereinzelt zu Bugs kommen.'
+							+'Bitte melden Sie Bugs unter:'
+							+'bugs.sch@eufler.de</div>'
+               		}
+               	]
+                
             }
         ]
     }

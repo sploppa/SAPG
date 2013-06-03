@@ -262,11 +262,12 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		                		},
 		                		function(err2){
                                          console.log(err2);
-                                         Ext.Msg.alert('Internal IP Error','Es gab leider ein Problem beim Abfragen der Internen IP');
+                                         Ext.Msg.alert('UPnP Problem','Es gab leider ein Problem mit dem UPnP Service.');
                                          tempStore.add({
                                                        name: steckdosenName,
                                                        httpPort: httpPort,
                                                        typ: 'Home',
+                                                       internalIp: internalIp,
                                                        mac: mac,
                                                        version: version,
                                                        userName: 'user7',
@@ -354,7 +355,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			            id: steckdosenIndex
 			        }
 				});
-				store.removeAll();
 			}
 
 			var dosenInfo = this.getDosenInfo(typ);
@@ -362,6 +362,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			var blockedDosen = dosenInfo.split(":")[1];
 			anzahlDosen = parseInt(anzahlDosen);
 			blockedDosen = parseInt(blockedDosen);
+			store.removeAll();
 			for(var i=1;i<=anzahlDosen;i++){
 				if(i<=blockedDosen){
 					store.add({

@@ -355,7 +355,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			            id: steckdosenIndex
 			        }
 				});
-				store.removeAll();
 			}
 
 			var dosenInfo = this.getDosenInfo(typ);
@@ -363,6 +362,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			var blockedDosen = dosenInfo.split(":")[1];
 			anzahlDosen = parseInt(anzahlDosen);
 			blockedDosen = parseInt(blockedDosen);
+			store.removeAll();
 			for(var i=1;i<=anzahlDosen;i++){
 				if(i<=blockedDosen){
 					store.add({

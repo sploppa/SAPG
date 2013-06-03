@@ -86,6 +86,10 @@
 	content: '.';
 }
 
+#creditsBody{
+	text-align: center;
+}
+
 .x-list .x-list-disclosure{
 	border: 0;
 	-webkit-border-radius: 0;
