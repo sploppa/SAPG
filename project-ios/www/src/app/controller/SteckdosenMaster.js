@@ -53,7 +53,6 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
         refs: {
             mySteckdosenList: 'steckdosenList'
         },
-
         control: {
             "steckdosenList": {
                 activate: 'onListActivate',
@@ -313,17 +312,27 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		var form = button.up('panel');
 		var record = form.getRecord();
 		var values = form.getValues();
-		console.log(values);
-		if(!record){
-			var newRecord = new MyApp.model.Steckdose(values);
-			newRecord.setDirty();
-		   	Ext.getStore('Steckdosen').add(newRecord);
+		var newRecord = new MyApp.model.Steckdose(values);
+		newRecord.setDirty();
+		var errors = newRecord.validate();
+		if(!errors.isValid()){
+			var errorMsg = "";
+			errors.each(function(errorObj){
+				errorMsg += errorObj.getMessage() + "<br>";
+			});
+			Ext.Msg.alert("Bitte &uumlberpr&uumlfen Sie folgende Felder noch einmal:", errorMsg);
+		}else{
+			if(!record){
+				var newRecord = new MyApp.model.Steckdose(values);
+				newRecord.setDirty();
+			   	Ext.getStore('Steckdosen').add(newRecord);
+			}
+			else {
+				record.set(values);
+			}
+			form.hide();
+			Ext.getStore('Steckdosen').sync();
 		}
-		else {
-			record.set(values);
-		}
-		form.hide();
-		Ext.getStore('Steckdosen').sync();
     },
     
     onSteckdosenListItemTap: function(view, index, target, record, event) {
@@ -913,6 +922,9 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 		var timerStore = Ext.getStore(steckdosenIndex+"D"+dosenId);
 
 		dosenName = Ext.getCmp('dosenName').getValue();
+		alert(escape(dosenName));
+		dosenName = dosenName.substring(0, 15); // Max. 16 Zeichen
+		dosenName = dosenName.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' '); // Trim-Funktion
 		var body = "TN="+dosenName;
 		for(var i = 1; i <= timerStore.getCount(); i++){
 			var index = timerStore.find('id',i);
@@ -924,7 +936,7 @@ Ext.define('MyApp.controller.SteckdosenMaster', {
 			if(checked=="checked"){
 				checked=("&T0"+(i-1))+"=on";
 			}else{
-				//no parameter set if socket is unset
+				//empty String, wenn Parameter nicht gesetzt ist
 				checked="";
 			}
 			body += checked+("&T1"+(i-1))+"="+days+("&T2"+(i-1))+"="+escape(startTime)+("&T3"+(i-1))+"="+escape(endTime);

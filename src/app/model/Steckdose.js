@@ -27,6 +27,13 @@ Ext.define('MyApp.model.Steckdose', {
 		    'password',
 		    'mac',
 		    'version',
+        ],
+        validations: [
+        	{ type: 'presence', field: 'name', message: 'Name'},
+        	{ type: 'presence', field: 'typ', message: 'Typ'},
+        	{ type: 'presence', field: 'httpPort', message: 'HTTP Port'},
+        	{ type: 'presence', field: 'userName', message: 'Benutzername'},
+        	{ type: 'presence', field: 'password', message: 'Passwort'},
         ]
     }
 });

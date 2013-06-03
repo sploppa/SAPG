@@ -14,7 +14,7 @@ Ext.define('MyApp.view.PhotoList', {
                 itemId: 'photoList',
                 inline: true,
                 itemTpl: [
-                    '<img src="{photo}" width=80  height=80 />'
+                    '<img src="{photo}" width=60  height=60 />'
                 ]
             }
         ]

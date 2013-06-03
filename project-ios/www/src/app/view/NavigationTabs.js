@@ -114,15 +114,16 @@ Ext.define('MyApp.view.NavigationTabs', {
                		},
                		{
                			 html: 
-							'<div id="creditsBody">Diese App entstand in Zusammenarbeit von'
+							'<div id="creditsBody">Diese App entstand in Zusammenarbeit <br/>von'
 							+'<div class="name">Sebastian Ploppa</div>' 
 							+'und'
 							+'<div class="name">Markus Sch&aumlufler</div>'
 							+'im Zuge einer Studienarbeit an der DHBW Stuttgart.'
-							+'Beim Testen wurden keine Tiere verletzt.'
+							+'<br/>Beim Testen wurden keine Tiere verletzt.'
 							+'Daher kann es vereinzelt zu Bugs kommen.'
-							+'Bitte melden Sie Bugs unter:'
-							+'bugs.sch@eufler.de</div>'
+							+'Bitte melden Sie Bugs &uumlber:<br/>'
+							+'<input id="input" onClick="javascript:location.href=\'mailto:bugs.sch@eufler.de\';" type="button" value="kontakt"/></div>'
+							
                		}
                	]
                 

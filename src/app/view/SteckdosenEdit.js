@@ -34,8 +34,9 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 itemId: 'name',
                 label: 'Name',
                 name: 'name',
+                placeHolder: 'Steckdosenname',
                 autoCapitalize: false,
-                autoComplete: false,
+                autoComplete: true,
                 autoCorrect: false
             },
             {
@@ -45,6 +46,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 usePicker: false,
                 itemId: 'typ',
                 label: 'Typ',
+                value: 'Home',
                 name: 'typ',
                 options: [
                     {
@@ -73,6 +75,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'textfield',
                 docked: 'top',
                 itemId: 'externalIp',
+                placeHolder: '134.3.157.218',
                 label: 'externe IP',
                 labelWidth: '40%',
                 name: 'externalIp'
@@ -81,6 +84,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'textfield',
                 docked: 'top',
                 itemId: 'internalIp',
+                placeHolder: '192.168.1.9',
                 label: 'internal IP',
                 labelWidth: '40%',
                 name: 'internalIp'
@@ -89,6 +93,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'numberfield',
                 docked: 'top',
                 itemId: 'httpPort',
+                placeHolder: '80',
                 label: 'HTTP Port',
                 labelWidth: '40%',
                 name: 'httpPort'
@@ -97,6 +102,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'textfield',
                 docked: 'top',
                 itemId: 'userName',
+                placeHolder: 'user7',
                 label: 'Benutzername',
                 labelWidth: '40%',
                 name: 'userName'
@@ -105,6 +111,7 @@ Ext.define('MyApp.view.SteckdosenEdit', {
                 xtype: 'passwordfield',
                 docked: 'top',
                 itemId: 'password',
+                placeHolder: 'anel',
                 label: 'Passwort',
                 labelWidth: '40%',
                 name: 'password'

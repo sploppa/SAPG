@@ -1,3 +1,22 @@
+#creditsBody{
+	text-align: center;
+	margin: '5%';
+}
+
+#creditsBody .name{
+	margin: '5%';
+	font-weight: bold;
+}
+
+#input{
+	background-image: -webkit-linear-gradient(top, #f6b673,#f39d43 50%,#f2912b 51%,#f18513);
+	border: 1px solid #ac5e0b;
+	border-top-color: #c46b0c;
+	margin: 6px 0.2em;
+	padding: 0 0.6em;
+	border-radius: 0.4em;
+}
+
 .timer{
 }
 .day{
@@ -84,10 +103,6 @@
 
 .x-list .x-list-disclosure:before{
 	content: '.';
-}
-
-#creditsBody{
-	text-align: center;
 }
 
 .x-list .x-list-disclosure{
